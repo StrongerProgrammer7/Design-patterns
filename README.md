@@ -7,7 +7,8 @@
           1.&emsp;Hello world
           2.&emsp;Accept the username as a program argument.Say hello to the user using string formatting. 
           &emsp;&emsp;&emsp;Ask what language is the user's favorite, in case it is ruby, answer that the user is a sucker, 
-          &emsp;&emsp;&emsp;otherwise be sure to answer that soon it will be ruby and put different comments for several languages.
+          &emsp;&emsp;&emsp;&emsp;otherwise be sure to answer that soon it will be ruby and put 
+          &emsp;&emsp;&emsp;&emsp;&emsp;different comments for several languages.
           3.&emsp;Ask user enter ruby language command and OS command. Execute ruby and OS command</pre>
 </p>
 <p> 2 Task:<br/><pre>
