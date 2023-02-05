@@ -1,4 +1,4 @@
-#Task1
+#Task1---------------------------------------------
 def primeDevider(num)
   for i in 2..Math.sqrt(num)
 	if(num%i==0) then
@@ -20,10 +20,24 @@ def sumPrimeDivisor(num)
 	    temp = temp.round
 	    if (primeDevider(temp)==1) then
 	    	sum+=temp
-            end
+        end
 	  end
 	end
   end
 return sum
 end
 
+#Task2---------------------------------------------
+def countOddDigitsNumber(num,minSizeDigit=nil)
+	count=0
+	while(num!=0)
+		temp=num%10
+		if(temp>minSizeDigit) then
+			count = count+1
+		end
+		num /=10
+	end
+return count
+end
+
+puts countOddDigitsNumber(1924924,3)
