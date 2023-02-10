@@ -27,5 +27,14 @@ def countElmAfterLastMax(array)
 	end
 	return array.reverse.index(array.max)
 end
-a = [1,6,4,5,23,6,7,23,4,6]
-print  countElmAfterLastMax(a)
+
+def elemBeforeMinToEndArray(array)
+	if(array.length==0) then
+		return 0
+	end
+	beforeMin = Array.new(array.index(array.min)) { |i|  array[i]}
+	return (array.delete_if{|x| array.index(x) < array.index(array.min) }) + beforeMin
+end
+a = [58,46,24,35,23,6,7,23,4,6]
+
+print elemBeforeMinToEndArray(a)
