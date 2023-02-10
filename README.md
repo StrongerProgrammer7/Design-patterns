@@ -17,4 +17,12 @@
           3.&emsp;Find the multiple of such divisors of a number, the sum of the digits less than 
           &emsp; &emsp;the sum of the digits of the original number.
 </pre></p>
+<p> 3 Task:<br/><pre>
+          1.&emsp;Write methods that find the minimum, elements, number of the first 
+          &emsp; &emsp;positive element. Each operation in a separate method. Solve the problem using loops (for and while)
+          2.&emsp;Write a program that takes two values as an argument. The first
+          &emsp; &emsp;value tells which of the methods of task 1 to execute, the second one 
+          &emsp; &emsp;tells where to read the list from where the file address should be written 
+          &emsp; &emsp;as an argument. Next, you need to read the array and execute the method.
+</pre></p>
 </div>
