@@ -38,6 +38,7 @@ end
 #Task 2--------------------------------------------
 
 def operationOverArray(nameMethod,addressFile)
+	#binding.irb
 	current_path = File.dirname(__FILE__)
 	file_path = current_path + "/" + addressFile
 	if File.exist?(file_path) then
@@ -66,3 +67,4 @@ end
 puts operationOverArray("minElement","array.txt")
 puts operationOverArray("numberFirstPossitiveElement","array.txt")
 puts operationOverArray("numberPossitiveElement","array.txt")
+binding.irb
