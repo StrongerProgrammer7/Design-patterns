@@ -25,7 +25,7 @@ def countElmAfterLastMax(array)
 	if(array.length==0) then
 		return 0
 	end
-	return array.reverse.index(array.max)
+	array.reverse.index(array.max)
 end
 
 def elemBeforeMinToEndArray(array)
@@ -33,15 +33,24 @@ def elemBeforeMinToEndArray(array)
 		return 0
 	end
 	beforeMin = Array.new(array.index(array.min)) { |i|  array[i]}
-	return (array.delete_if{|x| array.index(x) < array.index(array.min) }) + beforeMin
+	(array.delete_if{|x| array.index(x) < array.index(array.min) }) + beforeMin
 end
 
 def maxElemInterval(array,a,b)
 	if(array.length == 0 || a < 0 or b > array.length) then
 		return 0
 	end
-	return array[a..b].max
+	array[a..b].max
 end
 
-a = [54,56,67,68,78,32,45,7,86743,45,47]
-print maxElemInterval(a,1,10)
+def countElementsLessLeftNeighbor(array)
+	b=[]
+	array.each_index { |ind| array[ind+1]!= nil and array[ind]>array[ind+1]? b.push(ind+1): 0}
+	print b,"\n"
+	b.count
+end
+
+a = [54,56,67,1,78,1,45,7,86743,45,47,1]
+
+print countElementsLessLeftNeighbor(a),"\n"
+
