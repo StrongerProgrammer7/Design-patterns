@@ -39,8 +39,8 @@ end
 
 def operationOverArray(nameMethod,addressFile)
 	#binding.irb
-	current_path = File.dirname(__FILE__)
-	file_path = current_path + "/" + addressFile
+	#current_path = File.dirname(__FILE__)
+	file_path = addressFile#current_path + "/" + addressFile
 	if File.exist?(file_path) then
 		array = (File.open(file_path,'r'){ |file| file.read }).split(' ').map{|item| item.to_i}
 		if(nameMethod=="numberFirstPossitiveElement") then
@@ -64,7 +64,20 @@ end
 #puts "addressFile?"
 #address = STDIN.gets.chomp
 #fileArray = File.open(address,'r'){ |file| file.read }
-puts operationOverArray("minElement","array.txt")
-puts operationOverArray("numberFirstPossitiveElement","array.txt")
-puts operationOverArray("numberPossitiveElement","array.txt")
-binding.irb
+current_path = File.dirname(__FILE__)
+file_path = current_path + "/" + ARGV[1]
+if(ARGV[0]=="minElement") then
+	if File.exist?(file_path)
+		puts operationOverArray(ARGV[0],file_path)
+	else
+		puts "Неверное указан файл"
+	end
+elsif(ARGV[0]=="numberFirstPossitiveElement" || ARGV[0]=="numberPossitiveElement" || ARGV[0]=="firstPossitiveElement") then
+	if File.exist?(file_path)
+		puts operationOverArray(numberFirstPossitiveElement,file_path)
+	else
+		puts "Неверное указан файл"
+	end
+else
+	puts " Введеный метод не существует #{ARGV[0]}"
+end
