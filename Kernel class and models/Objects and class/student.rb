@@ -10,18 +10,9 @@ class Student
 		self.surname = surname 
 		self.name = name 
 		self.lastname = lastname
-		if phone!=nil && Student.check_phone(phone) != nil then
-			self.phone = phone 
-		elsif(phone!=nil)
-			raise "Not valid phone! +[0-9]{11,13}"
-		end
+		self.phone = phone 
 		self.telegram = telegram
-		if mail!=nil && Student.check_mail(phone) != nil then
-			self.mail = mail 
-		elsif(mail!=nil)
-			raise "Not valid mail! +[0-9]{11,13}"
-		end
-
+		self.mail = mail 
 		self.git = git
 		self.ID = @@countStudents
 		@@countStudents = @@countStudents + 1
