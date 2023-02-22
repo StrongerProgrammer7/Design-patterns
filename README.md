@@ -25,4 +25,15 @@
           &emsp; &emsp;tells where to read the list from where the file address should be written 
           &emsp; &emsp;as an argument. Next, you need to read the array and execute the method.
 </pre></p>
+<p> 4 Task:<br/><pre>
+          1.&emsp;Given an integer array. It is necessary to find the number of emails located after the last max
+          2.&emsp;Given an integer array. It is necessary to place the elements, located 
+           &emsp; &emsp;before the min, at the end of the array
+          3.&emsp;An integer array and an interval (a,b) are given. Need to find the max of the elements 
+           &emsp; &emsp;in this interval
+          4.&emsp;Given an integer array. Output indexes of el-in, which are less than its left  
+           &emsp; &emsp;neighbor, and the number of such numbers
+          5.&emsp;For the given list + numbers, construct a list of all + prime divisors  
+           &emsp; &emsp;of the e-list without repetitions
+</pre></p>
 </div>
