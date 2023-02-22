@@ -39,7 +39,7 @@
 </div>
 <h3> Kernel classes and models - 2lab</h3>
 <div>
-<p>1 Task: <br/><pre>
+<p>1Ex Object and clesses: <br/><pre>
           1.&emsp;Create the Student class in a separate file with the object fields ID, Last Name, 
             &emsp;First Name, Middle Name, Phone, Telegram, Mail, Git. Full name is required, others are not.
             &emsp;&emsp;Write a constructor, write a getter and a setter for each field, 
