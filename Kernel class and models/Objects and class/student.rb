@@ -61,10 +61,12 @@ class Student
 		@git=git
 	end
 
+	def print_current_info()
+		print "ID\tname\tlastname\tphone\n"
+		print "#{get_ID}\t#{get_name}\t#{get_lastname}\t#{get_phone}\n"
+	end
+
 	private
 	@@countStudents = 0
 	attr_writer :ID
 end
-
-d = Student.new("v","v1","v2",phone:"24")
-p d.get_name,d.get_surname,d.get_phone
