@@ -3,9 +3,7 @@ class Student
 	attr_reader :ID
 
 	def initialize(surname,name,lastname, phone:nil, telegram:nil,mail:nil,git:nil)
-		if( Student.check_letter(surname) ==nil && Student.check_letter(name)==nil && Student.check_letter(lastname) == nil)
-			raise "Not valid name or surname or lastname [A-Z][a-z]+"
-		end
+		valid_base_field(name,surname,lastname)
 		valid_extra_field(phone:phone,telegram:telegram,mail:mail,git:git)
 		self.surname = surname 
 		self.name = name 
@@ -67,6 +65,12 @@ class Student
 			if(Student.check_git(git)==nil) then
 				raise "Not valid git"
 			end
+		end
+	end
+
+	def valid_base_field(name,surname,lastname)
+		if( Student.check_letter(surname) ==nil && Student.check_letter(name)==nil && Student.check_letter(lastname) == nil)
+			raise "Not valid name or surname or lastname [A-Z][a-z]+"
 		end
 	end
 end
