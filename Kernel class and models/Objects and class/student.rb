@@ -3,8 +3,8 @@ class Student
 	attr_reader :ID
 
 	def initialize(surname,name,lastname, phone:nil, telegram:nil,mail:nil,git:nil)
-		valid_base_field(name,surname,lastname)
-		valid_extra_field(phone:phone,telegram:telegram,mail:mail,git:git)
+		valid_baseField_onCorrect(name,surname,lastname)
+		valid_extraField_onCorrect(phone:phone,telegram:telegram,mail:mail,git:git)
 		self.surname = surname 
 		self.name = name 
 		self.lastname = lastname
@@ -25,7 +25,7 @@ class Student
 		/\+?[0-9]{11,13}/.match(phone)
 	end
 
-	define_singleton_method :check_letter do |word|
+	define_singleton_method :check_word do |word|
 		/^[A-Z][a-z]+/.match(word)
 	end
 
@@ -45,7 +45,7 @@ class Student
 	@@countStudents = 0
 	attr_writer :ID
 
-	def valid_extra_field(phone:nil,mail:nil,telegram:nil,git:nil)
+	def valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
 		if(phone!=nil)
 			if Student.check_phone(phone) ==nil then
 			 	raise "Not valid phone"
@@ -68,8 +68,8 @@ class Student
 		end
 	end
 
-	def valid_base_field(name,surname,lastname)
-		if( Student.check_letter(surname) ==nil && Student.check_letter(name)==nil && Student.check_letter(lastname) == nil)
+	def valid_baseField_onCorrect(name,surname,lastname)
+		if( Student.check_word(surname) ==nil && Student.check_word(name)==nil && Student.check_word(lastname) == nil)
 			raise "Not valid name or surname or lastname [A-Z][a-z]+"
 		end
 	end
