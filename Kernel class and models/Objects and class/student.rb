@@ -41,6 +41,8 @@ class Student
 	define_singleton_method :check_git do |git|
 		/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/.match(git)
 	end
+
+
 	private
 	@@countStudents = 0
 	attr_writer :ID
