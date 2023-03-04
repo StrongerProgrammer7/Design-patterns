@@ -1,8 +1,7 @@
 class Student
-	attr_accessor :surname, :name, :lastname, :phone, :telegram, :mail, :git
-	attr_reader :ID
-
-	def initialize(surname,name,lastname, phone:nil, telegram:nil,mail:nil,git:nil)
+	attr_accessor :surname, :name, :lastname
+	attr_reader :ID, :phone, :telegram, :mail, :git
+	def initialize(surname:,name:,lastname:, phone:nil, telegram:nil,mail:nil,git:nil)
 		valid_baseField_onCorrect(name,surname,lastname)
 		valid_extraField_onCorrect(phone:phone,telegram:telegram,mail:mail,git:git)
 		self.surname = surname 
@@ -16,9 +15,9 @@ class Student
 		@@countStudents = @@countStudents + 1
 	end
 
-	def print_current_info()
-		print "ID\tname\tlastname\tphone\n"
-		print "#{self.ID}\t#{self.name}\t#{self.surname}\t#{self.phone}\n"
+	def to_s()
+		 #{}"ID\tname\tlastname\tphone\n"
+		 "#{self.ID}  #{self.name}  #{self.surname}  #{self.phone}  "
 	end
 
 	define_singleton_method :check_phone do |phone|
@@ -40,12 +39,32 @@ class Student
 		/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/.match(git)
 	end
 
+	def set_contacts(phone:nil,mail:nil,telegram:nil)
+		valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram)		
+		if(phone!=nil) then
+			self.phone=phone 
+		end
+		if(mail!=nil) then
+			self.mail = mail
+		end
+		if(telegram!=nil) then
+			self.telegram = telegram
+		end
+	end
+
+	def get_all_contacts()
+		contacts = {}
+		contacts["phone"] =self.phone
+		contacts["telegram"] = self.telegram
+		contacts["mail"] = self.mail
+		return contacts
+	end
 
 	private
 	@@countStudents = 0
-	attr_writer :ID
+	attr_writer :ID, :mail, :phone, :telegram, :git
 
-	def valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
+	def valid_contact(phone:nil,mail:nil,telegram:nil)
 		if(phone!=nil)
 			if Student.check_phone(phone) ==nil then
 			 	raise "Not valid phone"
@@ -61,11 +80,20 @@ class Student
 				raise "Not valid telegram"
 			end
 		end
+	end
+
+	def valid_git(git:nil)
 		if(git!=nil)
 			if(Student.check_git(git)==nil) then
 				raise "Not valid git"
 			end
 		end
+	end
+
+	def valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
+		valid_contact(phone:phone,mail:mail,telegram:telegram)
+		valid_git(git:git)	
+	
 	end
 
 	def valid_baseField_onCorrect(name,surname,lastname)

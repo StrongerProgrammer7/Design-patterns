@@ -3,15 +3,7 @@ load './student.rb'
 def get_git(student)
 	student.git
 end
-def get_any_contacts(student,phone:nil,mail:nil,telegram:nil)
-	if(student.phone != nil and mail == nil and telegram == nil)
-		student.phone
-	elsif(student.telegram != nil and mail == nil and phone == nil)
-		student.telegram
-	elsif student.mail != nil and phone == nil and telegram == nil
-		student.mail
-	end
-end
+
 
 
 def get_all_contacts(student)
@@ -35,36 +27,25 @@ def validate_contacts_git(student,phone:nil,mail:nil,telegram:nil)
 	return info
 end
 
-def set_contacts(student,phone:nil,mail:nil,telegram:nil)
-	if(phone!=nil) then
-		Student.check_phone(phone)? student.phone=phone : p
-	end
-	if(mail!=nil) then
-		Student.check_mail(mail)? student.mail = mail : p
-	end
-	if(telegram!=nil) then
-		Student.check_telegram(telegram)? student.telegram = telegram : p
-	end
-end
-
-s1 = Student.new("Nn","Ssd","Lfg",phone:"87743258961",git:"https://github.com/StPr/rep.git")
-s2 = Student.new("Nv","Ssd","Lfg",mail:"sw467@mail.ru")
-s3 = Student.new("Ns","Ssd","Lfg",telegram:"@sdsd")
-s4 = Student.new("Nd","Ssd","Lfg",phone:"+77743258961")
-s5 = Student.new("Nw","Ssd","Lfg",phone:"77743258961",telegram:"@cad",mail:"s5@mail.com")
-s1.print_current_info
-s2.print_current_info
-s3.print_current_info
-s4.print_current_info
-s5.print_current_info
+s1 = Student.new(surname:"Nn",name:"Ssd",lastname:"Lfg",phone:"87743258961",git:"https://github.com/StPr/rep.git")
+s2 = Student.new(surname:"Nv",name:"Ssd",lastname:"Lfg",mail:"sw467@mail.ru")
+s3 = Student.new(surname:"Ns",name:"Ssd",lastname:"Lfg",telegram:"@sdsd")
+s4 = Student.new(surname:"Nd",name:"Ssd",lastname:"Lfg",phone:"+77743258961")
+s5 = Student.new(surname:"Nw",name:"Ssd",lastname:"Lfg",phone:"77743258961",telegram:"@cad",mail:"s5@mail.com")
+p s1.to_s
+p s2.to_s
+p s3.to_s
+p s4.to_s
+p s5.to_s
 
 p Student.check_phone(s1.phone)
-s1.phone = "+77794563215"
-p Student.check_phone(s1.phone)
+#s1.phone = "+77794563215"
+#p Student.check_phone(s1.phone)
 
-set_contacts(s1,phone:"87743258961",telegram:"@cadet")
+s1.set_contacts(phone:"87743258961",telegram:"@cadet")
+p s1.get_all_contacts()
 
-p validate_contacts_git(s1)
-p validate_contacts_git(s2)
-p validate_contacts_git(s3)
-p get_all_contacts(s1)
+#p validate_contacts_git(s1)
+#p validate_contacts_git(s2)
+#p validate_contacts_git(s3)
+#p get_all_contacts(s1)
