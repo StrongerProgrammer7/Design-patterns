@@ -22,28 +22,10 @@ class Student
 		Student.new(surname:hash_data["surname"],name:hash_data["name"],lastname:hash_data["lastname"],
 			phone:hash_data["phone"],mail:hash_data["mail"],telegram:hash_data["telegram"],git:hash_data["git"])
 	end
+
 	def to_s()
 		 #{}"ID\tname\tlastname\tphone\n"
 		 "#{self.ID}  #{self.name}  #{self.surname}  #{self.phone}  "
-	end
-
-	define_singleton_method :check_phone do |phone|
-		/\+?[0-9]{11,13}$/.match(phone)
-	end
-
-	define_singleton_method :check_word do |word|
-		/^[A-Z][a-z]+$/.match(word)
-	end
-
-	define_singleton_method :check_mail do |mail|
-		/^[A-z0-9]+@[a-z0-9]+\.[a-z]+$/.match(mail)
-	end
-
-	define_singleton_method :check_telegram do |telegram|
-		/^@[A-z0-9]/.match(telegram)
-	end
-	define_singleton_method :check_git do |git|
-		/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/.match(git)
 	end
 
 	def set_contacts(phone:nil,mail:nil,telegram:nil)
@@ -66,6 +48,32 @@ class Student
 		contacts["mail"] = self.mail
 		return contacts
 	end
+
+	def getInfo()
+		getSurname_Initials + getGit + getAnyContact
+	end
+
+
+	define_singleton_method :check_phone do |phone|
+		/\+?[0-9]{11,13}$/.match(phone)
+	end
+
+	define_singleton_method :check_word do |word|
+		/^[A-Z][a-z]+$/.match(word)
+	end
+
+	define_singleton_method :check_mail do |mail|
+		/^[A-z0-9]+@[a-z0-9]+\.[a-z]+$/.match(mail)
+	end
+
+	define_singleton_method :check_telegram do |telegram|
+		/^@[A-z0-9]/.match(telegram)
+	end
+	define_singleton_method :check_git do |git|
+		/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/.match(git)
+	end
+
+	
 
 	private
 	@@countStudents = 0
@@ -135,5 +143,18 @@ class Student
 		end
 	end
 
+	def getSurname_Initials
+		"#{self.surname} #{self.name[0]}. #{self.lastname[0]}. "
+	end
+
+	def getAnyContact()
+		return " phone => #{self.phone} " if(self.phone!=nil)
+		return " mail => #{self.mail} " if(self.mail !=nil)
+		return " telegram => #{self.telegram} " if(self.telegram!=nil)
+	end
+
+	def getGit()
+		return "git => #{self.git} " if(self.git!=nil)
+	end
 
 end
