@@ -37,13 +37,13 @@ class Student
 
 	def Student.initialization(information)
 		raise "Not enough data or exists unnecessary data!(split [,])" if(information.count(",") < 2 || information.count(",") > 7)
-		hash_data = Student.string_to_hash(information.split(","))
+		hash_data = Student.string_to_hash(information.delete(' ').split(","))
 		Student.new(surname:hash_data["surname"],name:hash_data["name"],lastname:hash_data["lastname"],
 			phone:hash_data["phone"],mail:hash_data["mail"],telegram:hash_data["telegram"],git:hash_data["git"])
 	end
 
 	def to_s()
-		 "#{self.ID}  #{self.name}  #{self.surname}  #{self.phone} #{self.telegram} #{self.mail} #{self.git} "
+		 "#{self.surname} ,#{self.name} ,#{self.lastname}"
 	end
 
 	def set_contacts(phone:nil,mail:nil,telegram:nil)
@@ -60,15 +60,11 @@ class Student
 	end
 
 	def get_all_contacts()
-		contacts = {}
-		contacts["phone"] =self.phone
-		contacts["telegram"] = self.telegram
-		contacts["mail"] = self.mail
-		return contacts
+		"#{self.phone},#{self.telegram},#{self.mail}"
 	end
 
 	def getInfo()
-		"#{getSurname_Initials()} , #{getGit()} , #{getAnyContact()}"
+		"#{getSurname_Initials()} #{getGit()} #{getAnyContact()}"
 	end
 
 	private
@@ -136,19 +132,20 @@ class Student
 			raise "Not valid name or surname or lastname [A-Z][a-z]+"
 		end
 	end
-
+protected
 	def getSurname_Initials
 		"#{self.surname} #{self.name[0]}. #{self.lastname[0]}. "
 	end
 
 	def getAnyContact()
-		return " phone => #{self.phone} " if(self.phone!=nil)
-		return " mail => #{self.mail} " if(self.mail !=nil)
-		return " telegram => #{self.telegram} " if(self.telegram!=nil)
+		return ",phone => #{self.phone} " if(self.phone!=nil)
+		return ",mail => #{self.mail} " if(self.mail !=nil)
+		return ",telegram => #{self.telegram} " if(self.telegram!=nil)
+		return ",have't contact" if(self.phone==nil and self.mail==nil and self.telegram==nil)
 	end
 
 	def getGit()
-		return " git => #{self.git} " if(self.git!=nil)
+		 self.git!=nil ? ", git => #{self.git} " : "have't git"
 	end
 
 end
@@ -177,10 +174,18 @@ class Student_short < Student
 		students = Array.new()
 		File.open(addressFile,'r') do |file|
 			file.each_line do |line|
-				 students.push(Student.initialization(line.delete "\n"))
+				 students.push(Student.initialization(line.delete "\n")) if(line!="")
 			end
 		end
 		students
+	end
+
+	def write_to_txt(addressFile,nameFile,students)
+		file = File.new("#{addressFile}/#{nameFile}","w:UTF-8")
+		students.each do |i|
+			file.print("#{i.to_s()},#{i.get_all_contacts()},#{i.git}\n")
+		end
+		file.close
 	end
 private
 	attr_writer :ID, :initials, :git, :contact
