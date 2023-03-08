@@ -2,6 +2,25 @@ class Student
 	attr_accessor :surname, :name, :lastname
 	attr_reader :ID, :phone, :telegram, :mail, :git
 
+	define_singleton_method :check_phone do |phone|
+		/\+?[0-9]{11,13}$/.match(phone)
+	end
+
+	define_singleton_method :check_word do |word|
+		/^[A-Z][a-z]+$/.match(word)
+	end
+
+	define_singleton_method :check_mail do |mail|
+		/^[A-z0-9]+@[a-z0-9]+\.[a-z]+$/.match(mail)
+	end
+
+	define_singleton_method :check_telegram do |telegram|
+		/^@[A-z0-9]/.match(telegram)
+	end
+	define_singleton_method :check_git do |git|
+		/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/.match(git)
+	end
+
 	def initialize(surname:,name:,lastname:, phone:nil, telegram:nil,mail:nil,git:nil)
 		valid_baseField_onCorrect(name:name,surname:surname,lastname:lastname)
 		valid_extraField_onCorrect(phone:phone,telegram:telegram,mail:mail,git:git)
@@ -24,8 +43,7 @@ class Student
 	end
 
 	def to_s()
-		 #{}"ID\tname\tlastname\tphone\n"
-		 "#{self.ID}  #{self.name}  #{self.surname}  #{self.phone}  "
+		 "#{self.ID}  #{self.name}  #{self.surname}  #{self.phone} #{self.telegram} #{self.mail} #{self.git} "
 	end
 
 	def set_contacts(phone:nil,mail:nil,telegram:nil)
@@ -53,28 +71,6 @@ class Student
 		"#{getSurname_Initials()} , #{getGit()} , #{getAnyContact()}"
 	end
 
-
-	define_singleton_method :check_phone do |phone|
-		/\+?[0-9]{11,13}$/.match(phone)
-	end
-
-	define_singleton_method :check_word do |word|
-		/^[A-Z][a-z]+$/.match(word)
-	end
-
-	define_singleton_method :check_mail do |mail|
-		/^[A-z0-9]+@[a-z0-9]+\.[a-z]+$/.match(mail)
-	end
-
-	define_singleton_method :check_telegram do |telegram|
-		/^@[A-z0-9]/.match(telegram)
-	end
-	define_singleton_method :check_git do |git|
-		/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/.match(git)
-	end
-
-	
-
 	private
 	@@countStudents = 0
 	attr_writer :ID, :mail, :phone, :telegram, :git
@@ -89,9 +85,8 @@ class Student
 
 	def self.string_to_hash(data)
 		hash_data = Hash.new
-		#Student.valid_baseField_onCorrect(name:data[0],surname:data[1],lastname:data[2])
-		hash_data["surname"] = data[1]
-		hash_data["name"]=data[0]
+		hash_data["surname"] = data[0]
+		hash_data["name"]=data[1]
 		hash_data["lastname"] = data[2]
 		data.drop(3).each do |i|
 			next if(i==nil)
@@ -101,7 +96,6 @@ class Student
 			hash_data["git"] = i if(i.include? "https:\/\/github") 
 			hash_data["phone"] = i if(("0".."9").include?(i[0])==true and ("0".."9").include?(i[i.length-1])==true)
 		end
-		#Student.valid_extraField_onCorrect(phone:hash_data["phone"],mail:hash_data["mail"],telegram:hash_data["telegram"],git:hash_data["git"])
 		return hash_data
 	end
 
@@ -159,8 +153,9 @@ class Student
 
 end
 
-class Student_short
+class Student_short < Student
 	attr_reader :ID, :initials, :git, :contact
+
 	def initialize(id:,information:)
 		self.ID = id
 		data = information.split(",")
@@ -175,6 +170,17 @@ class Student_short
 	def self.initialization(student)
 		raise "require class's object Student" if(student.class!=Student)
 		Student_short.new(id:student.ID,information:student.getInfo())
+	end
+
+	def read_from_txt(addressFile)
+		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
+		students = Array.new()
+		File.open(addressFile,'r') do |file|
+			file.each_line do |line|
+				 students.push(Student.initialization(line.delete "\n"))
+			end
+		end
+		students
 	end
 private
 	attr_writer :ID, :initials, :git, :contact
