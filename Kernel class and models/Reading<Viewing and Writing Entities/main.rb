@@ -1,7 +1,7 @@
 load './student.rb'
 
 
-s1 = Student.initialization("Nn,Ssd,Lfg,87743258961,https://github.com/StPr/rep.git")
+s1 = Student.initialization("Nn,Ssd,Lfg,87743258s961,https://github.com/StPr/rep.git")
 s2 = Student.initialization("Nv,Ssd,Lfg,swa@mail.ru")
 #s3 = Student.new(surname:"Ns",name:"Ssd",lastname:"Lfg",telegram:"@sdsd")
 #s4 = Student.new(surname:"Nd",name:"Ssd",lastname:"Lfg",phone:"+77743258961")

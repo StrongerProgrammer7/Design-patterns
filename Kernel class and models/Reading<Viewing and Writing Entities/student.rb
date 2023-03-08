@@ -3,8 +3,8 @@ class Student
 	attr_reader :ID, :phone, :telegram, :mail, :git
 
 	def initialize(surname:,name:,lastname:, phone:nil, telegram:nil,mail:nil,git:nil)
-		#Student.valid_baseField_onCorrect(name:name,surname:surname,lastname:lastname)
-		#Student.valid_extraField_onCorrect(phone:phone,telegram:telegram,mail:mail,git:git)
+		Student.valid_baseField_onCorrect(name:name,surname:surname,lastname:lastname)
+		Student.valid_extraField_onCorrect(phone:phone,telegram:telegram,mail:mail,git:git)
 		self.surname = surname 
 		self.name = name 
 		self.lastname = lastname
@@ -18,8 +18,7 @@ class Student
 
 	def Student.initialization(information)
 		raise "Not enough data or exists unnecessary data!(split [,])" if(information.count(",") < 2 || information.count(",") > 7)
-		hash_data = Student.valid_string_onCorrect(information.split(","))
-
+		hash_data = Student.string_to_hash(information.split(","))
 		Student.new(surname:hash_data["surname"],name:hash_data["name"],lastname:hash_data["lastname"],
 			phone:hash_data["phone"],mail:hash_data["mail"],telegram:hash_data["telegram"],git:hash_data["git"])
 	end
@@ -29,15 +28,15 @@ class Student
 	end
 
 	define_singleton_method :check_phone do |phone|
-		/\+?[0-9]{11,13}/.match(phone)
+		/\+?[0-9]{11,13}$/.match(phone)
 	end
 
 	define_singleton_method :check_word do |word|
-		/^[A-Z][a-z]+/.match(word)
+		/^[A-Z][a-z]+$/.match(word)
 	end
 
 	define_singleton_method :check_mail do |mail|
-		/^[A-z0-9]+@[a-z0-9]+\.[a-z]+/.match(mail)
+		/^[A-z0-9]+@[a-z0-9]+\.[a-z]+$/.match(mail)
 	end
 
 	define_singleton_method :check_telegram do |telegram|
@@ -80,9 +79,9 @@ class Student
 
 	end
 
-	def self.valid_string_onCorrect(data)
+	def self.string_to_hash(data)
 		hash_data = Hash.new
-		Student.valid_baseField_onCorrect(name:data[0],surname:data[1],lastname:data[2])
+		#Student.valid_baseField_onCorrect(name:data[0],surname:data[1],lastname:data[2])
 		hash_data["surname"] = data[1]
 		hash_data["name"]=data[0]
 		hash_data["lastname"] = data[2]
@@ -92,10 +91,9 @@ class Student
 				(i[0]=='@') ? hash_data["telegram"] = i : hash_data["mail"] = i
 			end
 			hash_data["git"] = i if(i.include? "https:\/\/github") 
-			hash_data["phone"] = i if(isNumeric(i)==true )
+			hash_data["phone"] = i if(("0".."9").include?(i[0])==true and ("0".."9").include?(i[i.length-1])==true)
 		end
-		Student.valid_extraField_onCorrect(phone:hash_data["phone"],mail:hash_data["mail"],telegram:hash_data["telegram"])
-		Student.valid_git(git:hash_data["git"])
+		#Student.valid_extraField_onCorrect(phone:hash_data["phone"],mail:hash_data["mail"],telegram:hash_data["telegram"],git:hash_data["git"])
 		return hash_data
 	end
 
@@ -132,7 +130,7 @@ class Student
 	end
 
 	def self.valid_baseField_onCorrect(name:,surname:,lastname:)
-		if( Student.check_word(surname) ==nil && Student.check_word(name)==nil && Student.check_word(lastname) == nil)
+		if( Student.check_word(surname) ==nil || Student.check_word(name)==nil || Student.check_word(lastname) == nil)
 			raise "Not valid name or surname or lastname [A-Z][a-z]+"
 		end
 	end
