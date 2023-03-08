@@ -9,14 +9,11 @@ s2 = Student.initialization("Nv,Ssd,Lfg,swa@mail.ru")
 print s1.to_s() + "\n"
 print s2.to_s() +"\n"
 print s1.getInfo() + "\n"
-#print s3.to_s()
-#print s4.to_s()
-#print s5.to_s()
-#p s1.name
-#p Student.check_phone(s1.phone)
-
 
 #s1.set_contacts(mail:"swa@mail.ru",telegram:"@cadet")
 #p s1.get_all_contacts()
 
-
+ss2 = Student_short.initialization(s2)
+ss1 = Student_short.new(id:s1.ID,information:s1.getInfo())
+print ss1.contact + "\n"
+print ss2.initials + "\n"
