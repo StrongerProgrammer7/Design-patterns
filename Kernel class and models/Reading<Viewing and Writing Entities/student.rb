@@ -3,8 +3,8 @@ class Student
 	attr_reader :ID, :phone, :telegram, :mail, :git
 
 	def initialize(surname:,name:,lastname:, phone:nil, telegram:nil,mail:nil,git:nil)
-		Student.valid_baseField_onCorrect(name:name,surname:surname,lastname:lastname)
-		Student.valid_extraField_onCorrect(phone:phone,telegram:telegram,mail:mail,git:git)
+		valid_baseField_onCorrect(name:name,surname:surname,lastname:lastname)
+		valid_extraField_onCorrect(phone:phone,telegram:telegram,mail:mail,git:git)
 		self.surname = surname 
 		self.name = name 
 		self.lastname = lastname
@@ -97,7 +97,7 @@ class Student
 		return hash_data
 	end
 
-	def self.valid_contact(phone:nil,mail:nil,telegram:nil)
+	def valid_contact(phone:nil,mail:nil,telegram:nil)
 		if(phone!=nil)
 			if Student.check_phone(phone) ==nil then
 			 	raise "Not valid phone"
@@ -115,7 +115,7 @@ class Student
 		end
 	end
 
-	def self.valid_git(git:nil)
+	def valid_git(git:nil)
 		if(git!=nil)
 			if(Student.check_git(git)==nil) then
 				raise "Not valid git"
@@ -123,16 +123,17 @@ class Student
 		end
 	end
 
-	def self.valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
-		Student.valid_contact(phone:phone,mail:mail,telegram:telegram)
-		Student.valid_git(git:git)	
+	def valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
+		valid_contact(phone:phone,mail:mail,telegram:telegram)
+		valid_git(git:git)	
 	
 	end
 
-	def self.valid_baseField_onCorrect(name:,surname:,lastname:)
+	def valid_baseField_onCorrect(name:,surname:,lastname:)
 		if( Student.check_word(surname) ==nil || Student.check_word(name)==nil || Student.check_word(lastname) == nil)
 			raise "Not valid name or surname or lastname [A-Z][a-z]+"
 		end
 	end
+
 
 end
