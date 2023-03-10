@@ -11,26 +11,31 @@ print s1.to_s() + "\n"
 print s2.to_s() +"\n"
 print s1.getInfo() + "\n\n"
 
-#s1.set_contacts(mail:"swa@mail.ru",telegram:"@cadet")
-#p s1.get_all_contacts()
+s2.set_contacts(mail:"sw7a@mail.ru",telegram:"@cadet")
+p s2.getInfo()
+
 
 print "Short \n"
-ss2 = Student_short.initialization(s2)
-ss1 = Student_short.new(id:s1.ID,information:s1.getInfo())
+ss1 = Student_short.initialization(s1)
+ss2 = Student_short.initialization(s2)#Student_short.new(id:s1.ID,information:s1.getInfo())
 
 print ss1.contact + "\n"
 print ss2.initials + "\n"
 
+print "s2=",s2.id ," ss2=",ss2.id ,"\n"
+=begin
 print "\n\n read_from_txt \n"
-students = ss1.read_from_txt(File.dirname(__FILE__) + "/read_from_txt")
+students = s1.read_from_txt(File.dirname(__FILE__) + "/read_from_txt")
 
 p students[0].getInfo() + "\n"
 p students[1].getInfo() + "\n"
 
+
 print "\n\n write_to_txt\n"
-ss1.write_to_txt(File.dirname(__FILE__),"test",students)
+s1.write_to_txt(File.dirname(__FILE__),"test",students)
 print "\nread_from_write_to_txt\n"
-students1 = ss1.read_from_txt(File.dirname(__FILE__) + "/test")
+students1 = s1.read_from_txt(File.dirname(__FILE__) + "/test")
 
 p students1[0].getInfo() +"\n"
 p students1[1].getInfo() + "\n"
+=end
