@@ -31,7 +31,8 @@
           &emsp; &emsp; &emsp; &emsp;as an argument. Next, you need to read the array and execute the method.
 </pre></p>
 <p> 4 Task:<br/><pre>
-          1.&emsp;Given an integer array. It is necessary to find the number of emails located after the last max
+          1.&emsp;Given an integer array. It is necessary to find the number of emails located after 
+            &emsp;the last max
           2.&emsp;Given an integer array. It is necessary to place the elements, located 
            &emsp; &emsp;before the min, at the end of the array
           3.&emsp;An integer array and an interval (a,b) are given. Need to find the max of the elements 
@@ -63,7 +64,7 @@
           7.&emsp;Create validations for the correct form of the string in the remaining fields.
           8.&emsp;Write a validate method that performs two validations of the presence of the
             &emsp;&emsp;git and the presence of any contact for communication, if possible separate the methods.
-          9.&emsp; Write a set_contacts method that sets the value of a field or fields for the entered contacts.
+          9.Write a set_contacts method that sets the value of a field or fields for the entered contacts.
           10.&emsp;Start building a class diagram by describing this class.</pre>
 </p>
 <p><h4>2Ex Reading, view, record entity:</h4> <br/><pre>
@@ -90,7 +91,8 @@
           7. Write a read_from_txt method that receives file address arguments, throws an exception with
              &emsp;notification if the address is invalid, and returns an array of Student type objects.
           8. Test the method by outputting a brief output of information about each object.
-          9. Write a write_to_txt method that receives as address, name of a file, and a list of objects of type Student.
+          9. Write a write_to_txt method that receives as address, name of a file, and a list of objects 
+             &emsp;of type Student.
           10. Test the compatibility of these methods.
 </pre></p>
 </div>
