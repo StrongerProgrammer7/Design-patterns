@@ -1,84 +1,29 @@
-
-class Person
-	attr_accessor :surname, :name, :lastname 
-	attr_reader :id, :git 
-
-	define_singleton_method :check_phone do |phone|
-		/\+?[0-9]{11,13}$/.match(phone)
-	end
-
-	define_singleton_method :check_word do |word|
-		/^[A-Z][a-z]+$/.match(word)
-	end
-
-	define_singleton_method :check_mail do |mail|
-		/^[A-z0-9]+@[a-z0-9]+\.[a-z]+$/.match(mail)
-	end
-
-	define_singleton_method :check_telegram do |telegram|
-		/^@[A-z0-9]/.match(telegram)
-	end
-	define_singleton_method :check_git do |git|
-		/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/.match(git)
-	end
-
-	def to_s()
-		"#{self.surname} ,#{self.name} ,#{self.lastname}"
-	end
-		
-	private
-		attr_writer :id, :git
-		def initialize(surname:,name:,lastname:)
-			self.surname = surname 
-			self.name = name 
-			self.lastname = lastname
-		end
-
-		def getSurname_Initials
-			"#{self.surname} #{self.name[0]}. #{self.lastname[0]}. "
-		end
-
-		def valid_baseField_onCorrect(name:,surname:,lastname:)
-			if( Person.check_word(surname) ==nil || Person.check_word(name)==nil || Person.check_word(lastname) == nil)
-				raise "Not valid name or surname or lastname [A-Z][a-z]+"
-			end
-		end
-end
+load './person.rb'
 
 class Student < Person
 	attr_reader :phone, :telegram, :mail
 
 	def initialize(surname:,name:,lastname:, phone:nil, telegram:nil,mail:nil,git:nil)
-		valid_baseField_onCorrect(name:name,surname:surname,lastname:lastname)
-		valid_extraField_onCorrect(phone:phone,telegram:telegram,mail:mail,git:git)
-		super(surname:surname,name:name,lastname:lastname)
-		self.phone = phone 
-		self.telegram = telegram
-		self.mail = mail 
-		self.git = git
+		set_information(surname:surname,name:name,lastname:lastname,phone:phone,mail:mail,telegram:telegram,git:git)
 		self.id = @@countStudent
 		@@countStudent = @@countStudent + 1
 	end
 
 	def Student.initialization(information)
 		raise "Not enough data or exists unnecessary data!(split [,])" if(information.count(",") < 2 || information.count(",") > 7)
-		hash_data = Student.string_to_hash(information.delete(' ').split(","))
+		hash_data = Student.stringInformation_to_hash(information.delete(' ').split(","))
 		Student.new(surname:hash_data["surname"],name:hash_data["name"],lastname:hash_data["lastname"],
 			phone:hash_data["phone"],mail:hash_data["mail"],telegram:hash_data["telegram"],git:hash_data["git"])
 	end
 
 
-	def set_contacts(phone:nil,mail:nil,telegram:nil)
-		valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram)		
-		if(phone!=nil) then
-			self.phone=phone 
-		end
-		if(mail!=nil) then
-			self.mail = mail
-		end
-		if(telegram!=nil) then
-			self.telegram = telegram
-		end
+	def set_information(surname:nil,name:nil,lastname:nil, phone:nil,mail:nil,telegram:nil,git:nil)
+		set_baseInfo(surname:surname,name:name,lastname:lastname)
+		set_extraInfo(phone:phone,mail:mail,telegram:telegram,git:git)
+	end
+
+	def isExistsGit_AnyContact()
+		self.git!=nil && getAnyContact()!=nil
 	end
 
 	def getInfo()
@@ -107,6 +52,7 @@ class Student < Person
 	private
 		attr_writer :phone, :telegram, :mail
 		@@countStudent = 0
+
 		def self.isNumeric(num)
 			num.split(//).each do |i|
 				return false if not(("0".."9").include?(i))
@@ -114,7 +60,7 @@ class Student < Person
 			return true
 		end
 
-		def self.string_to_hash(data)
+		def self.stringInformation_to_hash(data)
 			hash_data = Hash.new
 			hash_data["surname"] = data[0]
 			hash_data["name"]=data[1]
@@ -130,6 +76,15 @@ class Student < Person
 			return hash_data
 		end
 
+		def set_extraInfo(phone:nil,telegram:nil,mail:nil,git:nil)
+			valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram,git:git)		
+			self.phone=phone if(phone!=nil)
+			self.mail = mail if(mail!=nil) 
+			self.telegram = telegram if(telegram!=nil)
+			self.git = git if(git!=nil)
+		end
+
+	
 		def valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
 			valid_contact(phone:phone,mail:mail,telegram:telegram)
 			valid_git(git:git)	
@@ -161,44 +116,17 @@ class Student < Person
 				end
 			end
 		end
-	
+
 		protected def get_all_contacts()
 		"#{self.phone},#{self.telegram},#{self.mail}"
 	end
-
-		protected def getGit()
-			self.git!=nil ? ", git => #{self.git} " : "have't git"
-		end
 	
 		protected def getAnyContact()
 			return ",phone => #{self.phone} " if(self.phone!=nil)
 			return ",mail => #{self.mail} " if(self.mail !=nil)
 			return ",telegram => #{self.telegram} " if(self.telegram!=nil)
-			return ",have't contact" if(self.phone==nil and self.mail==nil and self.telegram==nil)
+			return ",have't contact" 
 		end
 
 end
 
-class Student_short < Person
-	attr_reader :initials, :contact
-
-	def self.initialization(student)
-		raise "require class's object Student" if(student.class!=Student)
-		Student_short.new(id:student.id,information:student.getInfo())
-	end
-
-private
-	attr_writer :initials, :contact
-
-	def initialize(id:,information:)
-		self.id = id
-		data = information.split(",")
-		self.initials = data[0]
-		if data[1].include?("https:\/\/github") then 
-			self.git = data[1]
-			self.contact = data[2]
-		else
-			self.contact=data[1]
-		end
-	end
-end

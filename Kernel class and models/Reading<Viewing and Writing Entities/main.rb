@@ -1,4 +1,5 @@
 load './student.rb'
+load './student_short.rb'
 
 print "initialization\n"
 s1 = Student.initialization("Ssd,Nn,Lfg,87743258961,,,https://github.com/StPr/rep.git")
@@ -11,7 +12,7 @@ print s1.to_s() + "\n"
 print s2.to_s() +"\n"
 print s1.getInfo() + "\n\n"
 
-s2.set_contacts(mail:"sw7a@mail.ru",telegram:"@cadet")
+s2.set_information(mail:"sw7a@mail.ru",telegram:"@cadet")
 p s2.getInfo()
 
 
