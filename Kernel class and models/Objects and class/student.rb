@@ -1,23 +1,15 @@
 class Student
-	attr_accessor :surname, :name, :lastname
-	attr_reader :ID, :phone, :telegram, :mail, :git
+	attr_reader :ID,:surname, :name, :lastname, :phone, :telegram, :mail, :git
+
 	def initialize(surname:,name:,lastname:, phone:nil, telegram:nil,mail:nil,git:nil)
-		valid_baseField_onCorrect(name,surname,lastname)
-		valid_extraField_onCorrect(phone:phone,telegram:telegram,mail:mail,git:git)
-		self.surname = surname 
-		self.name = name 
-		self.lastname = lastname
-		self.phone = phone 
-		self.telegram = telegram
-		self.mail = mail 
-		self.git = git
+		set_information(surname:surname,name:name,lastname:lastname,phone:phone,mail:mail,
+			telegram:telegram,git:git)
 		self.ID = @@countStudents
 		@@countStudents = @@countStudents + 1
 	end
 
 	def to_s()
-		 #{}"ID\tname\tlastname\tphone\n"
-		 "#{self.ID}  #{self.name}  #{self.surname}  #{self.phone}  "
+		 "#{self.ID}  #{self.name}  #{self.surname} "
 	end
 
 	define_singleton_method :check_phone do |phone|
@@ -39,17 +31,13 @@ class Student
 		/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/.match(git)
 	end
 
-	def set_contacts(phone:nil,mail:nil,telegram:nil)
-		valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram)		
-		if(phone!=nil) then
-			self.phone=phone 
-		end
-		if(mail!=nil) then
-			self.mail = mail
-		end
-		if(telegram!=nil) then
-			self.telegram = telegram
-		end
+	def set_information(surname:nil,name:nil,lastname:nil, phone:nil,mail:nil,telegram:nil,git:nil)
+		set_baseInfo(surname:surname,name:name,lastname:lastname)
+		set_extraInfo(phone:phone,mail:mail,telegram:telegram,git:git)
+	end
+
+	def isExistsGit_AnyContact()
+		self.git!=nil && (self.phone!=nil || self.telegram != nil || self.mail!=nil)
 	end
 
 	def get_all_contacts()
@@ -62,7 +50,42 @@ class Student
 
 	private
 	@@countStudents = 0
-	attr_writer :ID, :mail, :phone, :telegram, :git
+	attr_writer :ID, :surname, :name, :lastname,:mail, :phone, :telegram, :git
+
+	def set_baseInfo(surname:nil,name:nil,lastname:nil)
+		valid_baseField_onCorrect(name,surname,lastname)
+		self.surname = surname if(surname!=nil)
+		self.name = name if(name != nil)
+		self.lastname = lastname if(lastname !=nil)
+	end
+
+	def set_extraInfo(phone:nil,telegram:nil,mail:nil,git:nil)
+		valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram,git:git)		
+		self.phone=phone if(phone!=nil)
+		self.mail = mail if(mail!=nil) 
+		self.telegram = telegram if(telegram!=nil)
+		self.git = git if(git!=nil)
+	end
+
+	def valid_baseField_onCorrect(name,surname,lastname)
+		if(surname!=nil) then
+			raise "Not valid surname [A-Z][a-z]+"  if(Student.check_word(surname) == nil)
+			self.surname=surname 
+		end
+		if(name!=nil) then
+			raise "Not valid name [A-Z][a-z]+"  if(Student.check_word(name) == nil)
+			self.name=name 
+		end
+		if(lastname!=nil) then
+			raise "Not valid lastname [A-Z][a-z]+"  if(Student.check_word(lastname) == nil)
+			self.lastname=lastname 
+		end
+	end
+
+	def valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
+		valid_contact(phone:phone,mail:mail,telegram:telegram)
+		valid_git(git:git)	
+	end
 
 	def valid_contact(phone:nil,mail:nil,telegram:nil)
 		if(phone!=nil)
@@ -89,16 +112,5 @@ class Student
 			end
 		end
 	end
-
-	def valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
-		valid_contact(phone:phone,mail:mail,telegram:telegram)
-		valid_git(git:git)	
 	
-	end
-
-	def valid_baseField_onCorrect(name,surname,lastname)
-		if( Student.check_word(surname) ==nil && Student.check_word(name)==nil && Student.check_word(lastname) == nil)
-			raise "Not valid name or surname or lastname [A-Z][a-z]+"
-		end
-	end
 end
