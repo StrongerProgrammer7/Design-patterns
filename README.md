@@ -1,10 +1,10 @@
 <sub>**This work is being done as part of the Course Deisgn patterns on <strong>Ruby</strong> **</sub> 
 # Design-patterns
 <p>
-<a href="https://github.com/StrongerProgrammer7/Design-patterns/blob/main/README.md#-introduction-with-ruby---1lab">Introduction with Ruby</a></br>
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#-introduction-with-ruby---1lab">Introduction with Ruby</a></br>
 <h5>Kernel classes and models</h5>
-&emsp;&emsp;<a href="https://github.com/StrongerProgrammer7/Design-patterns/blob/main/README.md#1ex-object-and-clesses">Object and clesses<a/>
-&emsp;&emsp;<a href="https://github.com/StrongerProgrammer7/Design-patterns/blob/main/README.md#2ex-reading-view-record-entity">Reading, view, record entity<a/>
+&emsp;&emsp;<a href="https://github.com/StrongerProgrammer7/Design-patterns#1ex-object-and-clesses">Object and clesses<a/>
+&emsp;&emsp;<a href="https://github.com/StrongerProgrammer7/Design-patterns#2ex-reading-view-record-entity">Reading, view, record entity<a/>
 </p>
 <div>
 <h3> Introduction with Ruby - 1lab</h3>
