@@ -4,9 +4,6 @@ load './student_short.rb'
 print "initialization\n"
 s1 = Student.initialization("Ssd,Nn,Lfg,87743258961,,,https://github.com/StPr/rep.git")
 s2 = Student.initialization("Ssv,Nv,Lfg,swa@mail.ru")
-#s3 = Student.new(surname:"Ns",name:"Ssd",lastname:"Lfg",telegram:"@sdsd")
-#s4 = Student.new(surname:"Nd",name:"Ssd",lastname:"Lfg",phone:"+77743258961")
-#s5 = Student.new(surname:"Nw",name:"Ssd",lastname:"Lfg",phone:"77743258961",telegram:"@cad",mail:"s5@mail.com")
 
 print s1.to_s() + "\n"
 print s2.to_s() +"\n"

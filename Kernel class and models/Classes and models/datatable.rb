@@ -2,8 +2,9 @@
 
 class Data_table
 	def initialize(entity)
-		self.set_attr_entities.push([entity.id,entity.surname,entity.name,entity.lastname,entity.phone
+		self.set_attr_entities.push([@@countRecords,entity.surname,entity.name,entity.lastname,entity.phone
 			,entity.mail,entity.telegram,entity.git])
+		@@countRecords = @@countRecords + 1
 	end
 
 	def get_element(row,column)
@@ -18,4 +19,5 @@ class Data_table
 	end
 	private
 		attr_accessor :set_attr_entities
+		@@countRecords = 0
 end

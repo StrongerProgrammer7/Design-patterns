@@ -1,10 +1,9 @@
 load './person.rb'
 
 class Student < Person
-	attr_reader :phone, :telegram, :mail
-
 	def initialize(surname:,name:,lastname:, phone:nil, telegram:nil,mail:nil,git:nil)
-		set_information(surname:surname,name:name,lastname:lastname,phone:phone,mail:mail,telegram:telegram,git:git)
+		super(surname:surname,name:name,lastname:lastname)
+		set_information(phone:phone,mail:mail,telegram:telegram,git:git)
 		self.id = @@countStudent
 		@@countStudent = @@countStudent + 1
 	end
@@ -50,15 +49,7 @@ class Student < Person
 	end
 
 	private
-		attr_writer :phone, :telegram, :mail
 		@@countStudent = 0
-
-		def self.isNumeric(num)
-			num.split(//).each do |i|
-				return false if not(("0".."9").include?(i))
-			end
-			return true
-		end
 
 		def self.stringInformation_to_hash(data)
 			hash_data = Hash.new
@@ -74,47 +65,6 @@ class Student < Person
 				hash_data["phone"] = i if(("0".."9").include?(i[0])==true and ("0".."9").include?(i[i.length-1])==true)
 			end
 			return hash_data
-		end
-
-		def set_extraInfo(phone:nil,telegram:nil,mail:nil,git:nil)
-			valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram,git:git)		
-			self.phone=phone if(phone!=nil)
-			self.mail = mail if(mail!=nil) 
-			self.telegram = telegram if(telegram!=nil)
-			self.git = git if(git!=nil)
-		end
-
-	
-		def valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
-			valid_contact(phone:phone,mail:mail,telegram:telegram)
-			valid_git(git:git)	
-		
-		end
-	
-		def valid_contact(phone:nil,mail:nil,telegram:nil)
-			if(phone!=nil)
-				if Person.check_phone(phone) ==nil then
-				 	raise "Not valid phone"
-				end
-			end
-			if(mail!=nil)
-				if(Person.check_mail(mail)==nil) then
-					raise "Not valid mail"
-				end
-			end
-			if(telegram!=nil)
-				if(Person.check_telegram(telegram)==nil) then
-					raise "Not valid telegram"
-				end
-			end
-		end
-	
-		def valid_git(git:nil)
-			if(git!=nil)
-				if(Person.check_git(git)==nil) then
-					raise "Not valid git"
-				end
-			end
 		end
 
 		protected def get_all_contacts()
