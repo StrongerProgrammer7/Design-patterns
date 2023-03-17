@@ -1,12 +1,12 @@
 class Data_list
-	attr_reader :set_object
+	attr_reader :array_objects
 	
 	def initialize()
-		self.set_object = Array.new() { }
+		self.array_objects = Array.new() { }
 	end
 
 	def select(number)
-		self.set_object[number]
+		self.array_objects[number]
 	end
 
 	def get_selected(arr_seleected_elements)
@@ -19,7 +19,7 @@ class Data_list
 	end
 
 private
-	attr_writer :set_object		
+	attr_writer :array_objects		
 
 	def get_names()
 	end
