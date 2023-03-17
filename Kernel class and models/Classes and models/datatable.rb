@@ -1,14 +1,24 @@
 
 
 class Data_table
-	def initialize(entity)
-		self.set_attr_entities.push([@@countRecords,entity.surname,entity.name,entity.lastname,entity.phone
-			,entity.mail,entity.telegram,entity.git])
-		@@countRecords = @@countRecords + 1
+	def initialize(entities)
+		array_temp = []
+		entities.each do |entity| 
+				array_temp.push(@@countRecords)
+				@@countRecords = @@countRecords + 1
+				array_temp.push(entity.surname,entity.name,entity.lastname,entity.phone,entity.mail,entity.telegram,entity.git)
+				self.set_attr_entities.push(array_temp)
+				array_temp.clear
+			end
+		end
+		# self.set_attr_entities.push(
+		#	[@@countRecords,entity.surname,entity.name,entity.lastname,entity.phone
+		#	,entity.mail,entity.telegram,entity.git])
+		#@@countRecords = @@countRecords + 1
 	end
 
 	def get_element(row,column)
-		self.set_attr_entities[rows][column]
+		self.set_attr_entities[row][column]
 	end
 	def get_countColumn
 		self.set_attr_entities[1].count

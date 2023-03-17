@@ -19,17 +19,20 @@ class Data_list
 		return selectedElem
 	end
 
-	def fillData()
-		names_attributies = get_names()
-		data_entity = get_data()
+	def getDataFromTable(dataGrid,entity)
+		names_attributies = get_names(dataGrid)
+		data_entity = get_data(entity)
 	end
+
 
 private
 	attr_writer :array_objects		
-
-	def get_names()
+	def get_names(dataGrid)
+		raise NotImplementedError, "#{self.class} has not implemented mathod '#{__method__}'"
 	end
 
-	def get_data()
+	def get_data(entity)
+		raise NotImplementedError, "#{self.class} has not implemented mathod '#{__method__}'"
 	end
+	
 end
