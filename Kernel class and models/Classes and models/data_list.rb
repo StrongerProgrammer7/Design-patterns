@@ -9,8 +9,14 @@ class Data_list
 		self.array_objects[number]
 	end
 
-	def get_selected(arr_seleected_elements)
-
+	def get_selected(arr_selected_elements)
+		selectedElem = []
+		arr_selected_elements.each do |elem|
+			index = elem[0]
+			object = select(index)
+			selectedElem.push(object.id)
+		end
+		return selectedElem
 	end
 
 	def fillData()
