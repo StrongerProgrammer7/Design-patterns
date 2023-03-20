@@ -19,8 +19,7 @@ class Data_list
 
 	def getDataFromTable()
 		names_attribue = get_names()
-		matrix = get_data()
-		matrix.unshift(names_attribue)	
+		matrix = get_data().unshift(names_attribue)
 		res = Data_table.new(matrix)
 	end
 

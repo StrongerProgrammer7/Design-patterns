@@ -6,6 +6,7 @@ class Data_table
 		entities.each do |entity| 
 			self.set_attr_entities.push(entity)
 		end
+		print self.set_attr_entities,"\n"
 	end
 
 	def get_element(row,column)
