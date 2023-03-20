@@ -1,38 +1,39 @@
+load ('./datatable.rb')
 class Data_list
-	attr_reader :array_objects
-	
-	def initialize()
-		self.array_objects = Array.new() { }
+	attr_writer :list_entities
+
+	def initialize(entities)
+		self.list_entities = entities
+		@selected = []
 	end
 
 	def select(number)
-		self.array_objects[number]
+		@selected << number
 	end
 
-	def get_selected(arr_selected_elements)
-		selectedElem = []
-		arr_selected_elements.each do |elem|
-			index = elem[0]
-			object = select(index)
-			selectedElem.push(object.id)
-		end
-		return selectedElem
+	def get_selected()
+		res = []
+		@selected.each {|elem| res << @list_entities[elem].id}
+		res
 	end
 
-	def getDataFromTable(dataGrid,entity)
-		names_attributies = get_names(dataGrid)
-		data_entity = get_data(entity)
+	def getDataFromTable()
+		names_attribue = get_names()
+		matrix = get_data()
+		matrix.unshift(names_attribue)	
+		res = Data_table.new(matrix)
 	end
-
 
 private
-	attr_writer :array_objects		
-	def get_names(dataGrid)
-		raise NotImplementedError, "#{self.class} has not implemented mathod '#{__method__}'"
+	attr_reader :list_entities
+	@@countRecords = 0
+
+	def get_names()
+		raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
 	end
 
-	def get_data(entity)
-		raise NotImplementedError, "#{self.class} has not implemented mathod '#{__method__}'"
+	def get_data()
+		raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
 	end
 	
 end

@@ -49,7 +49,7 @@ class Student < Person
 	end
 
 	private
-		@@countStudent = 0
+		@@countStudent = 8536
 
 		def self.stringInformation_to_hash(data)
 			hash_data = Hash.new
@@ -68,8 +68,8 @@ class Student < Person
 		end
 
 		protected def get_all_contacts()
-		"#{self.phone},#{self.telegram},#{self.mail}"
-	end
+			"#{self.phone},#{self.telegram},#{self.mail}"
+		end
 	
 		protected def getAnyContact()
 			return ",phone => #{self.phone} " if(self.phone!=nil)
