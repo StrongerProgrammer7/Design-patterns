@@ -49,7 +49,9 @@ class Students_list_txt
 	end
 
 	def push_student(student)
-
+		id = list_students,max_by { |elem| elem.id }.id
+		student.id = id
+		list_students.push(student)
 	end
 
 	def replace_element_by_id(id,element)
