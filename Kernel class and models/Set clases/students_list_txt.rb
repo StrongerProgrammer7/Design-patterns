@@ -60,6 +60,10 @@ class Students_list_txt
 		list_students.delete_if { |elem| elem.id == id }
 	end
 
+	def get_student_short_count()
+		list_students.length
+	end
+
 	def read_from_txt(addressFile)
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
 		students = Array.new()
