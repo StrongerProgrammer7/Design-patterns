@@ -36,12 +36,20 @@ class Students_list_txt
 			index_elem = index_elem + 1		
 		end
 
+
 		if(data_list == nil) then
 			return Data_list.new(list_students_short)
 		else
 			return data_list.list_entities = list_students_short
 		end
 	end
+
+	def sort_by_initials(data_list)
+		data_list.list_entities = data_list.list_entities.sort { |a,b| a.initials <=> b.initials}
+	end
+
+	
+
 
 	def read_from_txt(addressFile)
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
