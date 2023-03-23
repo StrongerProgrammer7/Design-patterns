@@ -16,7 +16,7 @@ class Data_list
 		@selected.each {|elem| res << @list_entities[elem].id}
 		res
 	end
-
+	#Accep pattern "Template"
 	def getDataFromTable()
 		names_attribue = get_names()
 		matrix = get_data().unshift(names_attribue)

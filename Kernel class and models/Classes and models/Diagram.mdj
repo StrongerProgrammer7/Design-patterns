@@ -1825,23 +1825,6 @@
 									"subViews": [
 										{
 											"_type": "UMLOperationView",
-											"_id": "AAAAAAGG/qtH7BFwNQE=",
-											"_parent": {
-												"$ref": "AAAAAAGG8JF5LroLrsg="
-											},
-											"model": {
-												"$ref": "AAAAAAGG/qtH1xFtl1M="
-											},
-											"font": "Arial;13;0",
-											"left": 797,
-											"top": 740,
-											"width": 150.67431640625,
-											"height": 13,
-											"text": "+initialize()",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
 											"_id": "AAAAAAGG8JH44rperRE=",
 											"_parent": {
 												"$ref": "AAAAAAGG8JF5LroLrsg="
@@ -1851,7 +1834,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 797,
-											"top": 755,
+											"top": 740,
 											"width": 150.67431640625,
 											"height": 13,
 											"text": "+select()",
@@ -1868,7 +1851,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 797,
-											"top": 770,
+											"top": 755,
 											"width": 150.67431640625,
 											"height": 13,
 											"text": "+get_selected()",
@@ -1885,7 +1868,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 797,
-											"top": 785,
+											"top": 770,
 											"width": 150.67431640625,
 											"height": 13,
 											"text": "+getDataFromTable()",
@@ -1902,7 +1885,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 797,
-											"top": 800,
+											"top": 785,
 											"width": 150.67431640625,
 											"height": 13,
 											"text": "-get_names()",
@@ -1919,7 +1902,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 797,
-											"top": 815,
+											"top": 800,
 											"width": 150.67431640625,
 											"height": 13,
 											"text": "-get_data()",
@@ -1930,7 +1913,7 @@
 									"left": 792,
 									"top": 735,
 									"width": 160.67431640625,
-									"height": 98
+									"height": 83
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -2778,7 +2761,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGG8JF5LboCUAk="
 							},
-							"name": "list_entities"
+							"name": "list_entities",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -2788,18 +2772,11 @@
 							},
 							"name": "countRecords",
 							"visibility": "private",
-							"isStatic": true
+							"isStatic": true,
+							"type": ""
 						}
 					],
 					"operations": [
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGG/qtH1xFtl1M=",
-							"_parent": {
-								"$ref": "AAAAAAGG8JF5LboCUAk="
-							},
-							"name": "initialize"
-						},
 						{
 							"_type": "UMLOperation",
 							"_id": "AAAAAAGG8JH407pbQBI=",
