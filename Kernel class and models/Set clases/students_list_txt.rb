@@ -45,11 +45,20 @@ class Students_list_txt
 	end
 
 	def sort_by_initials(data_list)
-		data_list.list_entities = data_list.list_entities.sort { |a,b| a.initials <=> b.initials}
+		data_list.list_entities.sort! { |a,b| a.initials <=> b.initials}
 	end
 
-	
+	def push_student(student)
 
+	end
+
+	def replace_element_by_id(id,element)
+		list_students.map! { |elem| elem.id = id ? element : elem }
+	end
+
+	def delete_element_by_id(id)
+
+	end
 
 	def read_from_txt(addressFile)
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
