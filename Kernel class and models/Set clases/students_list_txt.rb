@@ -57,7 +57,7 @@ class Students_list_txt
 	end
 
 	def delete_element_by_id(id)
-
+		list_students.delete_if { |elem| elem.id == id }
 	end
 
 	def read_from_txt(addressFile)
