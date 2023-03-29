@@ -9,7 +9,7 @@ class Students_list_txt
 	# Наследники от абстр реализ json yaml txt
 
 	def initialize(addressFile)
-		#на вход придет объект который запишется , объект абстрактного классаStudetn_file (придет наследник)
+		#на вход придет объект который запишется , объект абстрактного класса Studetn_file (придет наследник)
 		list_students = read_from_txt(addressFile)
 	end
 

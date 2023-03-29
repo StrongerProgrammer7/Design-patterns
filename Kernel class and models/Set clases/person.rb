@@ -6,7 +6,7 @@ class Person
 	end
 
 	define_singleton_method :check_word do |word|
-		/^[A-Z][a-z]+$/.match(word)
+		/^[A-ZА-Я]([a-z]+|[a-яё]+)$/.match(word)
 	end
 
 	define_singleton_method :check_mail do |mail|

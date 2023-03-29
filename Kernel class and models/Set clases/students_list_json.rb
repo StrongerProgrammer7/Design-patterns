@@ -68,14 +68,20 @@ class Students_list_json
 
 	def read_from_json(addressFile)
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
+		
 		students = Array.new()
-		File.open(addressFile,'r') do |file|
-			file.each_line do |line|
-				print JSON.parse(line)
-		#		students.push(Student.initialization(line.delete "\n")) if(line!="")
+		file = File.read addressFile
+		students_hash = JSON.parse(file)
+
+		students_hash.each do |key, student|
+			line = ""
+			student.each do |key_fields, elem|
+				line+= elem + ","
 			end
-		end
-		#students =JSON.parse(File.read('addressFile',encoding: 'utf-8'))
+			line.delete_suffix! ","
+			students.push(Student.initialization(line)) if(line!="")
+		end		
+		students
 	end
 
 	def write_to_json(addressFile,nameFile,students)
