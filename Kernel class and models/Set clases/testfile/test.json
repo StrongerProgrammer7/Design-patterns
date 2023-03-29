@@ -1,16 +1,24 @@
 {
 	"student1":
 	{
-		"surname":"Потапов",
-		"name":"Михаил",
-		"lastname":"Иванович",
+		"surname":"Калмыков",
+		"name":"Сергей",
+		"lastname":"Тимурович",
 		"phone":"89374324535"
 	},
 	"student2":
 	{
-		"surname":"Бирюков",
-		"name":"Ким",
-		"lastname":"Мэлорович",
+		"surname":"Крылов",
+		"name":"Александр",
+		"lastname":"Ильич",
 		"mail":"swaf@mail.ru"
+	},
+	"student3":
+	{
+		"surname":"Максимова",
+		"name":"Елизавета",
+		"lastname":"Артуровна",
+		"telegram":"@Arturovna7",
+		"git" : "https://github.com/StPr/rep.git"
 	}
 }

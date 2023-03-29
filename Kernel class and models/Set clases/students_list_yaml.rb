@@ -5,12 +5,7 @@ require 'yaml'
 
 
 class Students_list_yaml < Students_list_from_file
-
-	def initialize(addressFile)
-		list_students = read_from_yaml(addressFile)
-	end
-
-	def read_from_yaml(addressFile)
+	def read_from_file(addressFile)
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
 		
 		students = Array.new()
@@ -26,7 +21,7 @@ class Students_list_yaml < Students_list_from_file
 		students
 	end
 
-	def write_to_yaml(addressFile,nameFile,students)
+	def write_to_file(addressFile,nameFile,students)
 		file = File.new("#{addressFile}/#{nameFile}.yaml","w:UTF-8")
 		student_hash = {}
 		number_student = 1

@@ -1,9 +1,17 @@
-load './students_list_txt.rb'
-load('data_list_student_short.rb')
+
+load './person.rb'
 load './student.rb'
 load './student_short.rb'
+
+load 'data_list_student_short.rb'
+
+load './students_list_file.rb'
 load './students_list_json.rb'
 load './students_list_yaml.rb'
+load './students_list_txt.rb'
+
+load './students_list.rb'
+
 =begin
 print "initialization\n"
 s1 = Student.initialization("Ssd,Nn,Lfg,87743258961,,,https://github.com/StPr/rep.git")
@@ -69,8 +77,17 @@ test =  Students_list_json.new(File.dirname(__FILE__) + "testfile" + "/test.json
 test.write_to_json(File.dirname(__FILE__),"json_write",test.read_from_json(File.dirname(__FILE__) + "testfile" +"/test.json"))
 print test.read_from_json(File.dirname(__FILE__) + "testfile" + "/json_write.json")
 =end
-
+=begin
 print YAML, "\n"
 
 test1 = Students_list_yaml.new(File.dirname(__FILE__) + "/testfile" + "/test.yaml")
 test1.write_to_yaml(File.dirname(__FILE__),"/yaml_write", test1.read_from_yaml(File.dirname(__FILE__) + "/testfile" +"/test.yaml"))
+=end
+
+studentsList = Students_list.new(Students_list_yaml.new())
+studentsList.read_from_file(File.dirname(__FILE__) + "/testfile" + "/test.yaml")
+print studentsList.get_student_by_id(8536),"\n"
+studentsList.format_file = Students_list_json.new()
+studentsList.read_from_file(File.dirname(__FILE__) + "/testfile" + "/test.json")
+print studentsList.get_student_by_id(8536) ,"\n"
+print studentsList.list_students

@@ -5,13 +5,8 @@ require 'json'
 
 
 class Students_list_json < Students_list_from_file
-
-	def initialize(addressFile)
-		list_students = read_from_json(addressFile)
-	end
-
 	
-	def read_from_json(addressFile)
+	def read_from_file(addressFile)
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
 		
 		students = Array.new()
@@ -29,7 +24,7 @@ class Students_list_json < Students_list_from_file
 		students
 	end
 
-	def write_to_json(addressFile,nameFile,students)
+	def write_to_file(addressFile,nameFile,students)
 		file = File.new("#{addressFile}/#{nameFile}.json","w:UTF-8")
 		student_hash = {}
 		number_student = 1
