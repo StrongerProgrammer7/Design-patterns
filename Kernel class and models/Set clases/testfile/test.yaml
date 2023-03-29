@@ -1,0 +1,11 @@
+---
+  student1:
+    surname: "Потапов"
+    name: "Михаил"
+    lastname: "Иванович"
+    phone: "89374324535"
+  student2:
+    surname: "Бирюков"
+    name: "Ким"
+    lastname: "Мэлорович"
+    mail: "swaf@mail.ru"

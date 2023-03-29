@@ -3,7 +3,7 @@ load('data_list_student_short.rb')
 load './student.rb'
 load './student_short.rb'
 load './students_list_json.rb'
-
+load './students_list_yaml.rb'
 =begin
 print "initialization\n"
 s1 = Student.initialization("Ssd,Nn,Lfg,87743258961,,,https://github.com/StPr/rep.git")
@@ -48,16 +48,16 @@ print dl.get_selected()
 
 =begin
 print "\n\n read_from_txt \n"
-students = s1.read_from_txt(File.dirname(__FILE__) + "/read_from_txt")
+students = s1.read_from_txt(File.dirname(__FILE__) + "testfile" + "/read_from_txt")
 
 p students[0].getInfo() + "\n"
 p students[1].getInfo() + "\n"
 
 
 print "\n\n write_to_txt\n"
-s1.write_to_txt(File.dirname(__FILE__),"test",students)
+s1.write_to_txt(File.dirname(__FILE__)/testfile,"test",students)
 print "\nread_from_write_to_txt\n"
-students1 = s1.read_from_txt(File.dirname(__FILE__) + "/test")
+students1 = s1.read_from_txt(File.dirname(__FILE__) + "testfile" + "/test")
 
 p students1[0].getInfo() +"\n"
 p students1[1].getInfo() + "\n"
@@ -65,7 +65,12 @@ p students1[1].getInfo() + "\n"
 
 =begin
 print JSON, "\n"
-test =  Students_list_json.new(File.dirname(__FILE__) + "/test.json")
-test.write_to_json(File.dirname(__FILE__),"json_write",test.read_from_json(File.dirname(__FILE__) + "/test.json"))
-print test.read_from_json(File.dirname(__FILE__) + "/json_write.json")
+test =  Students_list_json.new(File.dirname(__FILE__) + "testfile" + "/test.json")
+test.write_to_json(File.dirname(__FILE__),"json_write",test.read_from_json(File.dirname(__FILE__) + "testfile" +"/test.json"))
+print test.read_from_json(File.dirname(__FILE__) + "testfile" + "/json_write.json")
 =end
+
+print YAML, "\n"
+
+test1 = Students_list_yaml.new(File.dirname(__FILE__) + "/testfile" + "/test.yaml")
+test1.write_to_yaml(File.dirname(__FILE__),"/yaml_write", test1.read_from_yaml(File.dirname(__FILE__) + "/testfile" +"/test.yaml"))
