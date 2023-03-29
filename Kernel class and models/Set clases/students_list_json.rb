@@ -1,19 +1,14 @@
 load './data_list.rb'
 load './student.rb'
 load './student_short.rb'
+require 'json'
 
 
-class Students_list_txt
-	#plесь потом будет объект 
-	# Абстрактный класс который будет содержать методы reaad and write file
-	# Наследники от абстр реализ json yaml txt
-
+class Students_list_json
 	def initialize(addressFile)
-		#на вход придет объект который запишется , объект абстрактного классаStudetn_file (придет наследник)
-		list_students = read_from_txt(addressFile)
+		list_students = read_from_json(addressFile)
 	end
 
-	#реализовать сет объекта абстрак класса Student_file
 	def get_student_by_id(id)
 		list_students.each do |elem|
 			if(elem.id == id) then
@@ -71,18 +66,19 @@ class Students_list_txt
 		list_students.length
 	end
 
-	def read_from_txt(addressFile)
+	def read_from_json(addressFile)
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
 		students = Array.new()
 		File.open(addressFile,'r') do |file|
 			file.each_line do |line|
-				students.push(Student.initialization(line.delete "\n")) if(line!="")
+				print JSON.parse(line)
+		#		students.push(Student.initialization(line.delete "\n")) if(line!="")
 			end
 		end
-		students
+		#students =JSON.parse(File.read('addressFile',encoding: 'utf-8'))
 	end
 
-	def write_to_txt(addressFile,nameFile,students)
+	def write_to_json(addressFile,nameFile,students)
 		file = File.new("#{addressFile}/#{nameFile}","w:UTF-8")
 		students.each do |i|
 			file.print("#{i.to_s()},#{i.get_all_contacts()},#{i.git}\n")

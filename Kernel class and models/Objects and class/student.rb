@@ -36,8 +36,16 @@ class Student
 		set_extraInfo(phone:phone,mail:mail,telegram:telegram,git:git)
 	end
 
-	def isExistsGit_AnyContact()
-		self.git!=nil && (self.phone!=nil || self.telegram != nil || self.mail!=nil)
+	def getGit()
+		isExistsGit() ? ", #{self.git} " : "have't git"
+	end
+
+	def isExistsGit()
+		self.git!=nil
+	end
+
+	def isExistsAnyContact()
+		getAnyContact()!=nil
 	end
 
 	def get_all_contacts()

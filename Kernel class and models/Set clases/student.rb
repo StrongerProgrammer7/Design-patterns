@@ -20,10 +20,6 @@ class Student < Person
 		set_extraInfo(phone:phone,mail:mail,telegram:telegram,git:git)
 	end
 
-	def isExistsGit_AnyContact()
-		self.git!=nil && getAnyContact()!=nil
-	end
-
 	def getInfo()
 		"#{getSurname_Initials()} #{getGit()} #{getAnyContact()}"
 	end

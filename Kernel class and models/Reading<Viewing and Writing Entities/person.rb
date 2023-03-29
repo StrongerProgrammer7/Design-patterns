@@ -1,5 +1,5 @@
 class Person
-	attr_reader :id,  :surname, :name, :lastname ,:git 
+	attr_reader :id,  :surname, :name, :lastname , :phone, :telegram, :mail, :git 
 
 	define_singleton_method :check_phone do |phone|
 		/\+?[0-9]{11,13}$/.match(phone)
@@ -23,9 +23,21 @@ class Person
 	def to_s()
 		"#{self.surname} ,#{self.name} ,#{self.lastname}"
 	end
+	
+	def getGit()
+		isExistsGit() ? ", #{self.git} " : "have't git"
+	end
+
+	def isExistsGit()
+		self.git!=nil
+	end
+
+	def isExistsAnyContact()
+		getAnyContact()!=nil
+	end
 		
 	private
-		attr_writer :id,  :surname, :name, :lastname ,:git
+		attr_writer :id,  :surname, :name, :lastname , :phone, :telegram, :mail,:git
 
 		def set_baseInfo(surname:nil,name:nil,lastname:nil)
 			valid_baseField_onCorrect(name,surname,lastname)

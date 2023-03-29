@@ -52,7 +52,15 @@ class Person
 		end
 
 		def getGit()
-			self.git!=nil ? ", #{self.git} " : "have't git"
+			isExistsGit() ? ", #{self.git} " : "have't git"
+		end
+
+		def isExistsGit()
+			self.git!=nil
+		end
+
+		def isExistsAnyContact()
+			getAnyContact()!=nil
 		end
 
 		def valid_baseField_onCorrect(name,surname,lastname)

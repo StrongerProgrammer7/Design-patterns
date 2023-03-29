@@ -28,6 +28,14 @@ class Person
 		"#{self.surname} ,#{self.name} ,#{self.lastname}"
 	end
 		
+	def isExistsGit()
+		self.git!=nil
+	end
+
+	def isExistsAnyContact()
+		getAnyContact()!=nil
+	end
+
 	private
 		attr_writer :id,  :surname, :name, :lastname ,:phone, :telegram, :mail,:git
 

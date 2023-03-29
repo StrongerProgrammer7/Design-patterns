@@ -2,6 +2,7 @@ load './students_list_txt.rb'
 load('data_list_student_short.rb')
 load './student.rb'
 load './student_short.rb'
+load './students_list_json.rb'
 
 print "initialization\n"
 s1 = Student.initialization("Ssd,Nn,Lfg,87743258961,,,https://github.com/StPr/rep.git")
@@ -55,3 +56,6 @@ students1 = s1.read_from_txt(File.dirname(__FILE__) + "/test")
 p students1[0].getInfo() +"\n"
 p students1[1].getInfo() + "\n"
 =end
+
+print "\n"
+test = Students_list_json.new(File.dirname(__FILE__) + "/test.json")

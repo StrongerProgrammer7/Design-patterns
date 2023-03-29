@@ -1,7 +1,7 @@
 load './person.rb'
 
 class Student < Person
-	attr_reader :phone, :telegram, :mail
+	 
 
 	def initialize(surname:,name:,lastname:, phone:nil, telegram:nil,mail:nil,git:nil)
 		set_information(surname:surname,name:name,lastname:lastname,phone:phone,mail:mail,telegram:telegram,git:git)
@@ -22,10 +22,7 @@ class Student < Person
 		set_extraInfo(phone:phone,mail:mail,telegram:telegram,git:git)
 	end
 
-	def isExistsGit_AnyContact()
-		self.git!=nil && getAnyContact()!=nil
-	end
-
+	
 	def getInfo()
 		"#{getSurname_Initials()} #{getGit()} #{getAnyContact()}"
 	end
@@ -50,7 +47,7 @@ class Student < Person
 	end
 
 	private
-		attr_writer :phone, :telegram, :mail
+	
 		@@countStudent = 0
 
 		def self.isNumeric(num)

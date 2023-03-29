@@ -430,7 +430,24 @@
 											"top": 350,
 											"width": 190.048828125,
 											"height": 13,
-											"text": "+isExistsGit_AnyContact()",
+											"text": "+isExists_git()",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGHF9HS8KvPc+Y=",
+											"_parent": {
+												"$ref": "AAAAAAGGfouErwmMFD8="
+											},
+											"model": {
+												"$ref": "AAAAAAGHF9HSeqvMLP0="
+											},
+											"font": "Arial;13;0",
+											"left": 165,
+											"top": 365,
+											"width": 190.048828125,
+											"height": 13,
+											"text": "+isExists_AnyContact()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -444,7 +461,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 165,
-											"top": 365,
+											"top": 380,
 											"width": 190.048828125,
 											"height": 13,
 											"text": "+get_all_contacts()",
@@ -461,7 +478,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 165,
-											"top": 380,
+											"top": 395,
 											"width": 190.048828125,
 											"height": 13,
 											"text": "-valid_extraField_onCorrect()",
@@ -478,7 +495,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 165,
-											"top": 395,
+											"top": 410,
 											"width": 190.048828125,
 											"height": 13,
 											"text": "-valid_baseInfo_onCorrect()",
@@ -495,7 +512,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 165,
-											"top": 410,
+											"top": 425,
 											"width": 190.048828125,
 											"height": 13,
 											"text": "-set_baseInfo()",
@@ -512,7 +529,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 165,
-											"top": 425,
+											"top": 440,
 											"width": 190.048828125,
 											"height": 13,
 											"text": "-set_extraInfo()",
@@ -529,7 +546,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 165,
-											"top": 440,
+											"top": 455,
 											"width": 190.048828125,
 											"height": 13,
 											"text": "-valid_git()",
@@ -546,7 +563,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 165,
-											"top": 455,
+											"top": 470,
 											"width": 190.048828125,
 											"height": 13,
 											"text": "-valid_contact()",
@@ -575,7 +592,7 @@
 									"left": 160,
 									"top": 240,
 									"width": 200.048828125,
-									"height": 233
+									"height": 248
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -615,7 +632,7 @@
 							"left": 160,
 							"top": 72,
 							"width": 200.048828125,
-							"height": 401,
+							"height": 416,
 							"nameCompartment": {
 								"$ref": "AAAAAAGGfouErgmGei0="
 							},
@@ -810,7 +827,15 @@
 							"_parent": {
 								"$ref": "AAAAAAGGfouErAmDmCU="
 							},
-							"name": "isExistsGit_AnyContact"
+							"name": "isExists_git"
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGHF9HSeqvMLP0=",
+							"_parent": {
+								"$ref": "AAAAAAGGfouErAmDmCU="
+							},
+							"name": "isExists_AnyContact"
 						},
 						{
 							"_type": "UMLOperation",
