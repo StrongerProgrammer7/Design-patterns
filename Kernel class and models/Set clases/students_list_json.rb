@@ -76,7 +76,7 @@ class Students_list_json
 		students_hash.each do |key, student|
 			line = ""
 			student.each do |key_fields, elem|
-				line+= elem + ","
+				line+= elem + "," if(elem!=nil)
 			end
 			line.delete_suffix! ","
 			students.push(Student.initialization(line)) if(line!="")
@@ -85,10 +85,22 @@ class Students_list_json
 	end
 
 	def write_to_json(addressFile,nameFile,students)
-		file = File.new("#{addressFile}/#{nameFile}","w:UTF-8")
+		file = File.new("#{addressFile}/#{nameFile}.json","w:UTF-8")
+		student_hash = {}
+		number_student = 1
 		students.each do |i|
-			file.print("#{i.to_s()},#{i.get_all_contacts()},#{i.git}\n")
+			student_hash["student#{number_student}"] = {
+				"surname"=>i.surname,
+				"name"=>i.name,
+				"lastname"=>i.lastname,
+				"phone"=>i.phone,
+				"mail"=>i.mail,
+				"telegram"=>i.telegram,
+				"git" => i.git
+			}
+			number_student+=1
 		end
+		file.write(JSON.pretty_generate(student_hash))
 		file.close
 	end
 

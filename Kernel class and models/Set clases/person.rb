@@ -27,6 +27,10 @@ class Person
 	def to_s()
 		"#{self.surname} ,#{self.name} ,#{self.lastname}"
 	end
+
+	def get_all_contacts()
+		"#{self.phone},#{self.telegram},#{self.mail}"
+	end
 		
 	private
 		attr_writer :id,  :surname, :name, :lastname ,:phone, :telegram, :mail,:git

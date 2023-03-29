@@ -63,6 +63,9 @@ p students1[0].getInfo() +"\n"
 p students1[1].getInfo() + "\n"
 =end
 
-print "\n"
+=begin
+print JSON, "\n"
 test =  Students_list_json.new(File.dirname(__FILE__) + "/test.json")
-print test.read_from_json(File.dirname(__FILE__) + "/test.json")
+test.write_to_json(File.dirname(__FILE__),"json_write",test.read_from_json(File.dirname(__FILE__) + "/test.json"))
+print test.read_from_json(File.dirname(__FILE__) + "/json_write.json")
+=end

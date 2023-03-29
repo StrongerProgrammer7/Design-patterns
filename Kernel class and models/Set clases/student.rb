@@ -42,10 +42,6 @@ class Student < Person
 			end
 			return hash_data
 		end
-
-		protected def get_all_contacts()
-			"#{self.phone},#{self.telegram},#{self.mail}"
-		end
 	
 		protected def getAnyContact()
 			return ",phone => #{self.phone} " if(self.phone!=nil)
