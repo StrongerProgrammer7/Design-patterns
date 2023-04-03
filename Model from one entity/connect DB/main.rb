@@ -26,12 +26,14 @@ begin
 	mysql.query("Alter table Students Change Lastname Lastname TEXT CHARACTER set utf8mb4 COLLATE utf8mb4_unicode_ci;")
 	text = File.read("./table_student/insert_students.sql")
 	mysql.query(text)
-	results = mysql.query("SELECT * FROM Students")
+	results = mysql.query("SELECT * FROM Students").to_a
 
-	print results
-	results.each do |row|
-		print row["Id"].to_s() + " || "
-	end 
+
+	results.each do |elem|
+		print elem,"\n"
+	end
+		
+
 	#rs = mysql.query 'SELECT VERSION()'
 	#print rs.fetch_row
 
