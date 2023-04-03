@@ -30,6 +30,7 @@ class Students_list_json < Students_list_from_file
 		number_student = 1
 		students.each do |i|
 			student_hash["student#{number_student}"] = {
+				"id"=>i.id,
 				"surname"=>i.surname,
 				"name"=>i.name,
 				"lastname"=>i.lastname,

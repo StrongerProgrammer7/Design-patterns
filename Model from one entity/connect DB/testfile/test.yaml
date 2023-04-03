@@ -1,10 +1,12 @@
 ---
   student1:
+    id: 1
     surname: "Потапов"
     name: "Михаил"
     lastname: "Иванович"
     phone: "89374324535"
   student2:
+    id: 2
     surname: "Бирюков"
     name: "Ким"
     lastname: "Мэлорович"

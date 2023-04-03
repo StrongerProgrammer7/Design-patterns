@@ -18,7 +18,7 @@ class Students_list_txt < Students_list_from_file
 	def write_to_file(addressFile,nameFile,students)
 		file = File.new("#{addressFile}/#{nameFile}","w:UTF-8")
 		students.each do |i|
-			file.print("#{i.to_s()},#{i.get_all_contacts()},#{i.git}\n")
+			file.print("#{i.id},#{i.to_s()},#{i.get_all_contacts()},#{i.git}\n")
 		end
 		file.close
 	end
