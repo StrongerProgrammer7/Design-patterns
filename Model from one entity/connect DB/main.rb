@@ -27,23 +27,33 @@ begin
 	text = File.read("./table_student/insert_students.sql")
 	mysql.query(text)
 	results = mysql.query("SELECT * FROM Students").to_a
+	
+	students = Array.new(results.length()) 
 
-
-	results.each do |elem|
-		print elem,"\n"
+	results.each do |data|
+		students.push(Student.new(id:data['Id'],
+			surname: data['Surname'],
+			name: data['Name'],
+			lastname: data['Lastname'],
+			phone: data['phone'],
+			telegram: data['telegram'],
+			mail: data['mail'],
+			git: data['git']))
 	end
-		
+	
+	print students[0].surname,"\n"	,students.length()
 
 	#rs = mysql.query 'SELECT VERSION()'
 	#print rs.fetch_row
 
+	mysql.query("delete * from Students")
 rescue Mysql2::Error => e
 	print e
 	#print e.Error
 
 ensure
-	mysql.query("delete from Students")
-	mysql.close if mysql
+	
+	mysql.close
 end
 
 
