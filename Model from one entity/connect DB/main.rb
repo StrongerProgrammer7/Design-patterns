@@ -60,7 +60,7 @@ ensure
 end
 =end
 
-=begin
+
 s1 = Student.initialization("8345,Volkov,John,Dmitrief,87743258961,,,https://github.com/StPr/rep.git")
 s2 = Student.initialization("8346,Lopy,John,Dmitrief,87743258961,,,https://github.com/StPr/rep.git")
 stdb = Students_list_DB.new()
@@ -71,7 +71,9 @@ stdb.delete_element_by_id(5)
 print stdb.get_student_short_count()
 stdb.replace_element_by_id(1,s2)
 print stdb.get_student_short_count()
-=end
+s = Students_DB.getInstance()
+s.crud_student_by_db("Delete FROM Students Where id = 2")
+
 
 =begin
 print "initialization\n"

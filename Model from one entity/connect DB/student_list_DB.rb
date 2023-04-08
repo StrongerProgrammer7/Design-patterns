@@ -9,8 +9,7 @@ class Students_DB
 	def self.getInstance()
 		@@mysql = Mysql2::Client.new(:username => 'alex', :host => 'localhost')
 		@@mysql.query("USE Students")
-		@inst = Students_DB.new() unless @inst	
-		return @inst
+		Students_DB.new() unless @inst	
 	end
 			
 	def crud_student_by_db(query)
@@ -22,7 +21,7 @@ class Students_DB
 	end
 
 	private 
-		@@mysql = nil 
+		@mysql = nil 
 		@inst = nil
 	
 end
