@@ -1,4 +1,4 @@
-require_relative File.dirname($0) + '/student_list_DB.rb'
+require_relative File.dirname($0) + './student_DB/student_list_DB.rb'
 require_relative File.dirname($0) + '/student_adapter.rb'
 
 class Student_list

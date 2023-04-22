@@ -1,6 +1,5 @@
-require_relative File.dirname($0) + '/datatable/data_list.rb'
-require_relative File.dirname($0) + '/persons/student_short.rb'
-require_relative File.dirname($0) + '/persons/student.rb'
+require_relative File.dirname($0) + './datatable/data_list.rb'
+require_relative File.dirname($0) + './persons/student_short.rb'
 
 require 'mysql2'
 include Mysql2
@@ -8,9 +7,14 @@ include Mysql2
 class Students_DB
 
 	def self.getInstance()
-		@@mysql = Mysql2::Client.new(:username => 'alex', :host => 'localhost')
-		@@mysql.query("USE Students")
-		Students_DB.new() unless @inst	
+		if @@mysql.nil?
+			@@mysql = Mysql2::Client.new(:username => 'alex', :host => 'localhost')
+			@@mysql.query("USE Students")
+		end
+		if @@inst.nil?
+			@@inst = Students_DB.new()
+		end
+		@@inst	
 	end
 			
 	def crud_student_by_db(query)
@@ -23,7 +27,7 @@ class Students_DB
 
 	private 
 		@@mysql = nil 
-		@inst = nil
+		@@inst = nil
 	
 end
 
@@ -41,11 +45,10 @@ class Students_list_DB
 		offset = (k - 1) * n
 		limit = n
 		list_students_short = []
-		@dbcon.crud_student_by_db("Select * FROM Students LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|	
-			temp_student = Student.initialization("#{elem["Id"]},#{elem["Surname"]},#{elem["Name"]},#{elem["Lastname"]},#{elem["phone"]},#{elem["mail"]},#{elem["telegram"]},#{elem["git"]}")
-			list_students_short.push(Student_short.initialization(temp_student))
+		@dbcon.crud_student_by_db("Select * FROM Students LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
+			list_students_short.push(Student_short.initialization(elem))
 		end
-		
+
 		if(data_list == nil) then
 			return Data_list.new(list_students_short)
 		else

@@ -63,16 +63,21 @@ end
 
 s1 = Student.initialization("8345,Volkov,John,Dmitrief,87743258961,,,https://github.com/StPr/rep.git")
 s2 = Student.initialization("8346,Lopy,John,Dmitrief,87743258961,,,https://github.com/StPr/rep.git")
+s3 = Student.initialization("8347,Потапов,Михаил,Иванович,,swaf@mail.ru,,")
+s4 = Student.initialization("8348,Бирюков,Ким,Мэлорович,,,@telega,https://github.com/StPr/rep.git")
 stdb = Students_list_DB.new()
 print s1.mail,"\n"
 stdb.push_student(s1)
-print stdb.get_student_short_count()
-stdb.delete_element_by_id(5)
-print stdb.get_student_short_count()
-stdb.replace_element_by_id(1,s2)
-print stdb.get_student_short_count()
-s = Students_DB.getInstance()
-s.crud_student_by_db("Delete FROM Students Where id = 2")
+stdb.push_student(s2)
+stdb.push_student(s3)
+stdb.push_student(s4)
+print stdb.get_student_short_count(),"\n"
+print stdb.get_k_n_student_short_list(1,2)
+stdb.delete_element_by_id(95)
+print stdb.get_student_short_count() ,"\n"
+stdb.replace_element_by_id(90,s2)
+print stdb.get_student_short_count(), "\n"
+
 
 
 =begin
