@@ -5,19 +5,37 @@ include Fox
 class MyMainWindow < FXMainWindow
   def initialize(app)
     # Call the base class initializer first
-    super(app, "My Application", :width => 400, :height => 300)
+    super(app, "My Application", :width => 800, :height => 800)
 
     # Create a horizontal frame to hold the tab book and status bar
     horizontal_frame = FXHorizontalFrame.new(self, LAYOUT_SIDE_TOP|FRAME_NONE|LAYOUT_FILL_X|LAYOUT_FILL_Y)
-
+	
+	  
     # Create a tab book widget
     tab_book = FXTabBook.new(horizontal_frame, :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y)
 
     # Create the first tab
     tab1 = FXTabItem.new(tab_book, "Tab 1")
-
+	
+	tab1_frame = FXVerticalFrame.new(tab_book, LAYOUT_FILL_X|LAYOUT_FILL_Y)
+	 # Create the filtering area on the left
+    filtering_area = FXGroupBox.new(tab1_frame, "Filtering Area")
+    FXLabel.new(filtering_area, "Filter by:")
+    FXTextField.new(filtering_area, 20)
+	
+	# Create the table in the center
+    table = FXTable.new(tab1_frame, horizontal_frame, 0,
+      LAYOUT_SIDE_LEFT|LAYOUT_FILL_X|LAYOUT_FILL_Y|LAYOUT_FILL_ROW)
+    table.setTableSize(10, 5)
+	
+	# Create the control area on the right
+    control_area = FXGroupBox.new(tab1_frame, "Control Area")
+    FXButton.new(control_area, "Add")
+    FXButton.new(control_area, "Edit")
+    FXButton.new(control_area, "Delete")
+	
     # Add a label to the first tab
-    label1 = FXLabel.new(tab_book, "This is tab 1")
+    label1 = FXLabel.new(tab1_frame, "This is tab 1")
     label1.justify = JUSTIFY_CENTER_X|JUSTIFY_CENTER_Y
 
     # Create the second tab
