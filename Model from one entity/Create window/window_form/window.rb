@@ -1,13 +1,6 @@
 require 'fox16'
-include Fox
 
-=begin
-application = FXApp.new("Hi","Ruby")
-main = FXMainWindow.new(application,"Hi",nil,nil,DECOR_ALL)
-application.create()
-main.show(PLACEMENT_SCREEN)
-application.run()
-=end
+include Fox
 
 class MyMainWindow < FXMainWindow
   def initialize(app)
@@ -43,7 +36,16 @@ class MyMainWindow < FXMainWindow
 
     # Create a status bar at the bottom of the window
     status_bar = FXStatusBar.new(horizontal_frame, LAYOUT_SIDE_BOTTOM|LAYOUT_FILL_X)
+	
+	# Create a close button and add it to the main frame
+    close_button = FXButton.new(horizontal_frame, "Close", nil, nil, 0, LAYOUT_FILL_X)
+    close_button.connect(SEL_COMMAND) { getApp().exit }
 
+    # Add the tab book and close button to the main frame
+    horizontal_frame.layoutHints |= LAYOUT_BOTTOM|LAYOUT_LEFT|LAYOUT_RIGHT|LAYOUT_FILL_X
+    tab_book.layoutHints |= LAYOUT_FILL_X|LAYOUT_FILL_Y
+    close_button.layoutHints |= LAYOUT_BOTTOM|LAYOUT_RIGHT|LAYOUT_FILL_X
+	
     # Show the window
     show(PLACEMENT_SCREEN)
   end
