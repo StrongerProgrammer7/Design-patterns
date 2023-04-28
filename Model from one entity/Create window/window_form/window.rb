@@ -3,6 +3,7 @@ require 'fox16'
 include Fox
 
 class MyMainWindow < FXMainWindow
+
   def initialize(app)
     # Call the base class initializer first
     super(app, "My Application", :width => 1000, :height => 800)
@@ -25,26 +26,16 @@ class MyMainWindow < FXMainWindow
     FXTextField.new(filtering_area, 15, :opts => TEXTFIELD_NORMAL)
 	
 	# Add a radio button group or a combo box widget to part 2 for selecting presence or absence of git
-	@filter_git = FXDataTarget.new(2)
-	git_group = FXGroupBox.new(filtering_area, "Наличие Гита", :opts => GROUPBOX_NORMAL|GROUPBOX_TITLE_LEFT|FRAME_GROOVE|LAYOUT_SIDE_TOP)
-    git_yes = FXRadioButton.new(git_group, "Есть",:target => @filter_git, :selector => FXDataTarget::ID_OPTION)
-    git_no = FXRadioButton.new(git_group, "Нет",:target => @filter_git, :selector => FXDataTarget::ID_OPTION+1)
-    git_dontcare = FXRadioButton.new(git_group, "Не важно",:target => @filter_git, :selector => FXDataTarget::ID_OPTION+2)
- 	
-	# Add a text field widget to part 2 for entering text to search on the git
-    search_label = FXLabel.new(filtering_area, "Search: ")
-    search_field = FXTextField.new(filtering_area, 15, :opts => TEXTFIELD_NORMAL|TEXTFIELD_READONLY)
-    search_field.disable
-	
-	@filter_git.connect(SEL_COMMAND) do
-		puts "The newly selected value is #{@filter_git.value}"
-		search_field.enable if @filter_git.value == 0
-		search_field.disable if @filter_git.value >0 
-	end
+
+
+	create_part_filter(filtering_area,@filter_git,"Наличие гита")
+	create_part_filter(filtering_area,@filter_mail,"Наличие почты")
+	create_part_filter(filtering_area,@filter_mail,"Наличие телеграмма")
+	create_part_filter(filtering_area,@filter_mail,"Наличие телефона")
 	
 	
-	№FXButton.new(filtering_area, "Apply")
-    №FXButton.new(filtering_area, "Reset")
+	#FXButton.new(filtering_area, "Apply")
+    #FXButton.new(filtering_area, "Reset")
 	# Create the table in the center
     table = FXTable.new(tab1_frame, nil, 0,
       LAYOUT_SIDE_LEFT|LAYOUT_FILL_X|LAYOUT_FILL_Y|LAYOUT_FILL_ROW)
@@ -92,6 +83,28 @@ class MyMainWindow < FXMainWindow
     # Show the window
     show(PLACEMENT_SCREEN)
   end
+  
+  private 
+  
+	def create_part_filter(filtering_area,filter,name_group)
+		# Add a radio button group or a combo box widget to part 2 for selecting presence or absence of git
+		filter = FXDataTarget.new(2)
+		groups_radio = FXGroupBox.new(filtering_area, name_group, :opts => GROUPBOX_NORMAL|GROUPBOX_TITLE_LEFT|FRAME_GROOVE|LAYOUT_SIDE_TOP)
+		FXRadioButton.new(groups_radio, "Есть",:target => filter, :selector => FXDataTarget::ID_OPTION)
+		FXRadioButton.new(groups_radio, "Нет",:target => filter, :selector => FXDataTarget::ID_OPTION+1)
+		FXRadioButton.new(groups_radio, "Не важно",:target => filter, :selector => FXDataTarget::ID_OPTION+2)
+		
+		# Add a text field widget to part 2 for entering text to search on the git
+		FXLabel.new(groups_radio, "Search: ")
+		search_field = FXTextField.new(groups_radio, 15, :opts => TEXTFIELD_NORMAL)
+		search_field.disable
+		
+		filter.connect(SEL_COMMAND) do
+			puts "The newly selected value is #{filter.value}"
+			search_field.enable if filter.value == 0
+			search_field.disable if filter.value >0 
+		end
+	end
 end
 
 # Start the application
