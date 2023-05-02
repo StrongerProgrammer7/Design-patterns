@@ -21,7 +21,7 @@ class Student < Person
 	end
 
 	def getInfo()
-		"#{getSurname_Initials()} #{getGit()} #{getAnyContact()}"
+		"#{getSurname_Initials()}, #{getGit()}, #{getAnyContact()}"
 	end
 
 	private
@@ -45,10 +45,10 @@ class Student < Person
 		end
 	
 		protected def getAnyContact()
-			return ",phone => #{self.phone} " if(self.phone!=nil)
-			return ",mail => #{self.mail} " if(self.mail !=nil)
-			return ",telegram => #{self.telegram} " if(self.telegram!=nil)
-			return ",have't contact" 
+			return "phone => #{self.phone} " if(self.phone!=nil)
+			return "mail => #{self.mail} " if(self.mail !=nil)
+			return "telegram => #{self.telegram} " if(self.telegram!=nil)
+			return "have't contact" 
 		end
 
 end

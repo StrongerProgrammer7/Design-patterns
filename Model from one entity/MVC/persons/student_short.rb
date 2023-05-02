@@ -15,11 +15,7 @@ private
 		self.id = id
 		data = information.split(",")
 		self.initials = data[0]
-		if data[1].include?("https:\/\/github") then 
-			self.git = data[1]
-			self.contact = data[2]
-		else
-			self.contact=data[1]
-		end
+		self.git = if data[1].include?("https:\/\/github") then data[1] else "not have git"	end
+		self.contact=data[2]
 	end
 end

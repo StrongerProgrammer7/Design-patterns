@@ -15,9 +15,9 @@ load './list_file/students_list_txt.rb'
 
 load './datatable/students_list.rb'
 
-load './student_list_DB.rb'
+#load './student_list_DB.rb'
 
-load './student_list.rb'
+#load './student_list.rb'
 
 load './controller/student_list_controller.rb'
 load './view/student_list_view.rb'
@@ -27,7 +27,8 @@ load './view/student_list_view.rb'
 controller = Student_list_controller.initialize_db
 application = FXApp.new
 view = Student_list_view.new(application,controller)
-application.create
+
 controller.student_list_view = view
-#view.show(PLACEMENT_SCREEN)
+view.showData(1,30)
+application.create
 application.run

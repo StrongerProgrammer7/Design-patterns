@@ -1,65 +1,31 @@
 
-
+require_relative File.dirname($0) + './controller/student_list_controller.rb'
 require 'fox16'
 
 include Fox
 
 class Student_list_view < FXMainWindow
 
-  
   def initialize(app,controller)
   	@student_list_controller = controller
-    # Call the base class initializer first
+
     super(app, "Students list", :width => 1000, :height => 600)
 	
     # Create a horizontal frame to hold the tab book and status bar
     horizontal_frame = FXHorizontalFrame.new(self, LAYOUT_SIDE_TOP|FRAME_NONE|LAYOUT_FILL_X|LAYOUT_FILL_Y)
 	
     # Create a tab book widget
-    tab_book = FXTabBook.new(horizontal_frame, :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y)
-
+    tab_book = FXTabBook.new(horizontal_frame)
 
     # Create the first tab
-    tab1 = FXTabItem.new(tab_book, "Tab 1")
-	
-	#              FXVerticalFrame
-	tab1_frame = FXHorizontalFrame.new(tab_book,LAYOUT_FILL_X|LAYOUT_FILL_Y)
-	
-	initialize_filter(tab1_frame)
-	
-	# Create the table in the center
-	intialize_table(tab1_frame)
-	
-	#@update_btn.connect(SEL_COMMAND) do
-	#	print @filter_git
-	#	print @filter_mail
-	#end
-	@filter_surname.connect(SEL_CHANGED) do
-			if @filter_surname.text!=nil and  @filter_surname.text != "" then
-				if /^[A-zА-яЁё]*$/.match(@filter_surname.text)!=nil then
-					@table_student.fill_table(Integer(@table_student.page_label.text[0]),3, filter_surname_initials:@filter_surname.text)
-				end				
-			else
-				@table_student.fill_table(Integer(@table_student.page_label.text[0]),2)
-			end
-		
-			#@total_pages = (self.table.numRows/self.count_people.to_f).ceil
-			#@page_label.text = "1 of #{@total_pages}"
-			#
-			#if(self.count_people > 0) then
-			#	fill_table(Integer(@page_label.text[0]),self.count_people)
-			#end
-		end
-	# Create the control area on the right
-	initialize_control(tab1_frame)
-    
-	
+
+		createTab(tab_book,"Tab 1")
+		fillTab(tab_book)
+   #TODO при переключении табов , добавить прослушиватель, который вызовет метод refreshData
+   #TODO make sort by only display data
     createTab(tab_book,"Tab 2")
     createTab(tab_book, "Tab 3")
 
-    # Create a status bar at the bottom of the window
-    status_bar = FXStatusBar.new(horizontal_frame, LAYOUT_SIDE_BOTTOM|LAYOUT_FILL_X)
-	
 	# Create a close button and add it to the main frame
     close_button = FXButton.new(horizontal_frame, "Close", nil, nil, 0, LAYOUT_FILL_X)
     close_button.connect(SEL_COMMAND) { getApp().exit }
@@ -69,13 +35,56 @@ class Student_list_view < FXMainWindow
     tab_book.layoutHints |= LAYOUT_FILL_X|LAYOUT_FILL_Y
     close_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
 	
-    # Show the window
-    show(PLACEMENT_SCREEN)
 		
   end
   
+  def showData(k,n)
+  	@student_list_controller.refresh_data(k,n)
+  end
+
+  def set_table_params(column_names,whole_entites_count)
+		@table_student.set_table_params(column_names,whole_entites_count)
+		@table_student.create_button_change_page()
+	end
+	
+	def set_table_data(data_table)
+		@table_student.set_table_data(data_table)
+	end
+
   private 
 	attr_accessor :student_list_controller
+
+	def createTab(tab_book, name_tab)
+    tab = FXTabItem.new(tab_book, name_tab)
+
+    # Add a label to the second tab : After delete
+    #label = FXLabel.new(tab_book, "This is new tab")
+   # label.justify = JUSTIFY_CENTER_X|JUSTIFY_CENTER_Y
+	end
+
+	def fillTab(tab_book)
+			#              FXVerticalFrame
+		tab_frame = FXHorizontalFrame.new(tab_book,LAYOUT_FILL_X|LAYOUT_FILL_Y)
+	
+		initialize_filter(tab_frame)
+	
+		intialize_table(tab_frame)
+	
+		initialize_control(tab_frame)
+
+		@filter_surname.connect(SEL_CHANGED) do
+			raise "Table is empty" if @table_student.table.numRows == 0
+				if @filter_surname.text!=nil and @filter_surname.text != "" then
+					if /^[A-zА-яЁё]*$/.match(@filter_surname.text)!=nil then
+						@table_student.filter_data(filter_surname_initials:@filter_surname.text)
+					end				
+				else
+					current_page = @table_student.num_current_page.text.slice(0,@table_student.num_current_page.text.index(" "))
+					@table_student.filter_data()
+				end	
+		end
+	end
+
 	def initialize_filter(tab_frame)
 		@filters = Filter.new 
 		filter_area = @filters.create_filter_area(tab_frame,180)
@@ -89,37 +98,7 @@ class Student_list_view < FXMainWindow
 	end
 	
 	def intialize_table(tab_frame)
-			
-		# Add some data to the table
-		datas = @student_list_controller.refresh_data(1,10)
-		#set_table_params
-		#set_table_data
-		print datas
-		data = [
-			["Doe J.J.", "johndoe@example.com", "+1234567890", "@johndoe", "github.com/johndoe"],
-			["Smith J. A.", "janesmith@example.com", "+0987654321", "@janesmith", "github.com/janesmith"],
-			["Lee B. H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"],
-			["Lee A. S.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidle1e"],
-			["Lee D.H.", "davidlee@example.com", "+1111111111", "@davidlee", ""],
-			["Doe J.J.", "johndoe@example.com", "+1234567890", "@johndoe", "github.com/johndoe"],
-			["Smith J. A.", "janesmith@example.com", "+0987654321", "@janesmith", "github.com/janesmith"],
-			["Lee B. H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"],
-			["Lee A. S.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidle1e"],
-			["Lee D.H.", "davidlee@example.com", "+1111111111", "@davidlee", ""]
-		]
-		@table_student = Table.new(data,["Surname N.L.","Mail","Phone","Telegram","Git"],tab_frame)
-		@table_student.create_button_change_page()
-		
-		#print @table.rowHeader
-		
-	end
-
-	def set_table_params(column_names,whole_entites_count)
-		@table_student.set_table_params(column_names,whole_entites_count)
-	end
-	
-	def set_table_data(data_table)
-		@table_student.set_table_data(data_table)
+		@table_student = Table.new(tab_frame)
 	end
 
 	def initialize_control(tab_frame)
@@ -155,14 +134,7 @@ class Student_list_view < FXMainWindow
 		end
 	end
 	
-	def createTab(tab_book, name_tab)
-		# Create the second tab
-    tab = FXTabItem.new(tab_book, name_tab)
-
-    # Add a label to the second tab : After delete
-    label = FXLabel.new(tab_book, "This is new tab")
-    label.justify = JUSTIFY_CENTER_X|JUSTIFY_CENTER_Y
-	end
+	
 end
 
 class Filter < FXMainWindow
@@ -226,92 +198,54 @@ class Filter < FXMainWindow
 end
 
 class Table < FXMainWindow
-	attr_accessor :table, :page_label
-	attr_reader :data, :vframe_table, :count_people
+	attr_accessor :table,:num_current_page, :current_data
+	attr_reader :data, :vframe_table, :whole_entites_count
 	
-	def initialize(data,names_col,tab_frame, width_frame:620,table_height:400,count_people:2)
-		raise "Data is empty!" if data.length == 0 || names_col.length == 0
-		self.data = data
+	def initialize(tab_frame, width_frame:620,table_height:400)
 		self.vframe_table = FXVerticalFrame.new(tab_frame, :opts => LAYOUT_FILL_X|LAYOUT_FIX_WIDTH)
 		self.vframe_table.width = width_frame
 		
 		table_area = FXGroupBox.new(self.vframe_table, "Table Area", LAYOUT_FILL_X|LAYOUT_FILL_Y)
 		
 		self.table = FXTable.new(table_area, nil, 0,
-		LAYOUT_SIDE_LEFT|LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT|TABLE_READONLY|TABLE_COL_SIZABLE|TABLE_ROW_SIZABLE|TABLE_NO_ROWSELECT)
+		LAYOUT_SIDE_LEFT|LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT|TABLE_READONLY|TABLE_COL_SIZABLE|TABLE_ROW_SIZABLE)
 		self.table.height = table_height
 		
-		self.table.setTableSize(data.length, data[0].length)
-		
-		self.count_people = count_people
-		setHeaderText(names_col)
+
 		self.table.rowHeaderWidth = 40
-		fill_table(1,self.count_people)
 		
-		header = self.table.columnHeader
-		header.connect(SEL_COMMAND) do |sender, selector, data|
-			print data
-			@data = self.data.sort_by { |row| row[data] }
-			fill_table(Integer(self.page_label.text[0]),self.count_people)
-			
+		self.table.columnHeader.connect(SEL_COMMAND) do |sender, selector, data|
+			current_page = self.num_current_page.text.slice(0,self.num_current_page.text.index(" "))
+			if(self.current_data != nil && self.current_data.length != 0) then
+				self.current_data = self.current_data.sort_by { |row| row[data] if row[data]!=nil or row[data]!='' }
+				fillSortData(Integer(current_page),self.whole_entites_count,self.current_data)
+				#if (checkbox_full_sort===true) then 
+					#self.data = self.data.sort_by { |row| row[data] if row[data]!=nil or row[data]!='' }
+					#fill_table(Integer(current_page),self.whole_entites_count)
+				#end
+				
+			end		
 		end
 		
-		
-		
 	end
-	
-	def setHeaderText(names)
-		column = 0
-		names.each do |name|
-			self.table.setColumnText(column, name) if column < names.length
-			column+=1
-		end
-		self.table.setColumnWidth((names.length-1), 200)
+
+	def set_table_params(column_names,whole_entites_count)
+		self.whole_entites_count = whole_entites_count
+		self.table.setTableSize(whole_entites_count,column_names.length)
+		setHeaderText(column_names)
+		#print (self.table.numColumns)
 	end
-		
-	def fill_table(num_page,count, filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
+
+	def set_table_data(data_table)
+		self.data = data_table
+		fill_table(1,self.whole_entites_count)
+		#print (self.table.numRows)
+	end
+
+	def filter_data(filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
 	filter_surname_initials:nil)
-		clear_table((self.data[0].length-1),(self.data.length - 1))
-		ind = 0
-		row = 0
-		begin_ = count * num_page - count
-		begin_ = 0 if(num_page == 0) 
-			
-		self.data.each do |row_data|
-			column = 0
-			
-			if(ind >= begin_ and ind < count*num_page) then
-				if(filter_surname_initials!=nil) then
-					#print filter_surname_initials
-					if row_data[0].include? filter_surname_initials then
-						row_data.each do |cell_data|
-							self.table.setItemText(row, column, cell_data)
-							column += 1
-						end
-						self.table.setRowText(row,(row+1).to_s)
-						row +=1
-					end
-				else
-					row_data.each do |cell_data|
-						self.table.setItemText(row, column, cell_data)
-						column += 1
-					end
-					self.table.setRowText(row,(row+1).to_s)
-					row +=1
-					
-				end
-				
-			end
-			
-			ind +=1
-			if(ind > count * num_page) then 
-				break 
-			else
-				
-			end
-		end
-    end
-	
+		fill_table(1,self.whole_entites_count,filter_git:filter_git,filter_mail:filter_mail,filter_telegram:filter_telegram,filter_phone:filter_phone,filter_surname_initials:filter_surname_initials)
+	end
 	def create_button_change_page()
 		
 		# Add buttons for changing pages
@@ -322,45 +256,121 @@ class Table < FXMainWindow
 		display_numPage_countPage(button_layout)
 		
 		prev_button.connect(SEL_COMMAND) do
-			current_page = Integer(self.page_label.text[0])
+			current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
 			if current_page > 1
 				current_page -= 1
-				self.page_label.text = "#{current_page} of #{@total_pages}"
-				fill_table(current_page,self.count_people)
+				self.num_current_page.text = "#{current_page} of #{@total_pages}"
+				fill_table(current_page,self.whole_entites_count)
 			end
 		end
 		next_button.connect(SEL_COMMAND) do
-			current_page = Integer(self.page_label.text[0])
+			current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
 			if current_page < @total_pages
 				current_page += 1
-				self.page_label.text = "#{current_page} of #{@total_pages}"
-				fill_table(current_page,self.count_people)
+				self.num_current_page.text = "#{current_page} of #{@total_pages}"
+				fill_table(current_page,self.whole_entites_count)
 			end
 		end
 	
 	end
 	
-	
-	
 	private
-		attr_accessor :data, :vframe_table, :count_people
-		
+		attr_accessor :data, :vframe_table, :whole_entites_count
+
+	def setHeaderText(column_names)
+		num = 0
+		column_names.each do |name|
+			self.table.setColumnText(num, name) if num < column_names.length
+			num+=1
+		end
+		self.table.setColumnWidth((0), 40)
+		self.table.setColumnWidth((column_names.length-1), 200)
+	end
+
 	def clear_table(count_col,count_row)
 		row = 0		
 		loop do
 			column =0
 			loop do
-				self.table.setRowText(row,"")
 				break if(column > count_col)
+				self.table.setRowText(row,"")
 				self.table.setItemText(row, column, "")
 				column+=1
 			end 
 			break if row > count_row - 1
 			row +=1
 		end
-		#print self.table.columnHeader
+
    end
-   
+
+  def fill_table(num_page,count,filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
+	filter_surname_initials:nil)
+		clear_table((self.data[0].length-1),(self.data.length - 1))
+		row = 0
+		begin_ = if num_page != 0 then count * num_page - count else 0 end
+		ind = begin_
+		self.current_data = []
+		loop do 
+			row = checkRow(filter_surname_initials,ind,row)
+			ind +=1
+			if(ind >= count * num_page) then 
+				break 
+			end
+		end
+   end 
+
+   #------- CHANGE NAME METHOD!
+   def checkRow(filter_surname_initials,ind,row)
+   		if(filter_surname_initials!=nil) then
+					if self.data[ind][1].include? filter_surname_initials then
+						fillRow(self.data[ind],row) 
+						row +=1
+					end
+				else
+					fillRow(self.data[ind],row)
+					row +=1	
+			end
+			row
+   end
+
+   def fillRow(row_data,row)
+   		column = 0
+   		if(row_data!=nil) then
+   			row_data.each do |cell_data|
+						self.table.setItemText(row, column, cell_data.to_s)
+						column += 1
+				end
+			self.table.setRowText(row,(row+1).to_s)
+			self.current_data << row_data
+		end
+		
+   end
+#---------------------------------TODO--REFACTORING!!
+   def fillSortData(num_page,count,data)
+   		row = 0
+			begin_ = if num_page != 0 then count * num_page - count else 0 end
+			ind = 0
+		loop do 
+			displaySortCurrentData(data[ind],row)
+			ind +=1
+			row +=1
+			if(ind >= count * num_page) then 
+				break 
+			end
+		end
+   end
+
+   def displaySortCurrentData(row_data,row)
+   	column = 0
+   		if(row_data!=nil) then
+   			row_data.each do |cell_data|
+						self.table.setItemText(row, column, cell_data.to_s)
+						column += 1
+				end
+			self.table.setRowText(row,(row+1).to_s)
+		end
+ 	 end
+#---------------------------------------------   
    #def isIncludeToFilter(row, filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
 #	filter_surname_initials:nil)
 #		return true if filter_git==nil and filter_mail==nil and filter_telegram == nil and filter_phone == nil	and filter_surname_initials == nil
@@ -371,41 +381,44 @@ class Table < FXMainWindow
  #  end
    
    def display_numPage_countPage(button_layout,pos_x:300)
-		self.page_label = FXLabel.new(button_layout, "1", :opts => LAYOUT_FIX_X)
-		self.page_label.x = pos_x
+		self.num_current_page = FXLabel.new(button_layout, "1", :opts => LAYOUT_FIX_X)
+		self.num_current_page.x = pos_x
 		
 		@total_label = FXLabel.new(button_layout, "Total elements: 0",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
 		@total_label.x = 20
 		@total_label.y = 50
-		count_people_lable = FXLabel.new(button_layout, "Count people ",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
-		count_people_lable.x = 20
-		count_people_lable.y = 80
-		count_people_input = FXTextField.new(button_layout, 15, :opts => TEXTFIELD_NORMAL|LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
-		count_people_input.x = 20
-		count_people_input.y = 100
-		count_people_input.text = self.count_people.to_s
+
+		whole_entites_count_label = FXLabel.new(button_layout, "Count people ",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
+		whole_entites_count_label.x = 20
+		whole_entites_count_label.y = 80
+
+		whole_entites_count_input = FXTextField.new(button_layout, 15, :opts => TEXTFIELD_NORMAL|LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
+		whole_entites_count_input.x = 20
+		whole_entites_count_input.y = 100
+		whole_entites_count_input.text = self.whole_entites_count.to_s
 		
-		count_people_input.connect(SEL_CHANGED) do
-			if count_people_input.text!=nil and  count_people_input.text != "" then
-				if /^[0-9]*$/.match(count_people_input.text)!=nil then
-					self.count_people = Integer(count_people_input.text)
+		whole_entites_count_input.connect(SEL_CHANGED) do
+			if whole_entites_count_input.text!=nil and  whole_entites_count_input.text != "" then
+				if /^[0-9]*$/.match(whole_entites_count_input.text)!=nil then
+					self.whole_entites_count = Integer(whole_entites_count_input.text)
 				end				
 			else
-				self.count_people = 1
+				self.whole_entites_count = 1
 			end
 		
-			@total_pages = (self.table.numRows/self.count_people.to_f).ceil
-			self.page_label.text = "1 of #{@total_pages}"
+			@total_pages = (self.table.numRows/self.whole_entites_count.to_f).ceil
+			self.num_current_page.text = "1 of #{@total_pages}"
 		
-			if(self.count_people > 0) then
-				fill_table(Integer(self.page_label.text[0]),self.count_people)
+			if(self.whole_entites_count > 0) then
+				current_page = self.num_current_page.text.slice(0,self.num_current_page.text.index(" "))
+				fill_table(Integer(current_page),self.whole_entites_count)
 			end
 		end
 				
-		@total_pages = (table.numRows / self.count_people.to_f).ceil
-		self.page_label.text = "1 of #{@total_pages}"
+		@total_pages = (table.numRows / self.whole_entites_count.to_f).ceil
+		self.num_current_page.text = "1 of #{@total_pages}"
 		
-		update_total_label
+		#update_total_label
 		
 	end
 	
@@ -427,8 +440,8 @@ class Button_control < FXMainWindow
 end
 
 # Start the application
-application = FXApp.new
-main_window = Student_list_view.new(application)
-application.create
-main_window.show(PLACEMENT_SCREEN)
-application.run
+#application = FXApp.new
+#main_window = Student_list_view.new(application)
+#application.create
+#main_window.show(PLACEMENT_SCREEN)
+#application.run

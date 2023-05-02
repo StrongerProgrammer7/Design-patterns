@@ -24,8 +24,6 @@ class Data_list
 		res = Data_table.new(matrix)
 	end
 
-
-
 private
 	attr_reader :list_entities
 

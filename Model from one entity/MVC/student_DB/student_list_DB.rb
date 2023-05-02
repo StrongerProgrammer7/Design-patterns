@@ -44,9 +44,12 @@ class Students_list_DB
 	def get_k_n_student_short_list(k,n,data_list:nil)
 		offset = (k - 1) * n
 		limit = n
+
 		list_students_short = []
 		@dbcon.crud_student_by_db("Select * FROM Students LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
-			list_students_short.push(Student_short.initialization(elem))
+			elem = clearData(elem)
+			student = Student.new(id:elem["Id"],surname:elem["Surname"],name:elem["Name"],lastname:elem["Lastname"], phone:elem["phone"], telegram:elem["telegram"],mail:elem["mail"],git:elem["git"])
+			list_students_short.push(Student_short.initialization(student))
 		end
 
 		if(data_list == nil) then
@@ -81,4 +84,15 @@ class Students_list_DB
 	private 
 		@dbcon = nil
 
+	def clearData(elem)
+		elem["mail"] = change_NULL_to_empty(elem["mail"])
+		elem["phone"] = change_NULL_to_empty(elem["phone"])
+		elem["telegram"] = change_NULL_to_empty(elem["telegram"])
+		elem["git"] = change_NULL_to_empty(elem["git"])
+		return elem
+	end
+
+	def change_NULL_to_empty(elem)
+		if(elem.to_s.include? "NULL") then return "" else return elem end
+	end
 end

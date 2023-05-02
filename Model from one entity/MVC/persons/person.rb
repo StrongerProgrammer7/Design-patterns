@@ -44,19 +44,20 @@ class Person
 
 		def set_extraInfo(phone:nil,telegram:nil,mail:nil,git:nil)
 			valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram,git:git)		
-			self.phone=phone if(phone!=nil)
-			self.mail = mail if(mail!=nil) 
-			self.telegram = telegram if(telegram!=nil)
-			self.git = git if(git!=nil)
+			self.phone=phone if(phone!=nil and phone != '')
+			self.mail = mail if(mail!=nil and mail!='') 
+			self.telegram = telegram if(telegram!=nil and telegram != '')
+			self.git = git if(git!=nil and git != '')
 		end
 
 
 		def getSurname_Initials
-			"#{self.surname} #{self.name[0]}. #{self.lastname[0]}. "
+			lastname = if(self.lastname!= '' or self.lastname!=nil) then "#{self.lastname[0]}." else "" end
+			"#{self.surname} #{self.name[0]}. #{lastname} "
 		end
 
 		def getGit()
-			isExistsGit() ? ", #{self.git} " : "have't git"
+			isExistsGit() ? "#{self.git} " : "have't git"
 		end
 
 		def isExistsGit()
@@ -89,17 +90,17 @@ class Person
 		end
 	
 		def valid_contact(phone:nil,mail:nil,telegram:nil)
-			if(phone!=nil)
+			if(phone!=nil and phone != '')
 				if Person.check_phone(phone) ==nil then
 				 	raise "Not valid phone"
 				end
 			end
-			if(mail!=nil)
+			if(mail!=nil and mail != '')
 				if(Person.check_mail(mail)==nil) then
 					raise "Not valid mail"
 				end
 			end
-			if(telegram!=nil)
+			if(telegram!=nil and telegram != '')
 				if(Person.check_telegram(telegram)==nil) then
 					raise "Not valid telegram"
 				end
@@ -107,7 +108,7 @@ class Person
 		end
 	
 		def valid_git(git:nil)
-			if(git!=nil)
+			if(git!=nil and git != '')
 				if(Person.check_git(git)==nil) then
 					raise "Not valid git"
 				end
