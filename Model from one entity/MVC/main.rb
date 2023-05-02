@@ -1,3 +1,6 @@
+require 'fox16'
+
+include Fox
 
 load './persons/person.rb'
 load './persons/student.rb'
@@ -16,69 +19,15 @@ load './student_list_DB.rb'
 
 load './student_list.rb'
 
-=begin
-require 'mysql2'
-include Mysql2
-begin 
-	mysql = Mysql2::Client.new(:username => 'alex', :host => 'localhost')
-	mysql.query("USE Students")
-	mysql.query("CREATE TABLE IF NOT EXISTS \
-		Students(Id INT PRIMARY KEY AUTO_INCREMENT, Surname VARCHAR(30) NOT NULL, Name VARCHAR(30) NOT NULL,
-		Lastname VARCHAR(30) NOT NULL, phone VARCHAR(15) NULL, mail VARCHAR(50) NULL, telegram VARCHAR(30) NULL,
-		git VARCHAR(200) NULL)")
-	mysql.query("Alter table Students Change Name Name TEXT CHARACTER set utf8mb4 COLLATE utf8mb4_unicode_ci;")
-	mysql.query("Alter table Students Change Surname Surname TEXT CHARACTER set utf8mb4 COLLATE utf8mb4_unicode_ci;")
-	mysql.query("Alter table Students Change Lastname Lastname TEXT CHARACTER set utf8mb4 COLLATE utf8mb4_unicode_ci;")
-	text = File.read("./table_student/insert_students.sql")
-	mysql.query(text)
-	#results = mysql.query("SELECT * FROM Students").to_a
-	
-	#students = Array.new(results.length()) 
-
-	#results.each do |data|
-	#	students.push(Student.new(id:data['Id'],
-	#		surname: data['Surname'],
-	#		name: data['Name'],
-	#		lastname: data['Lastname'],
-	#		phone: data['phone'],
-	#		telegram: data['telegram'],
-	#		mail: data['mail'],
-	#		git: data['git']))
-	#end
-	
-	#print students[0].surname,"\n"	,students.length()
-
-	#rs = mysql.query 'SELECT VERSION()'
-	#print rs.fetch_row
-
-	mysql.query("delete * from Students")
-rescue Mysql2::Error => e
-	print e
-	#print e.Error
-ensure
-	
-	mysql&.close
-end
-=end
+load './controller/student_list_controller.rb'
+load './view/student_list_view.rb'
 
 
-s1 = Student.initialization("8345,Volkov,John,Dmitrief,87743258961,,,https://github.com/StPr/rep.git")
-s2 = Student.initialization("8346,Lopy,John,Dmitrief,87743258961,,,https://github.com/StPr/rep.git")
-stdb = Students_list_DB.new()
 
-studentsList = Students_list.new(Students_list_yaml.new())
-studentsList.read_from_file(File.dirname(__FILE__) + "/testfile" + "/test.yaml")
-print studentsList.get_student_by_id(8536),"\n"
-
-
-#Объект БД
-s1_l = Student_list.new(stdb)
-
-#Объек Students_list
-s1_l.strategy = studentsList
-
-
-studentsList.format_file = Students_list_json.new()
-studentsList.read_from_file(File.dirname(__FILE__) + "/testfile" + "/test.json")
-print studentsList.get_student_by_id(8536) ,"\n"
-print studentsList.list_students
+controller = Student_list_controller.initialize_db
+application = FXApp.new
+view = Student_list_view.new(application,controller)
+application.create
+controller.student_list_view = view
+view.show(PLACEMENT_SCREEN)
+application.run

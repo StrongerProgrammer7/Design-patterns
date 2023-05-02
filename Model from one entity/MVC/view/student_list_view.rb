@@ -1,3 +1,5 @@
+
+
 require 'fox16'
 
 include Fox
@@ -6,14 +8,16 @@ class Student_list_view < FXMainWindow
 
   
   def initialize(app,controller)
+  	@student_list_controller = controller
     # Call the base class initializer first
-    super(app, "My Application", :width => 1000, :height => 600)
+    super(app, "Students list", :width => 1000, :height => 600)
 	
     # Create a horizontal frame to hold the tab book and status bar
     horizontal_frame = FXHorizontalFrame.new(self, LAYOUT_SIDE_TOP|FRAME_NONE|LAYOUT_FILL_X|LAYOUT_FILL_Y)
 	
     # Create a tab book widget
     tab_book = FXTabBook.new(horizontal_frame, :opts => LAYOUT_FILL_X|LAYOUT_FILL_Y)
+
 
     # Create the first tab
     tab1 = FXTabItem.new(tab_book, "Tab 1")
@@ -50,19 +54,8 @@ class Student_list_view < FXMainWindow
 	initialize_control(tab1_frame)
     
 	
-    # Create the second tab
-    tab2 = FXTabItem.new(tab_book, "Tab 2")
-
-    # Add a label to the second tab
-    label2 = FXLabel.new(tab_book, "This is tab 2")
-    label2.justify = JUSTIFY_CENTER_X|JUSTIFY_CENTER_Y
-
-    # Create the third tab
-    tab3 = FXTabItem.new(tab_book, "Tab 3")
-
-    # Add a label to the third tab
-    label3 = FXLabel.new(tab_book, "This is tab 3")
-    label3.justify = JUSTIFY_CENTER_X|JUSTIFY_CENTER_Y
+    createTab(tab_book,"Tab 2")
+    createTab(tab_book, "Tab 3")
 
     # Create a status bar at the bottom of the window
     status_bar = FXStatusBar.new(horizontal_frame, LAYOUT_SIDE_BOTTOM|LAYOUT_FILL_X)
@@ -78,7 +71,7 @@ class Student_list_view < FXMainWindow
 	
     # Show the window
     show(PLACEMENT_SCREEN)
-		@student_list_controller = controller
+		
   end
   
   private 
@@ -98,6 +91,8 @@ class Student_list_view < FXMainWindow
 	def intialize_table(tab_frame)
 			
 		# Add some data to the table
+		datas = @student_list_controller.refresh_data(1,10)
+		print datas
 		data = [
 			["Doe J.J.", "johndoe@example.com", "+1234567890", "@johndoe", "github.com/johndoe"],
 			["Smith J. A.", "janesmith@example.com", "+0987654321", "@janesmith", "github.com/janesmith"],
@@ -116,7 +111,15 @@ class Student_list_view < FXMainWindow
 		#print @table.rowHeader
 		
 	end
+
+	def set_table_params(column_names,whole_entites_count)
+		@table_student.set_table_params(column_names,whole_entites_count)
+	end
 	
+	def set_table_data(data_table)
+		@table_student.set_table_data(data_table)
+	end
+
 	def initialize_control(tab_frame)
 		@button_control = Button_control.new(tab_frame)
 		@button_control.createButton("Add")
@@ -148,10 +151,16 @@ class Student_list_view < FXMainWindow
 		@table_student.table.connect(SEL_DESELECTED) do |sender, sel, pos|
 			selected_items.delete(sender.getItem(pos.row, pos.col))
 		end
-		
-		
 	end
 	
+	def createTab(tab_book, name_tab)
+		# Create the second tab
+    tab = FXTabItem.new(tab_book, name_tab)
+
+    # Add a label to the second tab : After delete
+    label = FXLabel.new(tab_book, "This is new tab")
+    label.justify = JUSTIFY_CENTER_X|JUSTIFY_CENTER_Y
+	end
 end
 
 class Filter < FXMainWindow

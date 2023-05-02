@@ -1,4 +1,4 @@
-require_relative File.dirname($0) + './datatable/data_list.rb'
+require_relative File.dirname($0) + './datatable/data_list_student_short.rb'
 require_relative File.dirname($0) + './persons/student_short.rb'
 
 require 'mysql2'
@@ -50,7 +50,7 @@ class Students_list_DB
 		end
 
 		if(data_list == nil) then
-			return Data_list.new(list_students_short)
+			return Data_list_student_short.new(list_students_short)
 		else
 			return data_list.list_entities = list_students_short
 		end

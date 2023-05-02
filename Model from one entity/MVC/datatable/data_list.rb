@@ -17,12 +17,14 @@ class Data_list
 		@selected.each {|elem| res << @list_entities[elem].id}
 		res
 	end
-	#Accep pattern "Template"
+	#Accept pattern "Template"
 	def getDataFromTable()
 		names_attribue = get_names()
 		matrix = get_data().unshift(names_attribue)
 		res = Data_table.new(matrix)
 	end
+
+
 
 private
 	attr_reader :list_entities
