@@ -3,10 +3,11 @@ require_relative File.dirname($0) + './view/student_list_view.rb'
 
 class Data_list_student_short < Data_list
 
-	attr_accessor :student_list_view
+	attr_accessor :student_list_view #observer model
 
-	def notify()
-
+	def notify(whole_entities_count)
+		self.student_list_view.set_table_params(get_names(),whole_entities_count)
+		self.student_list_view.set_table_data(self.get_data())
 	end
 
 	private

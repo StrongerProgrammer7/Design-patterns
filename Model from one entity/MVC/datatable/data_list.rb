@@ -19,8 +19,8 @@ class Data_list
 	end
 	#Accept pattern "Template"
 	def getDataFromTable()
-		names_attribue = get_names()
-		matrix = get_data().unshift(names_attribue)
+		names_attributes = get_names()
+		matrix = get_data().unshift(names_attributes)
 		res = Data_table.new(matrix)
 	end
 

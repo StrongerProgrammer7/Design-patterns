@@ -26,10 +26,10 @@ class Student_list_controller
 		@student_list = Student_list.intialize_DB
 	end
 
-	def refresh_data(k,n,data_list:nil)
-		self.data_list_student_short = @student_list.get_k_n_student_short_list(k,n,data_list)
+	def refresh_data(k,n)
+		self.data_list_student_short = @student_list.get_k_n_student_short_list(k,n,self.data_list_student_short)
 		self.data_list_student_short.student_list_view = self.student_list_view
-		self.data_list_student_short.notify()
+		self.data_list_student_short.notify(n)
 		self.student_list_view.show(PLACEMENT_SCREEN)
 	end
 

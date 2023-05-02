@@ -29,5 +29,5 @@ application = FXApp.new
 view = Student_list_view.new(application,controller)
 application.create
 controller.student_list_view = view
-view.show(PLACEMENT_SCREEN)
+#view.show(PLACEMENT_SCREEN)
 application.run
