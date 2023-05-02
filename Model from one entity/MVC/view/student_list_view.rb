@@ -79,7 +79,7 @@ class Student_list_view < FXMainWindow
 	def initialize_filter(tab_frame)
 		@filters = Filter.new 
 		filter_area = @filters.create_filter_area(tab_frame,180)
-		@filter_surname = @filters.add_filter_input(filter_area)
+		@filter_surname = @filters.add_filter_input(filter_area,"Surname N.L.: ")
 		@filter_git = @filters.add_filter_radioBtn(filter_area,@filter_git,"Наличие гита")
 		@filter_mail = @filters.add_filter_radioBtn(filter_area,@filter_mail,"Наличие почты")
 		@filter_telegram = @filters.add_filter_radioBtn(filter_area,@filter_mail,"Наличие телеграмма")
@@ -92,6 +92,8 @@ class Student_list_view < FXMainWindow
 			
 		# Add some data to the table
 		datas = @student_list_controller.refresh_data(1,10)
+		#set_table_params
+		#set_table_data
 		print datas
 		data = [
 			["Doe J.J.", "johndoe@example.com", "+1234567890", "@johndoe", "github.com/johndoe"],
@@ -186,10 +188,11 @@ class Filter < FXMainWindow
 		
 	end
 	
-	def add_filter_input(filtering_area)
-		FXLabel.new(filtering_area, "Surname N.L.: ")
+	def add_filter_input(filtering_area,name_filter_input)
+		FXLabel.new(filtering_area, name_filter_input)
 		return FXTextField.new(filtering_area, 15, :opts => TEXTFIELD_NORMAL)
 	end
+
 	def add_controlBtn(filtering_area)
 		button_filter = FXHorizontalFrame.new(filtering_area,LAYOUT_FILL_X|LAYOUT_FILL_Y)
 		update = FXButton.new(button_filter, "Обновить")
