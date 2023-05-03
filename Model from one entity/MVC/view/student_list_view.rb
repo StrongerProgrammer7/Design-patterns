@@ -30,8 +30,6 @@ class Student_list_view < FXMainWindow
     		showData(self.num_page,self.count_records) if (data==0)
     end
 
-
-
     close_button = FXButton.new(horizontal_frame, "Close", nil, nil, 0, LAYOUT_FILL_X)
     close_button.connect(SEL_COMMAND) { getApp().exit }
 
@@ -45,7 +43,7 @@ class Student_list_view < FXMainWindow
   def showData(k,n)
   	self.num_page = k
   	self.count_records = n
-  	self.max_page_data = (@student_list_controller.get_max_count_page() / n) + 1
+  	self.max_page_data = (@student_list_controller.get_count_student_short() / n) + 1
   	@student_list_controller.refresh_data(k,n)
   end
 
@@ -239,7 +237,7 @@ class Table
 		self.table.columnHeader.connect(SEL_COMMAND) do |sender, selector, data|
 			current_page = self.num_current_page.text.slice(0,self.num_current_page.text.index(" "))
 			if(self.current_data != nil && self.current_data.length != 0) then
-				if(@chekbox_sort_all_data_toTable.checked?) then
+				if(self.chekbox_sort_all_data_toTable.checked?) then
 					self.data = self.data.sort_by { |row| row[data] if row[data]!=nil or row[data]!='' }
 					fill_table(Integer(current_page),self.whole_entites_count)
 				else
@@ -311,7 +309,7 @@ class Table
 	end
 	
 	private
-		attr_accessor :data, :vframe_table, :whole_entites_count
+		attr_accessor :data, :vframe_table, :whole_entites_count, :chekbox_sort_all_data_toTable
 
 	def setHeaderText(column_names)
 		num = 0
@@ -422,13 +420,11 @@ class Table
 		@whole_entites_count_input.y = 100
 		@whole_entites_count_input.text = self.whole_entites_count.to_s
 		
-		@chekbox_sort_all_data_toTable = FXCheckButton.new(button_layout, " Sort all data in the table", :opts => LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_SIDE_BOTTOM)
+		self.chekbox_sort_all_data_toTable = FXCheckButton.new(button_layout, " Sort all data in the table", :opts => LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_SIDE_BOTTOM)
 
-		@chekbox_sort_all_data_toTable.x = 160
-		@chekbox_sort_all_data_toTable.y = 100
-		#@chekbox_sort_all_data_toTable.connect(SEL_COMMAND) do |data|
-		#	print "The new value fro title #{@chekbox_sort_all_data_toTable.checked?}"
-		#end
+		self.chekbox_sort_all_data_toTable.x = 160
+		self.chekbox_sort_all_data_toTable.y = 100
+
 
 		@whole_entites_count_input.connect(SEL_CHANGED) do
 			if @whole_entites_count_input.text!=nil and  @whole_entites_count_input.text != "" then
@@ -454,7 +450,7 @@ class Table
 		self.label_num_current_page_data = FXLabel.new(button_layout, "",:opts => LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_SIDE_BOTTOM)
 		self.label_num_current_page_data.x = pos_x - 25
 		self.label_num_current_page_data.y = 25
-		#label_num_current_page_data.text = "1 page of 4 page data" 
+
 	end
 
 end

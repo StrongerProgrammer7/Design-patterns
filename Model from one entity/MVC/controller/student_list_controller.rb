@@ -35,7 +35,7 @@ class Student_list_controller
 		self.student_list_view.show(PLACEMENT_SCREEN)
 	end
 
-	def get_max_count_page()
+	def get_count_student_short()
 		@student_list.get_student_short_count
 	end
 
