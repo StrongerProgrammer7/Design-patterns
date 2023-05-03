@@ -48,8 +48,10 @@ class Students_list_DB
 		list_students_short = []
 		@dbcon.crud_student_by_db("Select * FROM Students LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
 			elem = clearData(elem)
+
 			student = Student.new(id:elem["Id"],surname:elem["Surname"],name:elem["Name"],lastname:elem["Lastname"], phone:elem["phone"], telegram:elem["telegram"],mail:elem["mail"],git:elem["git"])
-			list_students_short.push(Student_short.initialization(student))
+			student_short = Student_short.initialization(student)
+			list_students_short.push(student_short)
 		end
 
 		if(data_list == nil) then

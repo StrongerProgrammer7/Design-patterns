@@ -12,11 +12,11 @@ class Data_list_student_short < Data_list
 
 	private
 		def get_names()
-			arr_attr= ["id","initials","contact","git"] 
+			arr_attr= ["num","initials","contact","git"] 
 		end
 	
 		def get_data()
-			countRecords = 0
+			countRecords = 1
 			matrix = []
 			@list_entities.each  do |elem|
 				matrix.push([countRecords,elem.initials,elem.contact,elem.git])

@@ -11,26 +11,27 @@ class Student_list_view < FXMainWindow
 
     super(app, "Students list", :width => 1000, :height => 600)
 	
-    # Create a horizontal frame to hold the tab book and status bar
     horizontal_frame = FXHorizontalFrame.new(self, LAYOUT_SIDE_TOP|FRAME_NONE|LAYOUT_FILL_X|LAYOUT_FILL_Y)
 	
-    # Create a tab book widget
     tab_book = FXTabBook.new(horizontal_frame)
 
-    # Create the first tab
 
 		createTab(tab_book,"Tab 1")
 		fillTab(tab_book)
-   #TODO при переключении табов , добавить прослушиватель, который вызовет метод refreshData
+
    #TODO make sort by only display data
     createTab(tab_book,"Tab 2")
+    createLabelByCenter(tab_book)
     createTab(tab_book, "Tab 3")
+    createLabelByCenter(tab_book)
 
-	# Create a close button and add it to the main frame
+    tab_book.connect(SEL_COMMAND) do |sender, sel, data|
+    		showData(self.page,self.count_records) if (data==0)
+    end
+
     close_button = FXButton.new(horizontal_frame, "Close", nil, nil, 0, LAYOUT_FILL_X)
     close_button.connect(SEL_COMMAND) { getApp().exit }
 
-    # Add the tab book and close button to the main frame
     horizontal_frame.layoutHints |= LAYOUT_BOTTOM|LAYOUT_LEFT|LAYOUT_RIGHT|LAYOUT_FILL_X
     tab_book.layoutHints |= LAYOUT_FILL_X|LAYOUT_FILL_Y
     close_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
@@ -39,6 +40,8 @@ class Student_list_view < FXMainWindow
   end
   
   def showData(k,n)
+  	self.page = k
+  	self.count_records = n
   	@student_list_controller.refresh_data(k,n)
   end
 
@@ -52,14 +55,15 @@ class Student_list_view < FXMainWindow
 	end
 
   private 
-	attr_accessor :student_list_controller
+	attr_accessor :student_list_controller, :page, :count_records
 
 	def createTab(tab_book, name_tab)
     tab = FXTabItem.new(tab_book, name_tab)
+	end
 
-    # Add a label to the second tab : After delete
-    #label = FXLabel.new(tab_book, "This is new tab")
-   # label.justify = JUSTIFY_CENTER_X|JUSTIFY_CENTER_Y
+	def createLabelByCenter(tab_book)
+    label = FXLabel.new(tab_book, "This is new tab")
+    label.justify = JUSTIFY_CENTER_X|JUSTIFY_CENTER_Y
 	end
 
 	def fillTab(tab_book)
@@ -79,7 +83,6 @@ class Student_list_view < FXMainWindow
 						@table_student.filter_data(filter_surname_initials:@filter_surname.text)
 					end				
 				else
-					current_page = @table_student.num_current_page.text.slice(0,@table_student.num_current_page.text.index(" "))
 					@table_student.filter_data()
 				end	
 		end
@@ -151,13 +154,7 @@ class Filter < FXMainWindow
 		
 		FXLabel.new(filtering_area, "Filter by:")
 		
-		return filtering_area
-		#add_filter_radioBtn(filtering_area,@filter_git,"Наличие гита")
-		#add_filter_radioBtn(filtering_area,@filter_mail,"Наличие почты")
-		#add_filter_radioBtn(filtering_area,@filter_mail,"Наличие телеграмма")
-		#add_filter_radioBtn(filtering_area,@filter_mail,"Наличие телефона")
-		
-		
+		return filtering_area		
 	end
 	
 	def add_filter_input(filtering_area,name_filter_input)
@@ -247,29 +244,35 @@ class Table < FXMainWindow
 		fill_table(1,self.whole_entites_count,filter_git:filter_git,filter_mail:filter_mail,filter_telegram:filter_telegram,filter_phone:filter_phone,filter_surname_initials:filter_surname_initials)
 	end
 	def create_button_change_page()
-		
-		# Add buttons for changing pages
-		button_layout = FXHorizontalFrame.new(self.vframe_table,:opts => LAYOUT_FILL_X|LAYOUT_SIDE_BOTTOM)
-		prev_button = FXButton.new(button_layout, "Previous",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
-		next_button = FXButton.new(button_layout, "Next",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
-		
-		display_numPage_countPage(button_layout)
-		
-		prev_button.connect(SEL_COMMAND) do
-			current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
-			if current_page > 1
-				current_page -= 1
-				self.num_current_page.text = "#{current_page} of #{@total_pages}"
-				fill_table(current_page,self.whole_entites_count)
+		if(self.num_current_page==nil) then
+			# Add buttons for changing pages
+			button_layout = FXHorizontalFrame.new(self.vframe_table,:opts => LAYOUT_FILL_X|LAYOUT_SIDE_BOTTOM)
+			prev_button = FXButton.new(button_layout, "Previous",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
+			next_button = FXButton.new(button_layout, "Next",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
+			
+			display_numPage_countPage(button_layout)
+			
+			prev_button.connect(SEL_COMMAND) do
+				current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
+				if current_page > 1
+					current_page -= 1
+					self.num_current_page.text = "#{current_page} of #{@total_pages}"
+					fill_table(current_page,self.whole_entites_count)
+				end
 			end
-		end
-		next_button.connect(SEL_COMMAND) do
-			current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
-			if current_page < @total_pages
-				current_page += 1
-				self.num_current_page.text = "#{current_page} of #{@total_pages}"
-				fill_table(current_page,self.whole_entites_count)
+			next_button.connect(SEL_COMMAND) do
+				current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
+				if current_page < @total_pages
+					current_page += 1
+					self.num_current_page.text = "#{current_page} of #{@total_pages}"
+					fill_table(current_page,self.whole_entites_count)
+				end
 			end
+
+		else
+			@whole_entites_count_input.text = self.whole_entites_count.to_s
+			@total_pages = (self.table.numRows/self.whole_entites_count.to_f).ceil
+			self.num_current_page.text = "1 of #{@total_pages}"
 		end
 	
 	end
@@ -371,36 +374,24 @@ class Table < FXMainWindow
 		end
  	 end
 #---------------------------------------------   
-   #def isIncludeToFilter(row, filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
-#	filter_surname_initials:nil)
-#		return true if filter_git==nil and filter_mail==nil and filter_telegram == nil and filter_phone == nil	and filter_surname_initials == nil
-#		filter_accept = false
-#		row.each do |elem|
-#			
-#		end	
- #  end
-   
+
    def display_numPage_countPage(button_layout,pos_x:300)
 		self.num_current_page = FXLabel.new(button_layout, "1", :opts => LAYOUT_FIX_X)
 		self.num_current_page.x = pos_x
 		
-		@total_label = FXLabel.new(button_layout, "Total elements: 0",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
-		@total_label.x = 20
-		@total_label.y = 50
-
 		whole_entites_count_label = FXLabel.new(button_layout, "Count people ",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
 		whole_entites_count_label.x = 20
 		whole_entites_count_label.y = 80
 
-		whole_entites_count_input = FXTextField.new(button_layout, 15, :opts => TEXTFIELD_NORMAL|LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
-		whole_entites_count_input.x = 20
-		whole_entites_count_input.y = 100
-		whole_entites_count_input.text = self.whole_entites_count.to_s
+		@whole_entites_count_input = FXTextField.new(button_layout, 15, :opts => TEXTFIELD_NORMAL|LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
+		@whole_entites_count_input.x = 20
+		@whole_entites_count_input.y = 100
+		@whole_entites_count_input.text = self.whole_entites_count.to_s
 		
-		whole_entites_count_input.connect(SEL_CHANGED) do
-			if whole_entites_count_input.text!=nil and  whole_entites_count_input.text != "" then
-				if /^[0-9]*$/.match(whole_entites_count_input.text)!=nil then
-					self.whole_entites_count = Integer(whole_entites_count_input.text)
+		@whole_entites_count_input.connect(SEL_CHANGED) do
+			if @whole_entites_count_input.text!=nil and  @whole_entites_count_input.text != "" then
+				if /^[0-9]*$/.match(@whole_entites_count_input.text)!=nil then
+					self.whole_entites_count = Integer(@whole_entites_count_input.text)
 				end				
 			else
 				self.whole_entites_count = 1
@@ -418,14 +409,8 @@ class Table < FXMainWindow
 		@total_pages = (table.numRows / self.whole_entites_count.to_f).ceil
 		self.num_current_page.text = "1 of #{@total_pages}"
 		
-		#update_total_label
-		
 	end
-	
-    def update_total_label
-		total_elements = self.table.numRows * self.table.numColumns
-		@total_label.text = "Total elements: #{total_elements}"
-	end
+
 end
 
 class Button_control < FXMainWindow
@@ -439,9 +424,3 @@ class Button_control < FXMainWindow
 	end
 end
 
-# Start the application
-#application = FXApp.new
-#main_window = Student_list_view.new(application)
-#application.create
-#main_window.show(PLACEMENT_SCREEN)
-#application.run

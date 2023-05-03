@@ -25,8 +25,12 @@ class Student_list_controller
 	end
 
 	def refresh_data(k,n)
-		self.data_list_student_short = @student_list.get_k_n_student_short_list(k,n,data_list:self.data_list_student_short)
-		self.data_list_student_short.student_list_view = self.student_list_view
+		if(self.data_list_student_short==nil) then
+			self.data_list_student_short = @student_list.get_k_n_student_short_list(k,n,data_list:self.data_list_student_short)
+		else
+			@student_list.get_k_n_student_short_list(k,n,data_list:self.data_list_student_short)
+		end
+		self.data_list_student_short.student_list_view = self.student_list_view if self.data_list_student_short.student_list_view == nil
 		self.data_list_student_short.notify(n)
 		self.student_list_view.show(PLACEMENT_SCREEN)
 	end

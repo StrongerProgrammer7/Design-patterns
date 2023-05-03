@@ -8,6 +8,10 @@ class Student_short < Person
 		Student_short.new(id:student.id,information:student.getInfo())
 	end
 
+	def to_s()
+		"#{self.initials}"
+	end
+	
 private
 	attr_writer :initials, :contact
 
