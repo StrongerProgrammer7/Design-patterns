@@ -19,15 +19,18 @@ class Student_list_view < FXMainWindow
 		createTab(tab_book,"Tab 1")
 		fillTab(tab_book)
 
-   #TODO make sort by only display data
     createTab(tab_book,"Tab 2")
     createLabelByCenter(tab_book)
     createTab(tab_book, "Tab 3")
     createLabelByCenter(tab_book)
 
     tab_book.connect(SEL_COMMAND) do |sender, sel, data|
-    		showData(self.page,self.count_records) if (data==0)
+    		pos = @table_student.num_current_page.text.index(" ")
+    	 	current_page = Integer(@table_student.num_current_page.text.slice(0,pos))
+    		showData(self.num_page,self.count_records) if (data==0)
     end
+
+
 
     close_button = FXButton.new(horizontal_frame, "Close", nil, nil, 0, LAYOUT_FILL_X)
     close_button.connect(SEL_COMMAND) { getApp().exit }
@@ -35,27 +38,29 @@ class Student_list_view < FXMainWindow
     horizontal_frame.layoutHints |= LAYOUT_BOTTOM|LAYOUT_LEFT|LAYOUT_RIGHT|LAYOUT_FILL_X
     tab_book.layoutHints |= LAYOUT_FILL_X|LAYOUT_FILL_Y
     close_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
-	
+		
 		
   end
   
   def showData(k,n)
-  	self.page = k
+  	self.num_page = k
   	self.count_records = n
+  	self.max_page_data = (@student_list_controller.get_max_count_page() / n) + 1
   	@student_list_controller.refresh_data(k,n)
   end
 
   def set_table_params(column_names,whole_entites_count)
 		@table_student.set_table_params(column_names,whole_entites_count)
 		@table_student.create_button_change_page()
+		initializeButtonTable_getData()
 	end
 	
 	def set_table_data(data_table)
-		@table_student.set_table_data(data_table)
+			@table_student.set_table_data(data_table) if data_table!=[] and data_table!=nil
 	end
 
   private 
-	attr_accessor :student_list_controller, :page, :count_records
+	attr_accessor :student_list_controller, :num_page, :count_records,:max_page_data
 
 	def createTab(tab_book, name_tab)
     tab = FXTabItem.new(tab_book, name_tab)
@@ -86,6 +91,8 @@ class Student_list_view < FXMainWindow
 					@table_student.filter_data()
 				end	
 		end
+
+		
 	end
 
 	def initialize_filter(tab_frame)
@@ -102,6 +109,24 @@ class Student_list_view < FXMainWindow
 	
 	def intialize_table(tab_frame)
 		@table_student = Table.new(tab_frame)
+	end
+
+	def initializeButtonTable_getData()
+			@table_student.next_data_button.connect(SEL_COMMAND) do |sender,sel,data|
+				if(self.num_page < self.max_page_data) then
+					self.num_page+=1
+					@table_student.label_num_current_page_data.text = "#{self.num_page} page of #{self.max_page_data} data"
+    	 		showData(self.num_page,self.count_records)
+    	 	end 
+    	end
+
+    	@table_student.prev_data_button.connect(SEL_COMMAND) do |sender,sel,data|
+    		if(self.num_page > 1) then
+    			self.num_page-=1
+    			@table_student.label_num_current_page_data.text = "#{self.num_page} page of #{self.max_page_data} data" 
+    	 		showData(self.num_page,self.count_records) 
+    	 	end
+    	end
 	end
 
 	def initialize_control(tab_frame)
@@ -140,7 +165,7 @@ class Student_list_view < FXMainWindow
 	
 end
 
-class Filter < FXMainWindow
+class Filter 
 
 	def initialize()
 		#create_filter_area(tab_frame,width)
@@ -194,15 +219,15 @@ class Filter < FXMainWindow
 	
 end
 
-class Table < FXMainWindow
-	attr_accessor :table,:num_current_page, :current_data
+class Table 
+	attr_accessor :table,:num_current_page, :current_data, :prev_data_button,:next_data_button, :label_num_current_page_data
 	attr_reader :data, :vframe_table, :whole_entites_count
 	
 	def initialize(tab_frame, width_frame:620,table_height:400)
 		self.vframe_table = FXVerticalFrame.new(tab_frame, :opts => LAYOUT_FILL_X|LAYOUT_FIX_WIDTH)
 		self.vframe_table.width = width_frame
 		
-		table_area = FXGroupBox.new(self.vframe_table, "Table Area", LAYOUT_FILL_X|LAYOUT_FILL_Y)
+		table_area = FXGroupBox.new(self.vframe_table, "Student table", LAYOUT_FILL_X|LAYOUT_FILL_Y)
 		
 		self.table = FXTable.new(table_area, nil, 0,
 		LAYOUT_SIDE_LEFT|LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT|TABLE_READONLY|TABLE_COL_SIZABLE|TABLE_ROW_SIZABLE)
@@ -214,12 +239,13 @@ class Table < FXMainWindow
 		self.table.columnHeader.connect(SEL_COMMAND) do |sender, selector, data|
 			current_page = self.num_current_page.text.slice(0,self.num_current_page.text.index(" "))
 			if(self.current_data != nil && self.current_data.length != 0) then
-				self.current_data = self.current_data.sort_by { |row| row[data] if row[data]!=nil or row[data]!='' }
-				fillSortData(Integer(current_page),self.whole_entites_count,self.current_data)
-				#if (checkbox_full_sort===true) then 
-					#self.data = self.data.sort_by { |row| row[data] if row[data]!=nil or row[data]!='' }
-					#fill_table(Integer(current_page),self.whole_entites_count)
-				#end
+				if(@chekbox_sort_all_data_toTable.checked?) then
+					self.data = self.data.sort_by { |row| row[data] if row[data]!=nil or row[data]!='' }
+					fill_table(Integer(current_page),self.whole_entites_count)
+				else
+					self.current_data = self.current_data.sort_by { |row| row[data] if row[data]!=nil or row[data]!='' }
+					fillSortData(Integer(current_page),self.whole_entites_count,self.current_data)
+				end
 				
 			end		
 		end
@@ -235,7 +261,7 @@ class Table < FXMainWindow
 
 	def set_table_data(data_table)
 		self.data = data_table
-		fill_table(1,self.whole_entites_count)
+		fill_table(1,self.whole_entites_count) 
 		#print (self.table.numRows)
 	end
 
@@ -243,13 +269,20 @@ class Table < FXMainWindow
 	filter_surname_initials:nil)
 		fill_table(1,self.whole_entites_count,filter_git:filter_git,filter_mail:filter_mail,filter_telegram:filter_telegram,filter_phone:filter_phone,filter_surname_initials:filter_surname_initials)
 	end
+
 	def create_button_change_page()
 		if(self.num_current_page==nil) then
 			# Add buttons for changing pages
 			button_layout = FXHorizontalFrame.new(self.vframe_table,:opts => LAYOUT_FILL_X|LAYOUT_SIDE_BOTTOM)
-			prev_button = FXButton.new(button_layout, "Previous",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
-			next_button = FXButton.new(button_layout, "Next",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
+			self.prev_data_button = FXButton.new(button_layout, "Previous data",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
+			self.next_data_button = FXButton.new(button_layout, "Next data",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
+
+
+			prev_button = FXButton.new(button_layout, "Previous page",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
+			next_button = FXButton.new(button_layout, "Next page",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
 			
+			
+
 			display_numPage_countPage(button_layout)
 			
 			prev_button.connect(SEL_COMMAND) do
@@ -260,6 +293,7 @@ class Table < FXMainWindow
 					fill_table(current_page,self.whole_entites_count)
 				end
 			end
+
 			next_button.connect(SEL_COMMAND) do
 				current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
 				if current_page < @total_pages
@@ -268,7 +302,6 @@ class Table < FXMainWindow
 					fill_table(current_page,self.whole_entites_count)
 				end
 			end
-
 		else
 			@whole_entites_count_input.text = self.whole_entites_count.to_s
 			@total_pages = (self.table.numRows/self.whole_entites_count.to_f).ceil
@@ -378,7 +411,8 @@ class Table < FXMainWindow
    def display_numPage_countPage(button_layout,pos_x:300)
 		self.num_current_page = FXLabel.new(button_layout, "1", :opts => LAYOUT_FIX_X)
 		self.num_current_page.x = pos_x
-		
+
+
 		whole_entites_count_label = FXLabel.new(button_layout, "Count people ",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
 		whole_entites_count_label.x = 20
 		whole_entites_count_label.y = 80
@@ -388,6 +422,14 @@ class Table < FXMainWindow
 		@whole_entites_count_input.y = 100
 		@whole_entites_count_input.text = self.whole_entites_count.to_s
 		
+		@chekbox_sort_all_data_toTable = FXCheckButton.new(button_layout, " Sort all data in the table", :opts => LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_SIDE_BOTTOM)
+
+		@chekbox_sort_all_data_toTable.x = 160
+		@chekbox_sort_all_data_toTable.y = 100
+		#@chekbox_sort_all_data_toTable.connect(SEL_COMMAND) do |data|
+		#	print "The new value fro title #{@chekbox_sort_all_data_toTable.checked?}"
+		#end
+
 		@whole_entites_count_input.connect(SEL_CHANGED) do
 			if @whole_entites_count_input.text!=nil and  @whole_entites_count_input.text != "" then
 				if /^[0-9]*$/.match(@whole_entites_count_input.text)!=nil then
@@ -408,12 +450,16 @@ class Table < FXMainWindow
 				
 		@total_pages = (table.numRows / self.whole_entites_count.to_f).ceil
 		self.num_current_page.text = "1 of #{@total_pages}"
-		
+
+		self.label_num_current_page_data = FXLabel.new(button_layout, "",:opts => LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_SIDE_BOTTOM)
+		self.label_num_current_page_data.x = pos_x - 25
+		self.label_num_current_page_data.y = 25
+		#label_num_current_page_data.text = "1 page of 4 page data" 
 	end
 
 end
 
-class Button_control < FXMainWindow
+class Button_control
 	def initialize(tab_frame,width:200)
 		@control_area = FXGroupBox.new(tab_frame, "Control Area", :opts=> LAYOUT_FIX_WIDTH)
 		@control_area.width = 200

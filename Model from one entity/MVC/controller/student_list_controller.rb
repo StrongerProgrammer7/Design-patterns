@@ -35,6 +35,10 @@ class Student_list_controller
 		self.student_list_view.show(PLACEMENT_SCREEN)
 	end
 
+	def get_max_count_page()
+		@student_list.get_student_short_count
+	end
+
 	private 
 	attr_reader :student_list_view
 	attr_writer :data_list_student_short
