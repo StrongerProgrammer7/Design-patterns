@@ -172,6 +172,10 @@ class Student_list_view < FXMainWindow
 			self.modal_window_create_student.show(PLACEMENT_SCREEN)
 			self.modal_window_create_student.addTimeoutCheck()
     end
+
+    del.connect(SEL_COMMAND) do |sender,sel,data|
+    	print @selected_items
+    end
 	end
 end
 
