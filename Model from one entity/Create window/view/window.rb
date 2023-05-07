@@ -2,7 +2,7 @@ require 'fox16'
 
 include Fox
 
-class MyMainWindow < FXMainWindow
+class Student_list_view < FXMainWindow
 
   def initialize(app)
     # Call the base class initializer first
@@ -19,118 +19,35 @@ class MyMainWindow < FXMainWindow
 	
 	#              FXVerticalFrame
 	tab1_frame = FXHorizontalFrame.new(tab_book,LAYOUT_FILL_X|LAYOUT_FILL_Y)
-	create_filter_area(tab1_frame)
+	
+	initialize_filter(tab1_frame)
 	
 	# Create the table in the center
-	vframe_table = FXVerticalFrame.new(tab1_frame, :opts => LAYOUT_FILL_X|LAYOUT_FIX_WIDTH)
-	vframe_table.width = 620
-	table_area = FXGroupBox.new(vframe_table, "Table Area", LAYOUT_FILL_X|LAYOUT_FILL_Y)
-	#table_area.width = 620
-    @table = FXTable.new(table_area, nil, 0,
-      LAYOUT_SIDE_LEFT|LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT|TABLE_READONLY|TABLE_COL_SIZABLE|TABLE_ROW_SIZABLE)
-	@table.height =400
-
-    @table.setTableSize(11, 7)
-	# Set table header
-    @table.setColumnText(0, "Surname")
-    @table.setColumnText(1, "Name")
-    @table.setColumnText(2, "Lastname")
-    @table.setColumnText(3, "Mail")
-    @table.setColumnText(4, "Phone")
-    @table.setColumnText(5, "Telegram")
-    @table.setColumnText(6, "Git")
-	 @table.setColumnWidth(6, 200)
-	# Add some data to the table
-    @data = [
-      ["Doe", "John", "Jr.", "johndoe@example.com", "+1234567890", "@johndoe", "github.com/johndoe"],
-      ["Smith", "Jane", "A.", "janesmith@example.com", "+0987654321", "@janesmith", "github.com/janesmith"],
-      ["Lee", "David", "H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"],
-	  ["Lee", "David", "H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"],
-	  ["Lee", "David", "H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"],
-	  ["Doe", "John", "Jr.", "johndoe@example.com", "+1234567890", "@johndoe", "github.com/johndoe"],
-      ["Smith", "Jane", "A.", "janesmith@example.com", "+0987654321", "@janesmith", "github.com/janesmith"],
-      ["Lee", "David", "H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"],
-	  ["Lee", "David", "H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"],
-	  ["Lee", "David", "H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"]
-
-    ]
+	intialize_table(tab1_frame)
 	
-	fill_table(1,2)#TODO Record from input
-
-	# Add buttons for changing pages
-	button_layout = FXHorizontalFrame.new(vframe_table,:opts => LAYOUT_FILL_X|LAYOUT_SIDE_BOTTOM)
-    prev_button = FXButton.new(button_layout, "Previous",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
-	
-    next_button = FXButton.new(button_layout, "Next",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
-	
-    page_label = FXLabel.new(button_layout, "1", :opts => LAYOUT_FIX_X)
-    page_label.x = 300
-	@total_label = FXLabel.new(button_layout, "Total elements: 0",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
-	@total_label.x = 20
-	@total_label.y = 50
-	count_people_lable = FXLabel.new(button_layout, "Count people ",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
-	count_people_lable.x = 20
-	count_people_lable.y = 80
-	count_people_input = FXTextField.new(button_layout, 15, :opts => TEXTFIELD_NORMAL|LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
-	count_people_input.x = 20
-	count_people_input.y = 100
-	count_people_input.text = "2"
-	@count_people = Integer(count_people_input.text[0]) | 0
-	print @count_people 
-    prev_button.connect(SEL_COMMAND) do
-     # Decrement the current page count and update the UI
-      current_page = Integer(page_label.text[0])
-      if current_page > 1
-        current_page -= 1
-        page_label.text = "#{current_page} of #{@total_pages}"
-		fill_table(current_page,@count_people)
-      end
-    end
-    next_button.connect(SEL_COMMAND) do
-       # Increment the current page count and update the UI
-      current_page = Integer(page_label.text[0])
-      if current_page < @total_pages
-        current_page += 1
-        page_label.text = "#{current_page} of #{@total_pages}"
-		fill_table(current_page,@count_people)
-      end
-    end
-	 count_people_input.connect(SEL_CHANGED) do
-      @count_people = Integer(count_people_input.text[0]) | 0
-	  @total_pages = (@table.numRows/@count_people.to_f).ceil
-	  page_label.text = "1 of #{@total_pages}"
-
-	  if(@count_people > 0) then
-		fill_table(Integer(page_label.text[0]),@count_people)
-	  end
-    end
-
-	total_rows = @table.numRows
-	
-	@total_pages = (total_rows / @count_people.to_f).ceil
-	page_label.text = "1 of #{@total_pages}"
-	@table.rowHeaderWidth = 0
-	update_total_label
-	
-	#print @table.rowHeader
-	#@table.connect(SEL_COMMAND) do |sender, selector, data|
-	#	@data = @data.sort_by { |row| row[data.col] }
-	#	fill_table()
-    #end
-	header = @table.columnHeader
-	header.connect(SEL_COMMAND) do |sender, selector, data|
-		print data
-		@data = @data.sort_by { |row| row[data] }
-		fill_table(Integer(page_label.text[0]),2)
+	#@update_btn.connect(SEL_COMMAND) do
+	#	print @filter_git
+	#	print @filter_mail
+	#end
+	@filter_surname.connect(SEL_CHANGED) do
+			if @filter_surname.text!=nil and  @filter_surname.text != "" then
+				if /^[A-zА-яЁё]*$/.match(@filter_surname.text)!=nil then
+					@table_student.fill_table(Integer(@table_student.page_label.text[0]),3, filter_surname_initials:@filter_surname.text)
+				end				
+			else
+				@table_student.fill_table(Integer(@table_student.page_label.text[0]),2)
+			end
 		
-    end
-	
+			#@total_pages = (self.table.numRows/self.count_people.to_f).ceil
+			#@page_label.text = "1 of #{@total_pages}"
+			#
+			#if(self.count_people > 0) then
+			#	fill_table(Integer(@page_label.text[0]),self.count_people)
+			#end
+		end
 	# Create the control area on the right
-    control_area = FXGroupBox.new(tab1_frame, "Control Area", :opts=> LAYOUT_FIX_WIDTH)
-	control_area.width = 200
-    FXButton.new(control_area, "Add")
-    FXButton.new(control_area, "Edit")
-    FXButton.new(control_area, "Delete")
+	initialize_control(tab1_frame)
+    
 	
     # Create the second tab
     tab2 = FXTabItem.new(tab_book, "Tab 2")
@@ -164,32 +81,110 @@ class MyMainWindow < FXMainWindow
   
   private 
 	
-	def update_total_label
-		total_elements = @table.numRows * @table.numColumns
-		@total_label.text = "Total elements: #{total_elements}"
+	def initialize_filter(tab_frame)
+		@filters = Filter.new 
+		filter_area = @filters.create_filter_area(tab_frame,180)
+		@filter_surname = @filters.add_filter_input(filter_area)
+		@filter_git = @filters.add_filter_radioBtn(filter_area,@filter_git,"Наличие гита")
+		@filter_mail = @filters.add_filter_radioBtn(filter_area,@filter_mail,"Наличие почты")
+		@filter_telegram = @filters.add_filter_radioBtn(filter_area,@filter_mail,"Наличие телеграмма")
+		@filter_phone = @filters.add_filter_radioBtn(filter_area,@filter_mail,"Наличие телефона")
+		@update_btn = @filters.add_controlBtn(filter_area)
+		
 	end
 	
-	def create_filter_area(tab1_frame)
+	def intialize_table(tab_frame)
+			
+		# Add some data to the table
+		data = [
+			["Doe J.J.", "johndoe@example.com", "+1234567890", "@johndoe", "github.com/johndoe"],
+			["Smith J. A.", "janesmith@example.com", "+0987654321", "@janesmith", "github.com/janesmith"],
+			["Lee B. H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"],
+			["Lee A. S.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidle1e"],
+			["Lee D.H.", "davidlee@example.com", "+1111111111", "@davidlee", ""],
+			["Doe J.J.", "johndoe@example.com", "+1234567890", "@johndoe", "github.com/johndoe"],
+			["Smith J. A.", "janesmith@example.com", "+0987654321", "@janesmith", "github.com/janesmith"],
+			["Lee B. H.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidlee"],
+			["Lee A. S.", "davidlee@example.com", "+1111111111", "@davidlee", "github.com/davidle1e"],
+			["Lee D.H.", "davidlee@example.com", "+1111111111", "@davidlee", ""]
+		]
+		@table_student = Table.new(data,["Surname N.L.","Mail","Phone","Telegram","Git"],tab_frame)
+		@table_student.create_button_change_page()
+		
+		#print @table.rowHeader
+		
+	end
+	
+	def initialize_control(tab_frame)
+		control_area = FXGroupBox.new(tab_frame, "Control Area", :opts=> LAYOUT_FIX_WIDTH)
+		control_area.width = 200
+		FXButton.new(control_area, "Add")
+		#FXButton.new(control_area, "Update")
+		ed = FXButton.new(control_area, "Edit")
+		del = FXButton.new(control_area, "Delete")
+		ed.disable
+		del.disable
+		
+		@table_student.table.connect(SEL_COMMAND) do |sender, selector, data|
+			#print "col=",data.col
+			#print "row=",data.row
+			if data.row > 0 then
+				ed.disable
+				del.enable
+			elsif data.row == 0 then
+				ed.enable
+				del.enable
+			else
+				ed.disable
+				del.disable
+			end
+			if data == nil then
+				ed.disable
+				del.disable
+			end
+		end
+		
+		
+	end
+	
+end
+
+class Filter < FXMainWindow
+
+	def initialize()
+		#create_filter_area(tab_frame,width)
+	end
+	
+	def create_filter_area(tab_frame,width)
 		# Create the filtering area on the left
-		scroll_window = FXScrollWindow.new(tab1_frame, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FILL_Y|VSCROLLER_ALWAYS)
-		scroll_window.width = 180
+		scroll_window = FXScrollWindow.new(tab_frame, :opts => LAYOUT_FIX_WIDTH|LAYOUT_FILL_Y|VSCROLLER_ALWAYS)
+		scroll_window.width = width
 		filtering_area = FXGroupBox.new(scroll_window, "Filtering Area")
 		
 		FXLabel.new(filtering_area, "Filter by:")
-		FXLabel.new(filtering_area, "Last Name and Initials: ")
-		FXTextField.new(filtering_area, 15, :opts => TEXTFIELD_NORMAL)
 		
-		add_filter(filtering_area,@filter_git,"Наличие гита")
-		add_filter(filtering_area,@filter_mail,"Наличие почты")
-		add_filter(filtering_area,@filter_mail,"Наличие телеграмма")
-		add_filter(filtering_area,@filter_mail,"Наличие телефона")
+		return filtering_area
+		#add_filter_radioBtn(filtering_area,@filter_git,"Наличие гита")
+		#add_filter_radioBtn(filtering_area,@filter_mail,"Наличие почты")
+		#add_filter_radioBtn(filtering_area,@filter_mail,"Наличие телеграмма")
+		#add_filter_radioBtn(filtering_area,@filter_mail,"Наличие телефона")
 		
-		button_filter = FXHorizontalFrame.new(filtering_area,LAYOUT_FILL_X|LAYOUT_FILL_Y)
-		FXButton.new(button_filter, "Обновить")
-		FXButton.new(button_filter, "Сбросить")
+		
 	end
 	
-	def add_filter(filtering_area,filter,name_group)
+	def add_filter_input(filtering_area)
+		FXLabel.new(filtering_area, "Surname N.L.: ")
+		return FXTextField.new(filtering_area, 15, :opts => TEXTFIELD_NORMAL)
+	end
+	def add_controlBtn(filtering_area)
+		button_filter = FXHorizontalFrame.new(filtering_area,LAYOUT_FILL_X|LAYOUT_FILL_Y)
+		update = FXButton.new(button_filter, "Обновить")
+		FXButton.new(button_filter, "Сбросить")
+		update
+		
+	end
+	
+	def add_filter_radioBtn(filtering_area,filter,name_group)
 
 		filter = FXDataTarget.new(2)
 		groups_radio = FXGroupBox.new(filtering_area, name_group, :opts => GROUPBOX_NORMAL|GROUPBOX_TITLE_LEFT|FRAME_GROOVE|LAYOUT_SIDE_TOP)
@@ -205,54 +200,211 @@ class MyMainWindow < FXMainWindow
 		filter.connect(SEL_COMMAND) do
 			puts "The newly selected value is #{filter.value}"
 			search_field.enable if filter.value == 0
-			search_field.disable if filter.value > 0 
+			search_field.disable if filter.value > 0
+			
 		end
+		filter
 	end
 	
-	def fill_table(num_page,count)
-		clear_table()
-		@row_per = 0
+end
+
+class Table < FXMainWindow
+	attr_accessor :table, :page_label
+	attr_reader :data, :vframe_table, :count_people
+	
+	def initialize(data,names_col,tab_frame, width_frame:620,table_height:400,count_people:2)
+		raise "Data is empty!" if data.length == 0 || names_col.length == 0
+		self.data = data
+		self.vframe_table = FXVerticalFrame.new(tab_frame, :opts => LAYOUT_FILL_X|LAYOUT_FIX_WIDTH)
+		self.vframe_table.width = width_frame
+		
+		table_area = FXGroupBox.new(self.vframe_table, "Table Area", LAYOUT_FILL_X|LAYOUT_FILL_Y)
+		
+		self.table = FXTable.new(table_area, nil, 0,
+		LAYOUT_SIDE_LEFT|LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT|TABLE_READONLY|TABLE_COL_SIZABLE|TABLE_ROW_SIZABLE)
+		self.table.height = table_height
+		
+		self.table.setTableSize(data.length, data[0].length)
+		
+		self.count_people = count_people
+		setHeaderText(names_col)
+		self.table.rowHeaderWidth = 40
+		fill_table(1,self.count_people)
+		
+		header = self.table.columnHeader
+		header.connect(SEL_COMMAND) do |sender, selector, data|
+			print data
+			@data = self.data.sort_by { |row| row[data] }
+			fill_table(Integer(self.page_label.text[0]),self.count_people)
+			
+		end
+		
+		
+		
+	end
+	
+	def setHeaderText(names)
+		column = 0
+		names.each do |name|
+			self.table.setColumnText(column, name) if column < names.length
+			column+=1
+		end
+		self.table.setColumnWidth((names.length-1), 200)
+	end
+		
+	def fill_table(num_page,count, filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
+	filter_surname_initials:nil)
+		clear_table((self.data[0].length-1),(self.data.length - 1))
 		ind = 0
 		row = 0
 		begin_ = count * num_page - count
-		if(num_page == 0) then
-			begin_ = 0
-		end
-		@data.each do |row_data|
+		begin_ = 0 if(num_page == 0) 
+			
+		self.data.each do |row_data|
 			column = 0
+			
 			if(ind >= begin_ and ind < count*num_page) then
-				row_data.each do |cell_data|
-					@table.setItemText(row, column, cell_data)
-					column += 1
+				if(filter_surname_initials!=nil) then
+					print filter_surname_initials
+					if row_data[0].include? filter_surname_initials then
+						row_data.each do |cell_data|
+							self.table.setItemText(row, column, cell_data)
+							column += 1
+						end
+						self.table.setRowText(row,(row+1).to_s)
+						row +=1
+					end
+				else
+					row_data.each do |cell_data|
+						self.table.setItemText(row, column, cell_data)
+						column += 1
+					end
+					self.table.setRowText(row,(row+1).to_s)
+					row +=1
+					
 				end
-				row +=1
+				
 			end
-		@row_per += 1
-		ind +=1
+			
+			ind +=1
+			if(ind > count * num_page) then 
+				break 
+			else
+				
+			end
 		end
-  end
-   def clear_table()
-		ind  =0
-		row = 0
+    end
+	
+	def create_button_change_page()
 		
+		# Add buttons for changing pages
+		button_layout = FXHorizontalFrame.new(self.vframe_table,:opts => LAYOUT_FILL_X|LAYOUT_SIDE_BOTTOM)
+		prev_button = FXButton.new(button_layout, "Previous",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
+		next_button = FXButton.new(button_layout, "Next",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
+		
+		display_numPage_countPage(button_layout)
+		
+		prev_button.connect(SEL_COMMAND) do
+			current_page = Integer(self.page_label.text[0])
+			if current_page > 1
+				current_page -= 1
+				self.page_label.text = "#{current_page} of #{@total_pages}"
+				fill_table(current_page,self.count_people)
+			end
+		end
+		next_button.connect(SEL_COMMAND) do
+			current_page = Integer(self.page_label.text[0])
+			if current_page < @total_pages
+				current_page += 1
+				self.page_label.text = "#{current_page} of #{@total_pages}"
+				fill_table(current_page,self.count_people)
+			end
+		end
+	
+	end
+	
+	
+	
+	private
+		attr_accessor :data, :vframe_table, :count_people
+		
+	def clear_table(count_col,count_row)
+		row = 0		
 		loop do
 			column =0
 			loop do
-				break if(column > 6)
-				@table.setItemText(row, column, "")
+				self.table.setRowText(row,"")
+				break if(column > count_col)
+				self.table.setItemText(row, column, "")
 				column+=1
 			end 
-			break if row >@data.length-1 
+			break if row > count_row - 1
 			row +=1
 		end
-		#print @table.columnHeader
+		#print self.table.columnHeader
    end
-  
+   
+   #def isIncludeToFilter(row, filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
+#	filter_surname_initials:nil)
+#		return true if filter_git==nil and filter_mail==nil and filter_telegram == nil and filter_phone == nil	and filter_surname_initials == nil
+#		filter_accept = false
+#		row.each do |elem|
+#			
+#		end	
+ #  end
+   
+   def display_numPage_countPage(button_layout,pos_x:300)
+		self.page_label = FXLabel.new(button_layout, "1", :opts => LAYOUT_FIX_X)
+		self.page_label.x = pos_x
+		
+		@total_label = FXLabel.new(button_layout, "Total elements: 0",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
+		@total_label.x = 20
+		@total_label.y = 50
+		count_people_lable = FXLabel.new(button_layout, "Count people ",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
+		count_people_lable.x = 20
+		count_people_lable.y = 80
+		count_people_input = FXTextField.new(button_layout, 15, :opts => TEXTFIELD_NORMAL|LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
+		count_people_input.x = 20
+		count_people_input.y = 100
+		count_people_input.text = self.count_people.to_s
+		
+		count_people_input.connect(SEL_CHANGED) do
+			if count_people_input.text!=nil and  count_people_input.text != "" then
+				if /^[0-9]*$/.match(count_people_input.text)!=nil then
+					self.count_people = Integer(count_people_input.text)
+				end				
+			else
+				self.count_people = 1
+			end
+		
+			@total_pages = (self.table.numRows/self.count_people.to_f).ceil
+			self.page_label.text = "1 of #{@total_pages}"
+		
+			if(self.count_people > 0) then
+				fill_table(Integer(self.page_label.text[0]),self.count_people)
+			end
+		end
+				
+		@total_pages = (table.numRows / self.count_people.to_f).ceil
+		self.page_label.text = "1 of #{@total_pages}"
+		
+		update_total_label
+		
+	end
+	
+    def update_total_label
+		total_elements = self.table.numRows * self.table.numColumns
+		@total_label.text = "Total elements: #{total_elements}"
+	end
+end
+
+class Button_control < FXMainWindow
+
 end
 
 # Start the application
 application = FXApp.new
-main_window = MyMainWindow.new(application)
+main_window = Student_list_view.new(application)
 application.create
 main_window.show(PLACEMENT_SCREEN)
 application.run
