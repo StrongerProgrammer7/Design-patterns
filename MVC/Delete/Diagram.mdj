@@ -13102,7 +13102,8 @@
 								"$ref": "AAAAAAGH3BdKroT48Jw="
 							},
 							"name": "disable_button_edit_delete",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -13111,7 +13112,8 @@
 								"$ref": "AAAAAAGH3BdKroT48Jw="
 							},
 							"name": "chekbox_sort_all_data_toTable",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -13360,7 +13362,7 @@
 								"reference": {
 									"$ref": "AAAAAAGH3Bb0SHpwk1A="
 								},
-								"aggregation": "composite"
+								"aggregation": "shared"
 							}
 						}
 					],
