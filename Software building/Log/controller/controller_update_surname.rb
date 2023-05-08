@@ -1,8 +1,5 @@
-require_relative File.dirname($0) + './view/student_list_view.rb'
-require_relative File.dirname($0) + './student_DB/student_list_DB.rb'
-require_relative File.dirname($0) + './student_list/student_list.rb'
-require_relative File.dirname($0) + './datatable/data_list_student_short.rb'
 require_relative File.dirname($0) + '/student_list_controller.rb'
+require_relative File.dirname($0) + './persons/student.rb'
 
 class Controller_update_surname< Student_list_controller
 

@@ -15,7 +15,7 @@ load './list_file/students_list_txt.rb'
 
 load './datatable/students_list.rb'
 
-
+load './student_list/student_list.rb'
 load './controller/student_list_controller.rb'
 
 load './controller/controller_insert.rb'
