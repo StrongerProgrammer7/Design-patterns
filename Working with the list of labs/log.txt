@@ -1,0 +1,5 @@
+# Logfile created on 2023-05-08 16:42:40 +0300 by logger.rb/v1.5.3
+I, [2023-05-08T16:46:44.975510 #6446]  INFO -- : Updating student with ID 102 and params {"name"=>"Alexax", "surname"=>"Lopy", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>102}
+I, [2023-05-08T19:46:47.470588 #18270]  INFO -- : Updating student with ID 37 and params {"name"=>"Alex", "surname"=>"Volkovad", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>37}
+I, [2023-05-08T19:49:30.391792 #18576]  INFO -- : Updating student with ID 50 and params {"name"=>"Alex", "surname"=>"Lopy", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>50}
+I, [2023-05-08T19:49:52.987305 #18576]  INFO -- : Creating student with params {"name"=>"Alex", "surname"=>"Dmitiyd", "lastname"=>"Lolylov", "phone"=>"+7777156598", "mail"=>nil, "telegram"=>nil, "git"=>nil}
