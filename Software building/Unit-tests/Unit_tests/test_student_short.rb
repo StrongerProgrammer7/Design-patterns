@@ -28,7 +28,7 @@ class TestStudent_short < Test::Unit::TestCase
   end
 
 
-  def test_valid_email?
+  def test_valid_telegram?
       assert(Person.check_telegram("@telega"))
       assert(!Person.check_telegram("@@telga"))
       assert(!Person.check_telegram("tel@le"))
