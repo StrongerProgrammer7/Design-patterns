@@ -45,8 +45,7 @@ class Modal_change_student < FXDialogBox
 
 	def get_personal_data_student(id)
 		@student_data = []
-		@current_id = id
-		@student_data = @student_list_controller.get_student_by_id(@current_id)
+		@student_data = @student_list_controller.get_student_by_id(id)
 		if(@student_data.class!=Student) then
 			@student_data = @student_data
 			@fields.each do |key,val|
@@ -105,9 +104,6 @@ private
 		@student_field["#{name.downcase}"] = @student_data["#{name}"] if @student_data["#{name}"] != nil
 	end
 
-	def fill(name,elem)
-		@student_field["#{name.downcase}"] = elem if elem != nil
-	end
 	def fill_inputs_from_object()
 		@name.text = @student_data.name if @student_data.name != nil
 		@surname.text = @student_data.surname if @student_data.surname != nil
