@@ -12,8 +12,7 @@ class Students_list
 
 	def initialize(format_file)
 		self.format_file = format_file 
-		addressFile = "./testfile/test.json"
-		self.list_students = read_from_file(addressFile)
+		self.list_students = read_from_file(@@addressFile)
 	end
 
 	def get_student_by_id(id)
@@ -26,6 +25,7 @@ class Students_list
 	end
 
 	def get_k_n_student_short_list(k,n,data_list:nil)
+		self.list_students = read_from_file(@@addressFile)
 		list_students_short = []
 		index_elem = 0
 		index_list = 0
@@ -62,7 +62,7 @@ class Students_list
 	end
 
 	def replace_element_by_id(id,element)
-		self.list_students.map! { |elem| elem.id = id ? element : elem }
+		self.list_students.map! { |elem|  elem.id == id ? element : elem }
 	end
 
 	def delete_element_by_id(id)
@@ -82,6 +82,7 @@ class Students_list
 	private
 		attr_writer :list_students
 		attr_reader :format_file
+		@@addressFile = "./testfile/test.json"
 
 	def read_from_file(addressFile)
 		self.list_students = self.format_file.read_from_file(addressFile)

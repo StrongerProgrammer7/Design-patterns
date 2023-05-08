@@ -31,8 +31,8 @@
   },
   "student4": {
     "id": "4",
-    "surname": "Surnamej",
-    "name": "Namej",
+    "surname": "Kail",
+    "name": "Loly",
     "lastname": null,
     "phone": null,
     "mail": null,
@@ -41,15 +41,15 @@
   },
   "student5": {
     "id": "5",
-    "surname": "Surnames",
-    "name": "Names",
-    "lastname": null,
+    "surname": "Kont",
+    "name": "Puppy",
+    "lastname": "Strike",
     "phone": null,
     "mail": null,
     "telegram": null,
     "git": null
   },
-  "student7": {
+  "student6": {
     "id": "7",
     "surname": "Puf",
     "name": "Zuf",

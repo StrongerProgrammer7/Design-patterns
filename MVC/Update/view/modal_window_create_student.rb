@@ -31,7 +31,7 @@ class Modal_create_student < FXDialogBox
 
 	def addTimeoutCheck()
 		if(self.shown?) then
-			@timeout_id = @app.addTimeout(2000, :repeat => true) do
+			@timeout_id = @app.addTimeout(500, :repeat => true) do
 				if @student_field["surname"]!=nil && @student_field["name"] != nil then
 					 @ok_btn.enable  
 				else
@@ -56,6 +56,7 @@ private
 		ok_button.disable
 		ok_button.connect(SEL_COMMAND) do |sender, selector, data|
 			#TODO:Validate special field
+			@app.removeTimeout(@timeout_id)
 			@student_list_controller.create_student(@student_field)
 			self.hide
 		end
@@ -67,46 +68,28 @@ private
 		FXLabel.new(frame, name)
     	nameField = FXTextField.new(frame, 20)
     	nameField.text = name if name == "Name" || name == "Surname" || name == "Lastname"
-    	nameField.connect(SEL_KEYPRESS) do |sender, sel, event|
-    		if method_check.call(event.text)  && event.code != KEY_Tab && event.code != KEY_Return && event.code != KEY_KP_Enter then
-    			curpos = nameField.cursorPos 
-    			nameField.text = nameField.text.slice(0, nameField.cursorPos) + event.text + nameField.text.slice(nameField.cursorPos, nameField.text.length)
-    			nameField.setCursorPos(curpos+1)
+
+    	nameField.connect(SEL_VERIFY) do |sender, sel, tentative|
+    		if method_check.call(tentative)
+    			false 
+    		else		
+    			true
     		end
-        	action_operation_toTextField(event,nameField)
-        	if method_validate.call(nameField.text) then 
-        		@student_field[name.downcase]=nameField.text 
-        	else @student_field[name.downcase] =nil 
-        	end
-        #print nameField.text
     	end
-	end
-
-
-	def action_operation_toTextField(event,nameField)
-		if event.code == KEY_BackSpace && nameField.text[nameField.cursorPos-2] != nil then
-			#nameField.setText(nameField.text[0..-2]) 
-			action_delete(nameField,nameField.cursorPos-1,nameField.cursorPos,1) if nameField.cursorPos !=0
-		end
-		if event.code == KEY_Delete && nameField.text[nameField.cursorPos] != nil then
-			action_delete(nameField,nameField.cursorPos,nameField.cursorPos+1,0)
-    	end
-    	nameField.setCursorPos(nameField.cursorPos - 1) if nameField.cursorPos > 0 && event.code == KEY_Left
-    	nameField.setCursorPos(nameField.cursorPos + 1) if nameField.cursorPos <= nameField.text.length && event.code == KEY_Right
-   
-    	if (event.state & CONTROLMASK) && event.code == KEY_V
-        	text = Clipboard.paste
-        	nameField.setText(text)
+    	nameField.connect(SEL_CHANGED) do 
+    		validate_field(nameField,method_validate,name)
     	end
 
+    	
 	end
 
-	def action_delete(nameField,prev_cur,next_cur,margin)
-		curpos = nameField.cursorPos 
-		nameField.text = nameField.text.slice(0, prev_cur) + nameField.text.slice(next_cur, nameField.text.length)
-		nameField.setCursorPos(curpos-margin)
+	def validate_field(nameField,method_validate,name)
+		if method_validate.call(nameField.text) then 
+        	@student_field[name.downcase] = nameField.text 
+        else 
+        	@student_field[name.downcase] = nil 
+        end
 	end
-
 
 
 	def check_letter(elem)

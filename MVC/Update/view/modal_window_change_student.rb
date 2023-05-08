@@ -10,10 +10,10 @@ class Modal_change_student < FXDialogBox
 		@app = app
 		@student_list_controller = controller
 		
-		super(app, "Add student", :width => 400, :height => 250)
+		super(app, "Change student", :width => 400, :height => 250)
 		
 		@student_field = {"name" =>nil,"surname" => nil, "lastname" => nil,
-			"phone" => nil,"mail" => nil, "telegram" => nil, "git" => nil}
+			"phone" => nil,"mail" => nil, "telegram" => nil, "git" => nil, "id" => nil}
 		matrix = FXMatrix.new(self, 2, MATRIX_BY_COLUMNS|LAYOUT_FILL_X)
 
 		@name = create_textField(matrix,"Name",method(:check_letter),method(:validate_surname_name_lastname))
@@ -24,6 +24,8 @@ class Modal_change_student < FXDialogBox
 		@telegram = create_textField(matrix,"Telegram",method(:check_let_dig_specilSymbol),method(:valid_mail))
 		@git = create_textField(matrix,"Git",method(:check_let_dig_specilSymbol),method(:valid_mail))
 	
+		@fields = {"Name"=>@name,"Surname"=>@surname,"Lastname" =>@lastname,
+			"phone" => @phone, "telegram" => @telegram, "git" => @git,"mail" => @mail}
 		create_close_button(matrix)
 		@ok_btn = create_button_ok(matrix)
 			
@@ -31,7 +33,7 @@ class Modal_change_student < FXDialogBox
 
 	def addTimeoutCheck()
 		if(self.shown?) then
-			@timeout_id = @app.addTimeout(2000, :repeat => true) do
+			@timeout_id = @app.addTimeout(1000, :repeat => true) do
 				if @student_field["surname"]!=nil && @student_field["name"] != nil then
 					 @ok_btn.enable  
 				else
@@ -45,13 +47,14 @@ class Modal_change_student < FXDialogBox
 		@student_data = []
 		@current_id = id
 		@student_data = @student_list_controller.get_student_by_id(@current_id)
-		fill_inputs(@name,"Name")
-		fill_inputs(@surname,"Surname")
-		fill_inputs(@lastname,"Lastname")
-		fill_inputs(@phone,"phone")
-		fill_inputs(@mail,"mail")
-		fill_inputs(@telegram,"telegram")
-		fill_inputs(@git,"git")
+		if(@student_data.class!=Student) then
+			@student_data = @student_data
+			@fields.each do |key,val|
+				fill_inputs(val,key)
+			end
+		else
+			fill_inputs_from_object()
+		end
 	end
 
 private
@@ -66,10 +69,11 @@ private
 
 	def create_button_ok(horizontal_frame)
 		ok_button = FXButton.new(horizontal_frame, "Ok", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
-		ok_button.disable
 		ok_button.connect(SEL_COMMAND) do |sender, selector, data|
 			#TODO:Validate special field
-			#@student_list_controller.create_student(@student_field)
+			@student_field["id"] = @student_data["Id"] if @student_data.class!=Student
+			@student_list_controller.update_student(@student_field)
+			@app.removeTimeout(@timeout_id)
 			self.hide
 		end
 		ok_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
@@ -81,54 +85,55 @@ private
     	nameField = FXTextField.new(frame, 30)
     	
     	nameField.disable if name=="Phone" || name=="Telegram" || name=="Git" || name=="Mail"
-    	
 
-    	nameField.connect(SEL_KEYPRESS) do |sender, sel, event|
-    		if method_check.call(event.text)  && event.code != KEY_Tab && event.code != KEY_Return && event.code != KEY_KP_Enter then
-    			curpos = nameField.cursorPos 
-    			nameField.text = nameField.text.slice(0, nameField.cursorPos) + event.text + nameField.text.slice(nameField.cursorPos, nameField.text.length)
-    			nameField.setCursorPos(curpos+1)
+    	nameField.connect(SEL_VERIFY) do |sender, sel, tentative|
+    		if method_check.call(tentative)
+    			false 
+    		else		
+    			true
     		end
-        	action_operation_toTextField(event,nameField)
-        	if method_validate.call(nameField.text) then 
-        		@student_field[name.downcase]=nameField.text 
-        	else @student_field[name.downcase] =nil 
-        	end
-        #print nameField.text
     	end
+    	nameField.connect(SEL_CHANGED) do 
+    		validate_field(nameField,method_validate,name)
+    	end
+
     	nameField
 	end
 
 	def fill_inputs(nameField,name)
-		nameField.setText(@student_data[0]["#{name}"]) 
+		nameField.text = @student_data["#{name}"] if @student_data["#{name}"] != nil
+		@student_field["#{name.downcase}"] = @student_data["#{name}"] if @student_data["#{name}"] != nil
 	end
 
+	def fill(name,elem)
+		@student_field["#{name.downcase}"] = elem if elem != nil
+	end
+	def fill_inputs_from_object()
+		@name.text = @student_data.name if @student_data.name != nil
+		@surname.text = @student_data.surname if @student_data.surname != nil
+		@lastname.text = @student_data.lastname if @student_data.lastname != nil
+		@phone.text = @student_data.phone if @student_data.phone != nil
+		@mail.text = @student_data.mail if @student_data.mail != nil
+		@git.text = @student_data.git if @student_data.git != nil
+		@telegram.text = @student_data.telegram if @student_data.telegram != nil
 
-
-	def action_operation_toTextField(event,nameField)
-		if event.code == KEY_BackSpace && nameField.text[nameField.cursorPos-2] != nil then
-			#nameField.setText(nameField.text[0..-2]) 
-			action_delete(nameField,nameField.cursorPos-1,nameField.cursorPos,1) if nameField.cursorPos !=0
-		end
-		if event.code == KEY_Delete && nameField.text[nameField.cursorPos] != nil then
-			action_delete(nameField,nameField.cursorPos,nameField.cursorPos+1,0)
-    	end
-    	nameField.setCursorPos(nameField.cursorPos - 1) if nameField.cursorPos > 0 && event.code == KEY_Left
-    	nameField.setCursorPos(nameField.cursorPos + 1) if nameField.cursorPos <= nameField.text.length && event.code == KEY_Right
-   
-    	if (event.state & CONTROLMASK) && event.code == KEY_V
-        	text = Clipboard.paste
-        	nameField.setText(text)
-    	end
-
+		@student_field["name"] = @student_data.name if @student_data.name != nil
+		@student_field["surname"] = @student_data.surname if @student_data.surname != nil
+		@student_field["lastname"] = @student_data.lastname if @student_data.lastname != nil
+		@student_field["phone"] = @student_data.phone if @student_data.phone != nil
+		@student_field["mail"] = @student_data.mail if @student_data.mail != nil
+		@student_field["git"] = @student_data.git if @student_data.git != nil
+		@student_field["telegram"] = @student_data.telegram if @student_data.telegram != nil
+		@student_field["id"] = @student_data.id
 	end
 
-	def action_delete(nameField,prev_cur,next_cur,margin)
-		curpos = nameField.cursorPos 
-		nameField.text = nameField.text.slice(0, prev_cur) + nameField.text.slice(next_cur, nameField.text.length)
-		nameField.setCursorPos(curpos-margin)
+	def validate_field(nameField,method_validate,name)
+		if method_validate.call(nameField.text) then 
+        	@student_field[name.downcase] = nameField.text 
+        else 
+        	@student_field[name.downcase] = nil 
+        end
 	end
-
 
 
 	def check_letter(elem)

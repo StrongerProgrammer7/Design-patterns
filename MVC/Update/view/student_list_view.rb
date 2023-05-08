@@ -151,7 +151,7 @@ class Student_list_view < FXMainWindow
 		
 		event_addStudent(add)
 		event_deleteStudent(ed,del)
-		event_changeStudent(ed)
+		event_changeStudent(ed,del)
 
 	end
 
@@ -189,12 +189,14 @@ class Student_list_view < FXMainWindow
     end
 	end
 
-	def event_changeStudent(ed_btn)
+	def event_changeStudent(ed_btn,del_btn)
 		ed_btn.connect(SEL_COMMAND) do |sender,sel,data|	
-			self.modal_window_change_student.show(PLACEMENT_SCREEN)
-			self.modal_window_change_student.addTimeoutCheck()
+			self.modal_window_change_student.show(PLACEMENT_SCREEN)	
 			id = self.student_list_controller.get_selected()[0]
 			self.modal_window_change_student.get_personal_data_student(id)
+			self.modal_window_change_student.addTimeoutCheck()
+			@selected_items = []
+			disable_button_edit_delete(ed_btn,del_btn)
     end
 	end
 

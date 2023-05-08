@@ -38,7 +38,9 @@ class Students_list_DB
 	end 
 	
 	def get_student_by_id(id)
-		return @dbcon.crud_student_by_db("Select * FROM Students WHERE id = #{id}").to_a
+		student = @dbcon.crud_student_by_db("Select * FROM Students WHERE id = #{id}").to_a
+		student = clearData(student[0])
+		return student
 	end
 
 	def get_k_n_student_short_list(k,n,data_list:nil)
