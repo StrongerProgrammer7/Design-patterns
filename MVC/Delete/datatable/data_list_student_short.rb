@@ -1,5 +1,4 @@
 require_relative File.dirname($0) + '/data_list.rb'
-require_relative File.dirname($0) + './view/student_list_view.rb'
 
 class Data_list_student_short < Data_list
 
