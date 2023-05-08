@@ -1,0 +1,62 @@
+{
+  "student1": {
+    "id": "1",
+    "surname": "Калмыков",
+    "name": "Сергей",
+    "lastname": "Тимурович",
+    "phone": "89374324535",
+    "mail": null,
+    "telegram": null,
+    "git": null
+  },
+  "student2": {
+    "id": "2",
+    "surname": "Крылов",
+    "name": "Александр",
+    "lastname": "Ильич",
+    "phone": null,
+    "mail": "swaf@mail.ru",
+    "telegram": null,
+    "git": null
+  },
+  "student3": {
+    "id": "3",
+    "surname": "Максимова",
+    "name": "Елизавета",
+    "lastname": "Артуровна",
+    "phone": null,
+    "mail": null,
+    "telegram": "@Arturovna7",
+    "git": "https://github.com/StPr/rep.git"
+  },
+  "student4": {
+    "id": "4",
+    "surname": "Kail",
+    "name": "Loly",
+    "lastname": null,
+    "phone": null,
+    "mail": null,
+    "telegram": null,
+    "git": null
+  },
+  "student5": {
+    "id": "5",
+    "surname": "Kont",
+    "name": "Puppy",
+    "lastname": "Strike",
+    "phone": null,
+    "mail": null,
+    "telegram": null,
+    "git": null
+  },
+  "student6": {
+    "id": "7",
+    "surname": "Puf",
+    "name": "Zuf",
+    "lastname": null,
+    "phone": "+79374324535",
+    "mail": null,
+    "telegram": null,
+    "git": null
+  }
+}
