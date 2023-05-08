@@ -2,7 +2,7 @@ require_relative File.dirname($0) + './view/button_control_view.rb'
 require_relative File.dirname($0) + './view/filter_control_view.rb'
 require_relative File.dirname($0) + './view/table_control_view.rb'
 require_relative File.dirname($0) + './view/modal_window_create_student.rb'
-require_relative File.dirname($0) + './controller/student_list_controller.rb'
+
 require 'fox16'
 require 'clipboard'
 
