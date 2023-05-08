@@ -1,5 +1,3 @@
-require_relative File.dirname($0) + './student_list/student_list.rb'
-require_relative File.dirname($0) + './datatable/data_list_student_short.rb'
 
 require 'logger'
 
