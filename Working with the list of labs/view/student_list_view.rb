@@ -85,7 +85,7 @@ class Student_list_view < FXMainWindow
 	
 		list_btn = initialize_control(tab_frame)
 		events_students_controls(list_btn[0],list_btn[1],list_btn[2])
-		
+
 		@filter_surname.connect(SEL_CHANGED) do
 			raise "Table is empty" if @table_student.table.numRows == 0
 				if @filter_surname.text!=nil and @filter_surname.text != "" then
@@ -147,8 +147,8 @@ class Student_list_view < FXMainWindow
 		add = button_control.createButton("Add")
 		ed = button_control.createButton("Edit")
 		del = button_control.createButton("Delete")
-
-		return [add,ed,del]
+		update = button_control.createButton("update")
+		return [add,ed,del,update]
 	end
 
 	def events_students_controls(add,ed,del)
