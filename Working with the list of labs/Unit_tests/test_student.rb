@@ -1,5 +1,5 @@
-require_relative File.dirname($0) + './persons/student.rb'
-require_relative File.dirname($0) + './persons/person.rb'
+require_relative File.dirname($0) + './model_student/persons/student.rb'
+require_relative File.dirname($0) + './model_student/persons/person.rb'
 
 require 'test/unit'
 

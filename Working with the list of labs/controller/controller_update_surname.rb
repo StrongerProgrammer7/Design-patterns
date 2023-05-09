@@ -1,4 +1,4 @@
-require_relative File.dirname($0) + './persons/student.rb'
+require_relative File.dirname($0) + './model_student/persons/student.rb'
 require_relative File.dirname($0) + '/student_list_controller.rb'
 
 class Controller_update_surname< Student_list_controller

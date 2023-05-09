@@ -13,6 +13,8 @@ class Student_list_view < FXMainWindow
 
   def initialize(app,controller,modal_create:nil,modal_change:nil)
   	@student_list_controller = controller
+  	@labs_list_controller = nil
+  	
   	self.modal_window_create_student = modal_create
   	self.modal_window_change_student = modal_change
 
@@ -32,8 +34,15 @@ class Student_list_view < FXMainWindow
     createLabelByCenter(tab_book)
 
     tab_book.connect(SEL_COMMAND) do |sender, sel, data|
-    		pos = @table_student.num_current_page.text.index(" ")
-    	 	current_page = Integer(@table_student.num_current_page.text.slice(0,pos))
+    	if data == 0 then
+    		self.current_table = @table_student
+    	elsif data == 1 then
+    		self.current_table = @table_labs
+    	else
+    		self.current_table = @table_student
+    	end
+    		#pos = self.current_table.num_current_page.text.index(" ")
+    	 	#current_page = Integer(self.current_table.num_current_page.text.slice(0,pos))
     		showData(self.num_page,self.count_records) if (data==0)
     end
 
@@ -64,8 +73,9 @@ class Student_list_view < FXMainWindow
 	end
 
   private 
-	attr_accessor :student_list_controller ,:max_page_data, :modal_window_create_student, :modal_window_change_student
+	attr_accessor :student_list_controller ,:max_page_data, :modal_window_create_student, :modal_window_change_student, :current_table
 	attr_writer :count_records, :num_page
+	
 	def createTab(tab_book, name_tab)
     tab = FXTabItem.new(tab_book, name_tab)
 	end
@@ -103,7 +113,9 @@ class Student_list_view < FXMainWindow
 		
 		@table_labs = Table_lab_works.new(tab_frame,"Labs table")
 	
-		initialize_control(tab_frame)
+		list_btn = initialize_control(tab_frame)
+		events_labs_controls(list_btn[0],list_btn[1],list_btn[2],list_btn[3])
+
 	end
 
 	def initialize_filter(tab_frame)
@@ -152,15 +164,24 @@ class Student_list_view < FXMainWindow
 	end
 
 	def events_students_controls(add,ed,del)
-		ed.disable
-		del.disable
+		disable_button_edit_del(ed,del)
 
-		event_table_selected(ed,del)
-		event_table_deselected(ed,del)	
+		event_table_student_selected(ed,del)
+		event_table_student_deselected(ed,del)	
 		
 		event_addStudent(add)
 		event_deleteStudent(ed,del)
 		event_changeStudent(ed,del)
+	end
+
+	def events_labs_controls(add,ed,del,update)
+		disable_button_edit_del(ed,del)
+
+	end
+
+	def disable_button_edit_del(ed,del)
+		ed.disable
+		del.disable
 	end
 
 	def event_table_selected(ed_btn,del_btn)
@@ -179,9 +200,27 @@ class Student_list_view < FXMainWindow
 			end
 			self.student_list_controller.select_student(item.to_s)
 		end
+	end 
+
+	def event_table_student_selected(ed_btn,del_btn)
+		@selected_items = []
+		@table_student.table.connect(SEL_SELECTED) do |sender, selector, data|
+			item = sender.getItem(data.row, 0) #data.col	
+			@selected_items << data.row.to_s unless @selected_items.include? data.row.to_s
+			if @selected_items.length > 1 then
+				ed_btn.disable
+				del_btn.enable
+			elsif @selected_items.length == 1 then
+				ed_btn.enable
+				del_btn.enable
+			else
+				disable_button_edit_delete(ed_btn,del_btn)
+			end
+			self.student_list_controller.select_student(item.to_s)
+		end
 	end
 
-	def event_table_deselected(ed_btn,del_btn)
+	def event_table_student_deselected(ed_btn,del_btn)
 		@table_student.table.connect(SEL_DESELECTED) do |sender, sel, pos|
 			@selected_items.delete(pos.row.to_s) #pos.row pos.col
 			if @selected_items.length == 0 then

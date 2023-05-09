@@ -1,5 +1,5 @@
 require_relative File.dirname($0) + '/student_list_controller.rb'
-require_relative File.dirname($0) + './persons/student.rb'
+require_relative File.dirname($0) + './model_student/persons/student.rb'
 
 class Controller_insert < Student_list_controller
 

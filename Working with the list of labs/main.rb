@@ -2,20 +2,20 @@ require 'fox16'
 
 include Fox
 
-load './persons/person.rb'
-load './persons/student.rb'
-load './persons/student_short.rb'
+load './model_student/persons/person.rb'
+load './model_student/persons/student.rb'
+load './model_student/persons/student_short.rb'
 
-load './datatable/data_list_student_short.rb'
+load './model_student/datatable/data_list_student_short.rb'
 
-load './list_file/students_list_file.rb'
-load './list_file/students_list_json.rb'
-load './list_file/students_list_yaml.rb'
-load './list_file/students_list_txt.rb'
+load './model_student/list_file/students_list_file.rb'
+load './model_student/list_file/students_list_json.rb'
+load './model_student/list_file/students_list_yaml.rb'
+load './model_student/list_file/students_list_txt.rb'
 
-load './datatable/students_list.rb'
+load './model_student/datatable/students_list.rb'
 
-load './student_list/student_list.rb'
+load './model_student/student_list/student_list.rb'
 load './controller/student_list_controller.rb'
 
 load './controller/controller_insert.rb'

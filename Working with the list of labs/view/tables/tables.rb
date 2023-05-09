@@ -6,7 +6,7 @@ include Fox
 class Table
 
 	attr_accessor :table 
-	attr_reader :data, :vframe_table, :whole_entites_count
+	attr_reader :data, :vframe_table, :whole_entites_count, :num_current_page
 
 	def initialize(tab_frame,name_table, width_frame:620,table_height:400)
 		self.vframe_table = FXVerticalFrame.new(tab_frame, :opts => LAYOUT_FILL_X|LAYOUT_FIX_WIDTH)
@@ -37,6 +37,7 @@ class Table
 
 
 	private
+		attr_writer :num_current_page
 		attr_accessor :data, :vframe_table, :whole_entites_count
 
 	def fill_table(num_page,count,filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,	filter_surname_initials:nil)

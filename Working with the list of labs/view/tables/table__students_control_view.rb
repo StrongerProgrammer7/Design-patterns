@@ -5,7 +5,7 @@ require 'fox16'
 include Fox
 
 class Table_students < Table
-	attr_accessor :num_current_page, :current_data, :prev_data_button,:next_data_button, :label_num_current_page_data
+	attr_accessor :current_data, :prev_data_button,:next_data_button, :label_num_current_page_data
 	
 	def initialize(tab_frame,name_table)
 		super(tab_frame,name_table)
