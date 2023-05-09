@@ -31,24 +31,24 @@ class Person
 	def get_all_contacts()
 		"#{self.phone},#{self.telegram},#{self.mail}"
 	end
-		
+	
+	def set_baseInfo(surname:,name:,lastname:nil)
+		valid_baseField_onCorrect(name,surname,lastname)
+		self.surname = surname if(surname!=nil)
+		self.name = name if(name != nil)
+		self.lastname = lastname if(lastname !=nil)
+	end
+
+	def set_extraInfo(phone:nil,telegram:nil,mail:nil,git:nil)
+		valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram,git:git)		
+		self.phone=phone if(phone!=nil and phone != '')
+		self.mail = mail if(mail!=nil and mail!='') 
+		self.telegram = telegram if(telegram!=nil and telegram != '')
+		self.git = git if(git!=nil and git != '')
+	end
+
 	private
 		attr_writer :surname, :name, :lastname ,:phone, :telegram, :mail,:git
-
-		def set_baseInfo(surname:nil,name:nil,lastname:nil)
-			valid_baseField_onCorrect(name,surname,lastname)
-			self.surname = surname if(surname!=nil)
-			self.name = name if(name != nil)
-			self.lastname = lastname if(lastname !=nil)
-		end
-
-		def set_extraInfo(phone:nil,telegram:nil,mail:nil,git:nil)
-			valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram,git:git)		
-			self.phone=phone if(phone!=nil and phone != '')
-			self.mail = mail if(mail!=nil and mail!='') 
-			self.telegram = telegram if(telegram!=nil and telegram != '')
-			self.git = git if(git!=nil and git != '')
-		end
 
 
 		def getSurname_Initials
@@ -71,15 +71,12 @@ class Person
 		def valid_baseField_onCorrect(name,surname,lastname)
 			if(surname!=nil) then
 				raise "Not valid surname [A-Z][a-z]+ #{surname}"  if(Person.check_word(surname) == nil)
-				self.surname=surname 
 			end
 			if(name!=nil) then
 				raise "Not valid name [A-Z][a-z]+ #{name}"  if(Person.check_word(name) == nil)
-				self.name=name 
 			end
 			if(lastname!=nil && lastname != "") then
 				raise "Not valid lastname [A-Z][a-z]+ #{lastname}"  if(Person.check_word(lastname) == nil)
-				self.lastname=lastname 
 			end
 		end
 
