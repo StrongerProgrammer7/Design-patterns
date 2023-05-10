@@ -48,11 +48,11 @@ class Student_list_view < FXMainWindow
 		
   end
   
-  def showData(k,n)
+  def showData(k,n,filter_git:nil)
   	self.num_page = k
   	self.count_records = n
   	self.max_page_data = (@student_list_controller.get_count_student_short() / n) + 1
-  	@student_list_controller.refresh_data(k,n)
+  	@student_list_controller.get_data(k,n,filter_git:filter_git)
   end
 
   def set_table_params(column_names,whole_entites_count)
@@ -234,10 +234,10 @@ class Student_list_view < FXMainWindow
 	def showData_by_filter(filter)
 		case filter[0].value
 			when 0
-				filter_by_git = filter[1].text if filter[1].text != nil
-				self.student_list_controller.refresh_data(self.num_page,self.count_records,filter_git:filter_by_git)
+					filter_by_git = filter[1].text if filter[1].text != nil
+					showData(self.num_page,self.count_records,filter_git:filter_by_git)
 			when 1
-					self.student_list_controller.refresh_data(self.num_page,self.count_records,filter_git:"not have git")
+					showData(self.num_page,self.count_records,filter_git:"not have git")
 			else
 				showData(self.num_page,self.count_records) 
 			end

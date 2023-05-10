@@ -18,19 +18,11 @@ class Student_list_controller
     	end
 	end
 
-	def refresh_data(k,n,filter_git:nil)
+	
+	def get_data(k,n,filter_git:nil)
 		refresh_data_list_student_short(k,n,filter_git:filter_git)
-		self.data_list_student_short.student_list_view = self.student_list_view if self.data_list_student_short.student_list_view == nil
-		self.data_list_student_short.notify(n)
-		self.student_list_view.show(PLACEMENT_SCREEN)
-	rescue => e
-		self.logger.error("Error while get student :#{e}")
+		refresh_data(n)
 	end
-
-	#def refresh_data_by_git(k,n,filter_git)
-	#	refresh_data_list_student_short(k,n,filter_git:filter_git)
-	#	refresh_data(k,n)
-	#end
 
 	def get_count_student_short()
 		@student_list.get_student_short_count
@@ -62,6 +54,15 @@ class Student_list_controller
 	private 
 	attr_reader :student_list_view
 	attr_writer :data_list_student_short, :logger
+
+	def refresh_data(n)	
+		self.data_list_student_short.student_list_view = self.student_list_view if self.data_list_student_short.student_list_view == nil
+		self.data_list_student_short.notify(n)
+		self.student_list_view.show(PLACEMENT_SCREEN)
+	rescue => e
+		self.logger.error("Error while get student :#{e}")
+	end
+
 
 	def refresh_data_list_student_short(k,n,filter_git:nil)
 		if(self.data_list_student_short==nil) then
