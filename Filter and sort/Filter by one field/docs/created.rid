@@ -1,0 +1,15 @@
+Mon, 08 May 2023 17:51:54 +0300
+persons/person.rb	Mon, 08 May 2023 16:02:16 +0300
+persons/student.rb	Mon, 08 May 2023 15:59:40 +0300
+persons/student_short.rb	Wed, 03 May 2023 09:55:06 +0300
+datatable/data_list.rb	Sun, 07 May 2023 20:50:49 +0300
+datatable/data_list_student_short.rb	Sun, 07 May 2023 16:52:24 +0300
+datatable/datatable.rb	Thu, 13 Apr 2023 19:36:44 +0300
+datatable/students_list.rb	Mon, 08 May 2023 12:50:59 +0300
+list_file/students_list_file.rb	Thu, 13 Apr 2023 19:36:44 +0300
+list_file/students_list_json.rb	Sun, 07 May 2023 19:06:19 +0300
+list_file/students_list_txt.rb	Thu, 13 Apr 2023 19:36:44 +0300
+list_file/students_list_yaml.rb	Thu, 13 Apr 2023 19:36:44 +0300
+student_DB/student_list_DB.rb	Mon, 08 May 2023 13:16:13 +0300
+student_list/student_adapter.rb	Mon, 08 May 2023 12:51:08 +0300
+student_list/student_list.rb	Tue, 02 May 2023 20:32:48 +0300

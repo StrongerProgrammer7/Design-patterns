@@ -1,0 +1,2 @@
+# Logfile created on 2023-05-08 16:42:40 +0300 by logger.rb/v1.5.3
+I, [2023-05-08T16:46:44.975510 #6446]  INFO -- : Updating student with ID 102 and params {"name"=>"Alexax", "surname"=>"Lopy", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>102}
