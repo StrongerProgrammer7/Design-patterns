@@ -1,17 +1,7 @@
-# Logfile created on 2023-05-08 16:42:40 +0300 by logger.rb/v1.5.3
-I, [2023-05-08T16:46:44.975510 #6446]  INFO -- : Updating student with ID 102 and params {"name"=>"Alexax", "surname"=>"Lopy", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>102}
-I, [2023-05-08T19:46:47.470588 #18270]  INFO -- : Updating student with ID 37 and params {"name"=>"Alex", "surname"=>"Volkovad", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>37}
-I, [2023-05-08T19:49:30.391792 #18576]  INFO -- : Updating student with ID 50 and params {"name"=>"Alex", "surname"=>"Lopy", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>50}
-I, [2023-05-08T19:49:52.987305 #18576]  INFO -- : Creating student with params {"name"=>"Alex", "surname"=>"Dmitiyd", "lastname"=>"Lolylov", "phone"=>"+7777156598", "mail"=>nil, "telegram"=>nil, "git"=>nil}
-I, [2023-05-08T20:33:03.831282 #20399]  INFO -- : Updating student with ID 1 and params {"name"=>"John", "surname"=>"Lopy", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>1}
-I, [2023-05-09T13:50:20.752280 #7994]  INFO -- : Updating student with ID 101 and params {"name"=>"Dmitiy", "surname"=>"Volkov", "lastname"=>"Dmitr", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>101}
-I, [2023-05-09T13:51:25.986535 #7994]  INFO -- : Updating student with ID 102 and params {"name"=>"Alexax", "surname"=>"Lopy", "lastname"=>"Dmitr", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>102}
-I, [2023-05-09T14:21:38.560886 #9228]  INFO -- : Creating student with params {"name"=>"Nameg", "surname"=>"Surnameg", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
-E, [2023-05-09T14:21:41.613732 #9228] ERROR -- : Error while deleting student :undefined method `id' for nil:NilClass
-
-		@selected.each {|elem| res << @list_entities[elem.to_i - 1].id}
-		                                                           ^^^
-E, [2023-05-09T14:21:49.878013 #9228] ERROR -- : Error while deleting student :undefined method `id' for nil:NilClass
-
-		@selected.each {|elem| res << @list_entities[elem.to_i - 1].id}
-		                                                           ^^^
+# Logfile created on 2023-05-10 17:52:40 +0300 by logger.rb/v1.5.3
+I, [2023-05-10T17:53:37.444791 #7121]  INFO -- : Deleting student with ID {[138]
+I, [2023-05-10T17:54:54.531062 #7261]  INFO -- : Deleting student with ID {[140, 102, 139, 140, 139, 139, 140]
+I, [2023-05-10T17:55:28.679329 #7261]  INFO -- : Deleting student with ID {[141, 141, 142]
+I, [2023-05-10T18:11:04.178229 #8394]  INFO -- : Creating student with params {"name"=>"Nameds", "surname"=>"Surnameds", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-10T18:52:17.771253 #8707]  INFO -- : Deleting student with ID {[143]
+I, [2023-05-10T22:48:44.567878 #20666]  INFO -- : Deleting student with ID {["8"]

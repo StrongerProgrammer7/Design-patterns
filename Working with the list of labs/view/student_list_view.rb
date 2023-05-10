@@ -206,7 +206,7 @@ class Student_list_view < FXMainWindow
 		@selected_items = []
 		@table_student.table.connect(SEL_SELECTED) do |sender, selector, data|
 			item = sender.getItem(data.row, 0) #data.col	
-			@selected_items << data.row.to_s unless @selected_items.include? data.row.to_s
+			@selected_items << data.row.to_s unless @selected_items.include? data.row.to_s if item != '' and item != nil
 			if @selected_items.length > 1 then
 				ed_btn.disable
 				del_btn.enable
@@ -216,13 +216,14 @@ class Student_list_view < FXMainWindow
 			else
 				disable_button_edit_delete(ed_btn,del_btn)
 			end
-			self.student_list_controller.select_student(item.to_s)
+			self.student_list_controller.select_student(data.row.to_s) if item != '' and item != nil
 		end
 	end
 
 	def event_table_student_deselected(ed_btn,del_btn)
 		@table_student.table.connect(SEL_DESELECTED) do |sender, sel, pos|
 			@selected_items.delete(pos.row.to_s) #pos.row pos.col
+			self.student_list_controller.deselected_student(pos.row.to_s)
 			if @selected_items.length == 0 then
 				disable_button_edit_delete(ed_btn,del_btn)
 			end
@@ -250,9 +251,6 @@ class Student_list_view < FXMainWindow
 	def event_deleteStudent(ed,del_btn)
 		del_btn.connect(SEL_COMMAND) do |sender,sel,data|
     	self.student_list_controller.delete_student()
-    	@selected_items.each do |num|
-    		@table_student.delete_student_from_data(num.to_i)
-    	end
     	@selected_items = []
     	disable_button_edit_delete(ed,del_btn)
     end

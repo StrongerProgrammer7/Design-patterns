@@ -1,8 +1,14 @@
 require_relative File.dirname($0) + './persons/student.rb'
-require_relative File.dirname($0)+ '/students_list_file.rb'
+require_relative '../../model_entity/list_file/students_list_file.rb'
 
 class Students_list_txt < Students_list_from_file
 	
+	#--------------------Test dev - Students ------------------------
+	attr_accessor :addressFile 
+	def initialize()
+		self.addressFile = "./testfile/test.txt"
+	end
+	#----------------------------------------------------
 
 	def read_from_file(addressFile)
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))

@@ -1,36 +1,31 @@
 require 'fox16'
 
 include Fox
+#--------------------Student-----------
+load './model_entity/entity_list/student_list.rb'
 
-load './model_student/persons/person.rb'
-load './model_student/persons/student.rb'
-load './model_student/persons/student_short.rb'
-
-load './model_student/datatable/data_list_student_short.rb'
-
-load './model_student/list_file/students_list_file.rb'
-load './model_student/list_file/students_list_json.rb'
-load './model_student/list_file/students_list_yaml.rb'
-load './model_student/list_file/students_list_txt.rb'
-
-load './model_student/datatable/students_list.rb'
-
-load './model_student/student_list/student_list.rb'
 load './controller/student_list_controller.rb'
-
 load './controller/controller_insert.rb'
 load './controller/controller_update_surname.rb'
+
 load './view/student_list_view.rb'
 load './view/modal_window_create_student.rb'
 load './view/modal_window_change_student.rb'
+#--------------------------------------
+#-------------------Labs---------------
 
 
-mysql = Student_list.intialize_DB
-json = Student_list.initialize_json(Students_list_json.new())
+#--------------------------------------
 
-controller = Student_list_controller.new(mysql,:hybrid)
-contoller_modal_create = Controller_insert.new(mysql,:hybrid)
-controller_modal_change = Controller_update_surname.new(mysql,:hybrid)
+mysql = Student_list.intialize_DB(:student)
+lab = Student_list.intialize_DB(:lab)
+json = Student_list.initialize_json(Students_list_json.new(),:student)
+json_lab = Student_list.initialize_json(Labs_list_json.new(),:lab)
+
+
+controller = Student_list_controller.new(json,:hybrid)
+contoller_modal_create = Controller_insert.new(json,controller,:hybrid)
+controller_modal_change = Controller_update_surname.new(json,controller,:hybrid)
 application = FXApp.new
 
 modalWindow_create = Modal_create_student.new(application,contoller_modal_create)

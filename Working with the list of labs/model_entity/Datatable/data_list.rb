@@ -12,9 +12,13 @@ class Data_list
 		@selected << number.to_i
 	end
 
+	def deselected(number)
+		@selected.delete(number.to_i)
+	end
+
 	def get_selected()
 		res = []
-		@selected.each {|elem| res << @list_entities[elem.to_i - 1].id}
+		@selected.each {|elem| res << @list_entities[elem].id}
 		@selected = []
 		res
 	end

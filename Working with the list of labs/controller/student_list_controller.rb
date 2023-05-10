@@ -18,6 +18,7 @@ class Student_list_controller
     	end
 	end
 
+
 	def refresh_data(k,n)
 		if(self.data_list_student_short==nil) then
 			self.data_list_student_short = @student_list.get_k_n_student_short_list(k,n,data_list:self.data_list_student_short)
@@ -37,13 +38,15 @@ class Student_list_controller
 		self.data_list_student_short.select(num)
 	end
 
+	def deselected_student(num)
+		self.data_list_student_short.deselected(num)
+	end
+
 	def get_selected()
 		self.data_list_student_short.get_selected()
 	end
 
-	def get_student_by_id(id)
-		@student_list.get_student_by_id(id)
-	end
+	
 
 	def delete_student()
 		list_student = get_selected()
@@ -52,6 +55,7 @@ class Student_list_controller
 		list_student.each do |id_student|
 			@student_list.delete_element_by_id(id_student)
 		end 
+		refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
 	rescue => e
 		self.logger.error("Error while deleting student :#{e}")
 	end

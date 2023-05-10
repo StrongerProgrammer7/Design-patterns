@@ -1,0 +1,85 @@
+# Logfile created on 2023-05-08 16:42:40 +0300 by logger.rb/v1.5.3
+I, [2023-05-08T16:46:44.975510 #6446]  INFO -- : Updating student with ID 102 and params {"name"=>"Alexax", "surname"=>"Lopy", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>102}
+I, [2023-05-08T19:46:47.470588 #18270]  INFO -- : Updating student with ID 37 and params {"name"=>"Alex", "surname"=>"Volkovad", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>37}
+I, [2023-05-08T19:49:30.391792 #18576]  INFO -- : Updating student with ID 50 and params {"name"=>"Alex", "surname"=>"Lopy", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>50}
+I, [2023-05-08T19:49:52.987305 #18576]  INFO -- : Creating student with params {"name"=>"Alex", "surname"=>"Dmitiyd", "lastname"=>"Lolylov", "phone"=>"+7777156598", "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-08T20:33:03.831282 #20399]  INFO -- : Updating student with ID 1 and params {"name"=>"John", "surname"=>"Lopy", "lastname"=>"Dmitrief", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>1}
+I, [2023-05-09T13:50:20.752280 #7994]  INFO -- : Updating student with ID 101 and params {"name"=>"Dmitiy", "surname"=>"Volkov", "lastname"=>"Dmitr", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>101}
+I, [2023-05-09T13:51:25.986535 #7994]  INFO -- : Updating student with ID 102 and params {"name"=>"Alexax", "surname"=>"Lopy", "lastname"=>"Dmitr", "phone"=>"87743258961", "mail"=>"", "telegram"=>"", "git"=>"https://github.com/StPr/rep.git", "id"=>102}
+I, [2023-05-09T14:21:38.560886 #9228]  INFO -- : Creating student with params {"name"=>"Nameg", "surname"=>"Surnameg", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+E, [2023-05-09T14:21:41.613732 #9228] ERROR -- : Error while deleting student :undefined method `id' for nil:NilClass
+
+		@selected.each {|elem| res << @list_entities[elem.to_i - 1].id}
+		                                                           ^^^
+E, [2023-05-09T14:21:49.878013 #9228] ERROR -- : Error while deleting student :undefined method `id' for nil:NilClass
+
+		@selected.each {|elem| res << @list_entities[elem.to_i - 1].id}
+		                                                           ^^^
+I, [2023-05-10T16:59:17.333077 #4390]  INFO -- : Creating student with params {"name"=>"Names", "surname"=>"Surnames", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-10T17:00:14.877148 #4421]  INFO -- : Deleting student with ID {[119]
+I, [2023-05-10T17:00:17.416610 #4421]  INFO -- : Deleting student with ID {[118]
+I, [2023-05-10T17:00:55.271958 #4421]  INFO -- : Creating student with params {"name"=>"Name", "surname"=>"Korapt", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-10T17:06:55.225793 #4593]  INFO -- : Deleting student with ID {[120]
+I, [2023-05-10T17:07:12.083573 #4593]  INFO -- : Creating student with params {"name"=>"Zo", "surname"=>"Korpat", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>"@tej", "git"=>nil}
+I, [2023-05-10T17:10:43.580016 #4673]  INFO -- : Creating student with params {"name"=>"Kol", "surname"=>"Pupt", "lastname"=>nil, "phone"=>"+77771748565", "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-10T17:11:48.853591 #4788]  INFO -- : Creating student with params {"name"=>"Cat", "surname"=>"Dogs", "lastname"=>nil, "phone"=>nil, "mail"=>"swara@mail.com", "telegram"=>nil, "git"=>nil}
+I, [2023-05-10T17:21:48.321642 #5035]  INFO -- : Creating student with params {"name"=>"Names", "surname"=>"Surnames", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+E, [2023-05-10T17:21:56.435867 #5035] ERROR -- : Error while deleting student :undefined method `id' for nil:NilClass
+
+		@selected.each {|elem| res << @list_entities[elem.to_i - 1].id}
+		                                                           ^^^
+I, [2023-05-10T17:24:32.159931 #5395]  INFO -- : Creating student with params {"name"=>"Names", "surname"=>"Surnames", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-10T17:25:34.815182 #5506]  INFO -- : Deleting student with ID {[125]
+I, [2023-05-10T17:25:37.250938 #5506]  INFO -- : Deleting student with ID {[124]
+I, [2023-05-10T17:25:40.160439 #5506]  INFO -- : Creating student with params {"name"=>"Names", "surname"=>"Surnames", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-10T17:30:35.238719 #5823]  INFO -- : Deleting student with ID {[126]
+I, [2023-05-10T17:30:42.249745 #5823]  INFO -- : Creating student with params {"name"=>"Names", "surname"=>"Surnames", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>"@saf", "git"=>nil}
+I, [2023-05-10T17:37:50.169468 #6118]  INFO -- : Deleting student with ID {[127]
+I, [2023-05-10T17:37:52.166472 #6118]  INFO -- : Deleting student with ID {[128]
+I, [2023-05-10T17:37:55.977467 #6118]  INFO -- : Creating student with params {"name"=>"Namef", "surname"=>"Surnamef", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+E, [2023-05-10T17:37:56.025274 #6118] ERROR -- : Error while creating student: undefined method `refresh_data' for nil:NilClass
+
+		@parent_controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
+		                  ^^^^^^^^^^^^^
+D, [2023-05-10T17:38:15.903983 #6118] DEBUG -- : Updating student with ID 129 and params {"name"=>"Namefdfr", "surname"=>"Surnamef", "lastname"=>nil, "phone"=>"", "mail"=>"", "telegram"=>"", "git"=>"", "id"=>129}
+I, [2023-05-10T17:38:15.904857 #6118]  INFO -- : Updating student with ID 129 and params {"name"=>"Namefdfr", "surname"=>"Surnamef", "lastname"=>nil, "phone"=>"", "mail"=>"", "telegram"=>"", "git"=>"", "id"=>129}
+E, [2023-05-10T17:38:15.929021 #6118] ERROR -- : Error while updating student with ID 129: undefined method `refresh_data' for :hybrid:Symbol
+
+		@controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
+		           ^^^^^^^^^^^^^
+I, [2023-05-10T17:38:49.452732 #6118]  INFO -- : Creating student with params {"name"=>"Nma", "surname"=>"Asdf", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+E, [2023-05-10T17:38:49.479632 #6118] ERROR -- : Error while creating student: undefined method `refresh_data' for nil:NilClass
+
+		@parent_controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
+		                  ^^^^^^^^^^^^^
+I, [2023-05-10T17:39:14.596723 #6118]  INFO -- : Deleting student with ID {[123, 129, 130]
+I, [2023-05-10T17:39:45.651481 #6118]  INFO -- : Creating student with params {"name"=>"Nmafd", "surname"=>"Asdf", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+E, [2023-05-10T17:39:45.673584 #6118] ERROR -- : Error while creating student: undefined method `refresh_data' for nil:NilClass
+
+		@parent_controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
+		                  ^^^^^^^^^^^^^
+I, [2023-05-10T17:39:54.439898 #6118]  INFO -- : Creating student with params {"name"=>"Nmafdd", "surname"=>"Asdf", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+E, [2023-05-10T17:39:54.462970 #6118] ERROR -- : Error while creating student: undefined method `refresh_data' for nil:NilClass
+
+		@parent_controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
+		                  ^^^^^^^^^^^^^
+I, [2023-05-10T17:39:58.115060 #6118]  INFO -- : Deleting student with ID {[121, 122, 131, 132]
+I, [2023-05-10T17:40:43.481413 #6228]  INFO -- : Creating student with params {"name"=>"Namesd", "surname"=>"Surnamed", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+E, [2023-05-10T17:40:43.504051 #6228] ERROR -- : Error while creating student: undefined method `refresh_data' for nil:NilClass
+
+		@parent_controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
+		                  ^^^^^^^^^^^^^
+I, [2023-05-10T17:43:00.468356 #6398]  INFO -- : Creating student with params {"name"=>"Named", "surname"=>"Surnamed", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-10T17:43:08.403894 #6398]  INFO -- : Deleting student with ID {[133]
+I, [2023-05-10T17:43:13.022741 #6398]  INFO -- : Deleting student with ID {[134]
+I, [2023-05-10T17:43:16.543105 #6398]  INFO -- : Creating student with params {"name"=>"Namedfd", "surname"=>"Surnamedgd", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+D, [2023-05-10T17:43:27.461528 #6398] DEBUG -- : Updating student with ID 135 and params {"name"=>"Namedfd", "surname"=>"Surnamedgd", "lastname"=>nil, "phone"=>"", "mail"=>"", "telegram"=>"", "git"=>"", "id"=>135}
+I, [2023-05-10T17:43:27.463224 #6398]  INFO -- : Updating student with ID 135 and params {"name"=>"Namedfd", "surname"=>"Surnamedgd", "lastname"=>nil, "phone"=>"", "mail"=>"", "telegram"=>"", "git"=>"", "id"=>135}
+I, [2023-05-10T17:43:33.292105 #6398]  INFO -- : Deleting student with ID {[135]
+I, [2023-05-10T17:44:09.945801 #6461]  INFO -- : Creating student with params {"name"=>"Names", "surname"=>"Surnames", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+D, [2023-05-10T17:44:31.260147 #6461] DEBUG -- : Updating student with ID 136 and params {"name"=>"Namesd", "surname"=>"Afsd", "lastname"=>"Dmitr", "phone"=>"", "mail"=>"", "telegram"=>"", "git"=>"", "id"=>136}
+I, [2023-05-10T17:44:31.261029 #6461]  INFO -- : Updating student with ID 136 and params {"name"=>"Namesd", "surname"=>"Afsd", "lastname"=>"Dmitr", "phone"=>"", "mail"=>"", "telegram"=>"", "git"=>"", "id"=>136}
+I, [2023-05-10T17:44:38.968629 #6461]  INFO -- : Deleting student with ID {[136]
+I, [2023-05-10T17:45:31.859788 #6568]  INFO -- : Creating student with params {"name"=>"Namej", "surname"=>"Surnamej", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-10T17:45:50.978619 #6599]  INFO -- : Deleting student with ID {[137]
+I, [2023-05-10T17:45:53.877297 #6599]  INFO -- : Creating student with params {"name"=>"Namej", "surname"=>"Surnamej", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}

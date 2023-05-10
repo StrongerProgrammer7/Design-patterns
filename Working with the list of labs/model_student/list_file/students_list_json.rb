@@ -1,11 +1,18 @@
 require_relative File.dirname($0) + './persons/student.rb'
-require_relative File.dirname($0)+ '/students_list_file.rb'
+require_relative '../../model_entity/list_file/students_list_file.rb'
 
 require 'json'
 
 
 class Students_list_json < Students_list_from_file
 	
+	#--------------------Test dev - Students ------------------------
+	attr_accessor :addressFile
+	
+	def initialize()
+		self.addressFile = "./testfile/test.json"
+	end
+	#----------------------------------------------------
 	def read_from_file(addressFile)
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
 		
@@ -26,6 +33,7 @@ class Students_list_json < Students_list_from_file
 
 	def write_to_file(addressFile,nameFile,students)
 		file = File.new("#{File.dirname($0)}#{addressFile}/#{nameFile}.json","w:UTF-8")
+		print "#{File.dirname($0)}#{addressFile}/#{nameFile}.json","\n"
 		student_hash = {}
 		number_student = 1
 		students.each do |i|

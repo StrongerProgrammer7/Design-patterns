@@ -21,8 +21,8 @@ class Modal_create_student < FXDialogBox
 		create_textField(matrix,"Lastname",method(:check_letter),method(:validate_surname_name_lastname))
 		create_textField(matrix,"Phone",method(:check_phone),method(:valid_phone))
 		create_textField(matrix,"Mail",method(:check_let_dig_specilSymbol),method(:valid_mail))
-		create_textField(matrix,"Telegram",method(:check_let_dig_specilSymbol),method(:valid_mail))
-		create_textField(matrix,"Git",method(:check_let_dig_specilSymbol),method(:valid_mail))
+		create_textField(matrix,"Telegram",method(:check_let_dig_specilSymbol),method(:valid_telegram))
+		create_textField(matrix,"Git",method(:check_let_dig_specilSymbol),method(:valid_git))
 	
 		create_close_button(matrix)
 		@ok_btn = create_button_ok(matrix)
@@ -122,7 +122,7 @@ private
 	end
 
 	def valid_telegram(text)
-		text.match?(/^@[A-z0-9]*/)
+		text.match?(/^@[A-z0-9]+/)
 	end
 
 

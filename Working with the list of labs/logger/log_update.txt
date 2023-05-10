@@ -1,0 +1,2 @@
+# Logfile created on 2023-05-10 17:53:27 +0300 by logger.rb/v1.5.3
+I, [2023-05-10T17:54:47.203524 #7261]  INFO -- : Updating student with ID 140 and params {"name"=>"Nameds", "surname"=>"Surnamedsda", "lastname"=>"Dasdasd", "phone"=>"", "mail"=>"", "telegram"=>"", "git"=>"", "id"=>140}
