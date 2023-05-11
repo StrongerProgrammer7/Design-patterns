@@ -3,12 +3,13 @@ class Laboratory_work
 	attr_accessor :id
 
 	define_singleton_method :check_word do |word|
-		/^[A-ZА-Я]([a-z]+|[a-яё]+)$/.match(word)
+		/^[A-ZА-Я]((([a-z]+|[a-яё]+)\s*){2,99})$/.match(word)
 	end
 
 	define_singleton_method :check_date do |date|
-		/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)\d\d$/.match(date)
+		/^((\d{2}|\d{4})[\.|\-](0[1-9]|1[0-2])[\.|\-](0[1-9]|[1|2][0-9]|3[01])|(0[1-9]|[1|2][0-9]|3[01])[\.|\-](0[1-9]|1[0-2])[\.\-](\d{2}|\d{4}))$/.match(date)
 	end
+
 
 	def initialize(id:,number:,name:,topics:nil,tasks:nil,date:)
 		set_baseInfo(name:name,date:date)

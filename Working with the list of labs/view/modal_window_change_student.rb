@@ -31,7 +31,7 @@ class Modal_change_student < FXDialogBox
 			
 	end
 
-	def addTimeoutCheck()
+	def addTimeoutCheck(data:nil)
 		if(self.shown?) then
 			@timeout_id = @app.addTimeout(1000, :repeat => true) do
 				if @student_field["surname"]!=nil && @student_field["name"] != nil then
@@ -71,7 +71,7 @@ private
 		ok_button.connect(SEL_COMMAND) do |sender, selector, data|
 			#TODO:Validate special field
 			@student_field["id"] = @student_data["Id"] if @student_data.class!=Student
-			@student_list_controller.update_student(@student_field)
+			@student_list_controller.update_entity(@student_field)
 			@app.removeTimeout(@timeout_id)
 			self.hide
 		end

@@ -10,7 +10,7 @@ class Controller_update < Controller_action
 		@controller.entity_list.get_element_by_id(id)
 	end
 
-	def update_student(element)
+	def update_entity(element)
 		self.logger.debug("Updating element with ID #{element["id"]} and params #{element}")
 		self.logger.info("Updating element with ID #{element["id"]} and params #{element}")
 		@controller.entity_list.replace_element_by_id(element["id"],element)

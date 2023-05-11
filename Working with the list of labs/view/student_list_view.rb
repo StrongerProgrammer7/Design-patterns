@@ -11,13 +11,14 @@ class Student_list_view < FXMainWindow
 
 	attr_reader :count_records, :num_page, :current_table
 
-  def initialize(app,controller,modal_create:nil,modal_change:nil)
+  def initialize(app,controller,modal_create_student:nil,modal_change_student:nil,modal_create_lab:nil,modal_change_lab:nil)
   	@student_list_controller = controller
   	@labs_list_controller = nil
   	
-  	self.modal_window_create_student = modal_create
-  	self.modal_window_change_student = modal_change
-
+  	self.modal_window_create_student = modal_create_student
+  	self.modal_window_change_student = modal_change_student
+  	self.modal_window_create_lab = modal_create_lab
+  	self.modal_window_change_lab = modal_change_lab
     super(app, "Students list", :width => 1000, :height => 600)
 	
     horizontal_frame = FXHorizontalFrame.new(self, LAYOUT_SIDE_TOP|FRAME_NONE|LAYOUT_FILL_X|LAYOUT_FILL_Y)
@@ -80,7 +81,7 @@ class Student_list_view < FXMainWindow
 	end
 
   private 
-	attr_accessor :student_list_controller ,:max_page_data, :modal_window_create_student, :modal_window_change_student
+	attr_accessor :student_list_controller ,:max_page_data, :modal_window_create_student, :modal_window_change_student,:modal_window_create_lab, :modal_window_change_lab
 	attr_writer :count_records, :num_page, :current_table
 	
 	def createTab(tab_book, name_tab)
@@ -125,8 +126,8 @@ class Student_list_view < FXMainWindow
 		list_btn = initialize_control(tab_frame)
 		events_entities_controls(@table_labs,
 			list_btn[0],list_btn[1],list_btn[2],list_btn[3],
-			modal_add:nil,
-			modal_change:nil)
+			modal_add:self.modal_window_create_lab,
+			modal_change:self.modal_window_change_lab)
 		
 		list_btn[3].connect(SEL_COMMAND) do |sender,sel,data|	
 			clearSelect()
@@ -242,7 +243,7 @@ class Student_list_view < FXMainWindow
 	def event_addEntity(modal_window_add,add_btn)
 		add_btn.connect(SEL_COMMAND) do |sender,sel,data|	
 			modal_window_add.show(PLACEMENT_SCREEN)
-			modal_window_add.addTimeoutCheck()
+			modal_window_add.addTimeoutCheck(data:self.current_table.data)
     end
 	end
 
@@ -251,7 +252,7 @@ class Student_list_view < FXMainWindow
 			modal_window_change.show(PLACEMENT_SCREEN)	
 			id = self.student_list_controller.get_selected()[0]
 			modal_window_change.get_personal_data_student(id)
-			modal_window_change.addTimeoutCheck()
+			modal_window_change.addTimeoutCheck(data:self.current_table.data)
 			@selected_items = []
 			disable_button_edit_delete(ed_btn,del_btn)
     end

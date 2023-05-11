@@ -40,31 +40,33 @@ class Labs_list_DB < Entities_list_DB
 	end
 
 	def push_element(element)
+		element = formating_date(element)
+		element = formating_stirng(element)
 		lab = Laboratory_work.new(
 					id:0,
 					number:element["number"],
       				name:element["name"],
       				topics:element["topics"],
       				tasks:element["tasks"],
-      				date:element["date"])
-		@dbcon.crud_student_by_db("INSERT INTO Laboratory_work(name, topics, tasks, date_of_issue) VALUES ('#{lab.name}','#{lab.topics || 'NULL'}','#{lab.tasks || 'NULL'}','#{lab.date}');")
+      				date:element["date_of_issue"])
+		@dbcon.crud_student_by_db("INSERT INTO Laboratory_work
+			(number,name, topics, tasks, date_of_issue) 
+			VALUES 
+			('#{lab.number}','#{lab.name}','#{lab.topics || 'NULL'}','#{lab.tasks || 'NULL'}','#{lab.date}');")
 	end
 
 	def replace_element_by_id(id,element)
+		element = formating_date(element)
+		element = formating_stirng(element)
 		lab = Laboratory_work.new(
 					id:element["id"],
 					number:element["number"],
       				name:element["name"],
       				topics:element["topics"],
       				tasks:element["tasks"],
-      				date:element["date"])
-		@dbcon.crud_student_by_db("UPDATE Laboratory_work 
-							SET name = '#{lab.name}', 
-							number = '#{lab.number}'
-							topics = '#{lab.topics}', 
-							tasks = '#{lab.tasks}',
-							date_of_issue = '#{lab.date}'
-							WHERE id = #{id};")
+      				date:element["date_of_issue"])
+
+		@dbcon.crud_student_by_db("UPDATE Laboratory_work SET name = '#{lab.name}', number = '#{lab.number}',topics = '#{lab.topics}', tasks = '#{lab.tasks}', date_of_issue = '#{lab.date}' WHERE id = #{id};")
 	end
 
 	def delete_element_by_id(id)
@@ -76,6 +78,18 @@ class Labs_list_DB < Entities_list_DB
 	end
 	
 	private 
+
+	def formating_date(element)
+		element["date_of_issue"] = element["date_of_issue"].gsub(".","-")
+		temp_date = Date.strptime(element["date_of_issue"],'%d-%m-%Y')
+		element["date_of_issue"] = temp_date.strftime('%Y-%m-%d')
+		element
+	end
+	def formating_stirng(element)
+		element["topics"] = element["topics"].gsub("'","`")
+		element["tasks"] = element["tasks"].gsub("'","`")
+		element
+	end
 
 	def clearData(elem)
 		elem["topics"] = change_NULL_to_empty(elem["topics"])

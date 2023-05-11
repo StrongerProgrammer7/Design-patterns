@@ -5,7 +5,7 @@ class Controller_insert < Controller_action
 		super(parent_controller,log_mode,"logger/log_create.txt")
 	end
 	 
-	def create_student(element)
+	def create_entity(element)
 		self.logger.debug("Creating element with params #{element}")
 		self.logger.info("Creating element with params #{element}")
 		@controller.entity_list.push_element(element)

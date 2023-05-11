@@ -29,8 +29,7 @@ class Modal_create_student < FXDialogBox
 			
 	end
 
-	def addTimeoutCheck()
-		datas = "s"
+	def addTimeoutCheck(data:nil)
 		if(self.shown?) then
 			@timeout_id = @app.addTimeout(500, :repeat => true) do
 				if @student_field["surname"]!=nil && @student_field["name"] != nil then
@@ -40,7 +39,6 @@ class Modal_create_student < FXDialogBox
 				end
 			end
 		end
-		print datas,"\n"
 	end
 
 private
@@ -59,7 +57,7 @@ private
 		ok_button.connect(SEL_COMMAND) do |sender, selector, data|
 			#TODO:Validate special field
 			@app.removeTimeout(@timeout_id)
-			@student_list_controller.create_student(@student_field)
+			@student_list_controller.create_entity(@student_field)
 			self.hide
 		end
 		ok_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X

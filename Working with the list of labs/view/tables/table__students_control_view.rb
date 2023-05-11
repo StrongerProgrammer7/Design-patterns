@@ -81,31 +81,6 @@ class Table_students < Table
 	private
 		attr_accessor :chekbox_sort_all_data_toTable
 
-	def setHeaderText(column_names)
-		num = 0
-		column_names.each do |name|
-			self.table.setColumnText(num, name) if num < column_names.length
-			num+=1
-		end
-		self.table.setColumnWidth((0), 40)
-		self.table.setColumnWidth((column_names.length-1), 200)
-	end
-
-	def clear_table(count_col,count_row)
-		row = 0		
-		loop do
-			column =0
-			loop do
-				break if(column > count_col - 1)
-				self.table.setRowText(row,"")
-				self.table.setItemText(row, column, "")
-				column+=1
-			end 
-			break if row > count_row - 1
-			row +=1
-		end
-
-   end
 
   def fill_table(num_page,count,filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
 	filter_surname_initials:nil)
@@ -127,27 +102,34 @@ class Table_students < Table
    def fill_table_rows(filter_surname_initials,ind,row)
    	if(filter_surname_initials!=nil) then
 			if self.data[ind][1].include? filter_surname_initials then
-					fillRow(self.data[ind],row) 
-					row +=1
+				fillRow(self.data[ind],row,4) 
+				row +=1
 			end
 		else
-			fillRow(self.data[ind],row)
+			fillRow(self.data[ind],row,4)
 			row +=1	
 		end
 		row
    end
 
-   def fillRow(row_data,row)
-   	column = 0
-   	if(row_data!=nil) then
-   		row_data.each do |cell_data|
-					self.table.setItemText(row, column, cell_data.to_s) if(column<4)
-					column += 1
-			end
-			self.table.setRowText(row,(row_data[row_data.length-1]).to_s)
-			self.current_data << row_data
-		end		
+  
+   def resize_columns()
+   	col = 0
+   	@columns_size.each do |size|
+   		if col ==0 then 
+   			col +=1 
+   			next 
+   		end
+   		self.table.setColumnWidth(col, size * 4) if col == 1
+   		self.table.setColumnWidth(col, size * 6) if col > 1
+   		col +=1
+   	end
+   	#cur_width = self.table.getItem(row,column).getWidth(self.table)
+			#if  @columns_size!= nil && @columns_size[column] < cur_width then
+				#	@columns_size[column] = cur_width
+			#end
    end
+   
 
 #---------------------------------TODO--REFACTORING!!
    def fill_table_sort_data(num_page,count,data)
