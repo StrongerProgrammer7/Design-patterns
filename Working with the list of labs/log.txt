@@ -5,3 +5,10 @@ I, [2023-05-10T17:55:28.679329 #7261]  INFO -- : Deleting student with ID {[141,
 I, [2023-05-10T18:11:04.178229 #8394]  INFO -- : Creating student with params {"name"=>"Nameds", "surname"=>"Surnameds", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
 I, [2023-05-10T18:52:17.771253 #8707]  INFO -- : Deleting student with ID {[143]
 I, [2023-05-10T22:48:44.567878 #20666]  INFO -- : Deleting student with ID {["8"]
+I, [2023-05-11T10:45:41.098194 #2448]  INFO -- : Deleting student with ID {["8"]
+I, [2023-05-11T11:02:01.709368 #3452]  INFO -- : Deleting student with ID {[144]
+I, [2023-05-11T11:17:48.417829 #3967]  INFO -- : Deleting student with ID {["8"]
+I, [2023-05-11T11:33:30.759393 #4523]  INFO -- : Deleting student with ID {[145]
+I, [2023-05-11T11:43:09.094961 #5531]  INFO -- : Deleting student with ID {[146]
+I, [2023-05-11T13:41:18.251652 #10008]  INFO -- : Deleting student with ID {[147]
+I, [2023-05-11T14:32:24.599725 #13628]  INFO -- : Deleting student with ID {[148]

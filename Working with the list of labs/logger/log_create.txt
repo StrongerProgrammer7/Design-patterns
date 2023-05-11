@@ -119,3 +119,11 @@ E, [2023-05-10T22:45:40.619111 #20554] ERROR -- : Error while creating student: 
 		                                                                          ^^^^^^^^^^^^^^
 Did you mean?  list_entities
 I, [2023-05-10T22:48:41.408657 #20666]  INFO -- : Creating student with params {"name"=>"Names", "surname"=>"Surnames", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-11T10:44:20.818738 #2381]  INFO -- : Creating student with params {"name"=>"Namek", "surname"=>"Surnamek", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+E, [2023-05-11T10:44:20.864338 #2381] ERROR -- : Error while creating student: Нет такого файла или каталога @ rb_sysopen - .testfile/test.json
+I, [2023-05-11T10:45:30.438902 #2448]  INFO -- : Creating student with params {"name"=>"Named", "surname"=>"Surnamed", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-11T11:17:46.412379 #3967]  INFO -- : Creating student with params {"name"=>"Namesd", "surname"=>"Surnamesd", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-11T11:33:28.893113 #4523]  INFO -- : Creating student with params {"name"=>"Nameds", "surname"=>"Surnamesd", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-11T11:42:20.420922 #5412]  INFO -- : Creating element with params {"name"=>"Named", "surname"=>"Surnamed", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-11T13:41:06.287529 #10008]  INFO -- : Creating element with params {"name"=>"Namef", "surname"=>"Surnamef", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}
+I, [2023-05-11T14:32:05.145625 #13628]  INFO -- : Creating element with params {"name"=>"Namef", "surname"=>"Surnamef", "lastname"=>nil, "phone"=>nil, "mail"=>nil, "telegram"=>nil, "git"=>nil}

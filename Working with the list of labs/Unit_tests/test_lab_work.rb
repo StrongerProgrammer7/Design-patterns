@@ -7,6 +7,7 @@ class TestLab_work < Test::Unit::TestCase
   def setup
     @lab = Laboratory_work.new(id:0,
       name:"Public",
+      number:1,
       topics:"Log",
       tasks:"1.Create logger",
       date:"13.04.2022")
@@ -15,6 +16,7 @@ class TestLab_work < Test::Unit::TestCase
   def test_initialize
     assert_equal("Public", @lab.name)
     assert_equal("Log", @lab.topics)
+    assert_equal(1, @lab.number)
     assert_equal("1.Create logger", @lab.tasks)
     assert_equal("13.04.2022", @lab.date)
   end

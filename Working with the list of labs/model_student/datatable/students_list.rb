@@ -36,8 +36,19 @@ class Students_list < Entities_list
 		end
 	end
 
-	def sort_by_initials(data_list)
+	def sort_by_field(data_list)
 		data_list.list_entities.sort! { |a,b| a.initials <=> b.initials}
 	end
+
+	def push_element(element)
+		student = Student.new(id:0,surname:element["surname"],name:element["name"],lastname:element["lastname"],phone:element["phone"],telegram:element["telegram"],mail:element["mail"],git: element["git"])
+		super(student)
+	end
+
+	def replace_element_by_id(id,element)
+		student = Student.new(id:element["id"],surname:element["surname"],name:element["name"],lastname:element["lastname"],phone:element["phone"],telegram:element["telegram"],mail:element["mail"],git: element["git"])
+		super(student.id,student)
+	end
+
 
 end

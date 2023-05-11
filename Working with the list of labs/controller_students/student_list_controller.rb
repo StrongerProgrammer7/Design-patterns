@@ -3,7 +3,7 @@ require 'logger'
 
 class Student_list_controller
 	attr_writer :student_list_view
-	attr_reader :data_list_student_short, :logger
+	attr_reader :data_list_student_short, :logger,:student_list
 
 	def initialize(student_list,log_mode = :all)
 		@student_list = student_list
@@ -21,9 +21,9 @@ class Student_list_controller
 
 	def refresh_data(k,n)
 		if(self.data_list_student_short==nil) then
-			self.data_list_student_short = @student_list.get_k_n_student_short_list(k,n,data_list:self.data_list_student_short)
+			self.data_list_student_short = @student_list.get_k_n_elements_list(k,n,data_list:self.data_list_student_short)
 		else
-			@student_list.get_k_n_student_short_list(k,n,data_list:self.data_list_student_short)
+			@student_list.get_k_n_elements_list(k,n,data_list:self.data_list_student_short)
 		end
 		self.data_list_student_short.student_list_view = self.student_list_view if self.data_list_student_short.student_list_view == nil
 		self.data_list_student_short.notify(n)
@@ -31,7 +31,7 @@ class Student_list_controller
 	end
 
 	def get_count_student_short()
-		@student_list.get_student_short_count
+		@student_list.get_elements_count()
 	end
 
 	def select_student(num)
@@ -62,7 +62,7 @@ class Student_list_controller
 
 	private 
 	attr_reader :student_list_view
-	attr_writer :data_list_student_short, :logger
+	attr_writer :data_list_student_short, :logger, :student_list
 
 	
 end

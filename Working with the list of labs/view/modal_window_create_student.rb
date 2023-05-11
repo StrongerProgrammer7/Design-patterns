@@ -30,6 +30,7 @@ class Modal_create_student < FXDialogBox
 	end
 
 	def addTimeoutCheck()
+		datas = "s"
 		if(self.shown?) then
 			@timeout_id = @app.addTimeout(500, :repeat => true) do
 				if @student_field["surname"]!=nil && @student_field["name"] != nil then
@@ -39,6 +40,7 @@ class Modal_create_student < FXDialogBox
 				end
 			end
 		end
+		print datas,"\n"
 	end
 
 private

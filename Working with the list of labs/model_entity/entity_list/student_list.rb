@@ -28,15 +28,15 @@ class Student_list
   		end		
 	end
 	
-	def get_student_by_id(id)
+	def get_element_by_id(id)
 		@strategy.get_element_by_id(id)
 	end
 
-	def get_k_n_student_short_list(k,n,data_list:nil)
+	def get_k_n_elements_list(k,n,data_list:nil)
 		@strategy.get_k_n_elements_list(k,n,data_list:data_list)
 	end
 
-	def push_student(student)
+	def push_element(student)
 		@strategy.push_element(student)
 	end
 
@@ -48,7 +48,7 @@ class Student_list
 		@strategy.delete_element_by_id(id)
 	end
 
-	def get_student_short_count()
+	def get_elements_count()
 		@strategy.get_elements_count()
 	end
 	private 

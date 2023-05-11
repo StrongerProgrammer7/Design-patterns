@@ -5,7 +5,7 @@ include Fox
 
 class Table
 
-	attr_accessor :table 
+	attr_accessor :table, :count_data
 	attr_reader :data, :vframe_table, :whole_entites_count, :num_current_page
 
 	def initialize(tab_frame,name_table, width_frame:620,table_height:400)
@@ -31,10 +31,14 @@ class Table
 
 	def set_table_data(data_table)
 		self.data = data_table
+		self.count_data = self.data.length
 		fill_table(1,self.whole_entites_count) 
 		#print (self.table.numRows)
 	end
 
+	def get_data()
+		self.data
+	end
 
 	private
 		attr_writer :num_current_page
@@ -44,4 +48,18 @@ class Table
 		raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
 	end
 
+
+
+
 end
+
+=begin
+require 'date'
+
+date_string = '15.05.2022'
+date = Date.strptime(date_string, '%d.%m.%Y')
+milliseconds = date.strftime('%Q').to_i
+
+puts milliseconds
+
+=end

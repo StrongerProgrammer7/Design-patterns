@@ -8,7 +8,7 @@ class Labs_list < Entities_list
 	end
 
 	def get_k_n_elements_list(k,n,data_list:nil)
-		self.list_entities = read_from_file(@@addressFile)
+		self.list_entities = read_from_file(self.format_file.addressFile)
 		list = []
 		index_elem = 0
 		index_list = 0
@@ -34,8 +34,31 @@ class Labs_list < Entities_list
 		end
 	end
 
-	def sort_by_name(data_list)
+	def sort_by_field(data_list)
 		data_list.list_entities.sort! { |a,b| a.name <=> b.name}
 	end
+
+	def push_element(element)
+		lab = Laboratory_work.new(
+					id:0,
+					number:element["number"],
+      				name:element["name"],
+      				topics:element["topics"],
+      				tasks:element["tasks"],
+      				date:element["date"])
+		super(lab)
+	end
+
+	def replace_element_by_id(id,element)
+		lab = Laboratory_work.new(
+					id:element["id"],
+					number:element["number"],
+      				name:element["name"],
+      				topics:element["topics"],
+      				tasks:element["tasks"],
+      				date:element["date"])
+		super(id,lab)
+	end
+
 
 end

@@ -1,5 +1,6 @@
 require_relative File.dirname($0) + './laboratory_work.rb'
 require_relative '../../model_entity/entity_DB/entity_list_DB.rb'
+require 'date'
 
 class Labs_list_DB < Entities_list_DB
 
@@ -20,31 +21,49 @@ class Labs_list_DB < Entities_list_DB
 		list_labs = []
 		@dbcon.crud_student_by_db("Select * FROM Laboratory_work LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
 			elem = clearData(elem)
+			date = Date.parse(elem["date_of_issue"].to_s).strftime('%d.%m.%Y')
 			lab = Laboratory_work.new(
-					id:elem["Id"],
+					id:elem["id"],
+					number:elem["number"],
       				name:elem["name"],
       				topics:elem["topics"],
       				tasks:elem["tasks"],
-      				date:elem["date"])
+      				date:date.to_s)
 			list_labs.push(lab)
 		end
 
 		if(data_list == nil) then
-			return Data_list_student_short.new(list_labs)
+			return Data_list_labs.new(list_labs)
 		else
 			return data_list.list_entities = list_labs
 		end
 	end
 
-	def push_element(lab)
-		@dbcon.crud_student_by_db("INSERT INTO Laboratory_work(name, topics, tasks, date) VALUES ('#{lab.name}','#{lab.topics || 'NULL'}','#{lab.tasks || 'NULL'}','#{lab.date}');")
+	def push_element(element)
+		lab = Laboratory_work.new(
+					id:0,
+					number:element["number"],
+      				name:element["name"],
+      				topics:element["topics"],
+      				tasks:element["tasks"],
+      				date:element["date"])
+		@dbcon.crud_student_by_db("INSERT INTO Laboratory_work(name, topics, tasks, date_of_issue) VALUES ('#{lab.name}','#{lab.topics || 'NULL'}','#{lab.tasks || 'NULL'}','#{lab.date}');")
 	end
 
 	def replace_element_by_id(id,element)
+		lab = Laboratory_work.new(
+					id:element["id"],
+					number:element["number"],
+      				name:element["name"],
+      				topics:element["topics"],
+      				tasks:element["tasks"],
+      				date:element["date"])
 		@dbcon.crud_student_by_db("UPDATE Laboratory_work 
-							SET name = '#{element.name}', topics = '#{element.topics}', 
-							tasks = '#{element.tasks}',
-							date = '#{element.date}'
+							SET name = '#{lab.name}', 
+							number = '#{lab.number}'
+							topics = '#{lab.topics}', 
+							tasks = '#{lab.tasks}',
+							date_of_issue = '#{lab.date}'
 							WHERE id = #{id};")
 	end
 

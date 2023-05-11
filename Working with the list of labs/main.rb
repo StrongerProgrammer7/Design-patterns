@@ -4,9 +4,9 @@ include Fox
 #--------------------Student-----------
 load './model_entity/entity_list/student_list.rb'
 
-load './controller/student_list_controller.rb'
+load './controller/controller.rb'
 load './controller/controller_insert.rb'
-load './controller/controller_update_surname.rb'
+load './controller/controller_update.rb'
 
 load './view/student_list_view.rb'
 load './view/modal_window_create_student.rb'
@@ -18,14 +18,14 @@ load './view/modal_window_change_student.rb'
 #--------------------------------------
 
 mysql = Student_list.intialize_DB(:student)
-lab = Student_list.intialize_DB(:lab)
+mysql_lab = Student_list.intialize_DB(:lab)
 json = Student_list.initialize_json(Students_list_json.new(),:student)
 json_lab = Student_list.initialize_json(Labs_list_json.new(),:lab)
 
 
-controller = Student_list_controller.new(json,:hybrid)
-contoller_modal_create = Controller_insert.new(json,controller,:hybrid)
-controller_modal_change = Controller_update_surname.new(json,controller,:hybrid)
+controller = Controller.new(mysql,mysql_lab,:hybrid)
+contoller_modal_create = Controller_insert.new(controller,:hybrid)
+controller_modal_change = Controller_update.new(controller,:hybrid)
 application = FXApp.new
 
 modalWindow_create = Modal_create_student.new(application,contoller_modal_create)

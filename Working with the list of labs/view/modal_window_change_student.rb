@@ -45,7 +45,7 @@ class Modal_change_student < FXDialogBox
 
 	def get_personal_data_student(id)
 		@student_data = []
-		@student_data = @student_list_controller.get_student_by_id(id)
+		@student_data = @student_list_controller.get_element_by_id(id)
 		if(@student_data.class!=Student) then
 			@student_data = @student_data
 			@fields.each do |key,val|

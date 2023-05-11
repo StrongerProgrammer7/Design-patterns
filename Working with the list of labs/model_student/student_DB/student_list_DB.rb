@@ -34,17 +34,19 @@ class Students_list_DB < Entities_list_DB
 		end
 	end
 
-	def push_element(student)
+	def push_element(element)
+		student = Student.new(id:0,surname:element["surname"],name:element["name"],lastname:element["lastname"],phone:element["phone"],telegram:element["telegram"],mail:element["mail"],git: element["git"])
 		@dbcon.crud_student_by_db("INSERT INTO Students(Surname, Name, Lastname, phone, mail, telegram,
 		git) VALUES ('#{student.surname}','#{student.name}','#{student.lastname}','#{student.phone || 'NULL'}','#{student.mail || 'NULL'}','#{student.telegram || 'NULL'}','#{student.git || 'NULL'}');")
 	end
 
 	def replace_element_by_id(id,element)
+		student = Student.new(id:id,surname:element["surname"],name:element["name"],lastname:element["lastname"],phone:element["phone"],telegram:element["telegram"],mail:element["mail"],git: element["git"])
 		@dbcon.crud_student_by_db("UPDATE Students 
-							SET Surname = '#{element.surname}', Name = '#{element.name}', 
-							Lastname = '#{element.lastname}',
-							phone = '#{element.phone}', mail = '#{element.mail}', 
-							git = '#{element.git}', telegram = '#{element.telegram}'
+							SET Surname = '#{student.surname}', Name = '#{student.name}', 
+							Lastname = '#{student.lastname}',
+							phone = '#{student.phone}', mail = '#{student.mail}', 
+							git = '#{student.git}', telegram = '#{student.telegram}'
 							WHERE id = #{id};")
 	end
 

@@ -10,18 +10,17 @@ class Laboratory_work
 		/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)\d\d$/.match(date)
 	end
 
-	def initialize(id:,name:,topics:nil,tasks:nil,date:)
+	def initialize(id:,number:,name:,topics:nil,tasks:nil,date:)
 		set_baseInfo(name:name,date:date)
 		set_extraInfo(topics:topics,tasks:tasks) 
-		@@number +=1
-		self.number = @@number + 1
 		self.id = id
+		self.number = number
 	end
 
 	def self.initialization(information)
-		raise "Not enough data or exists unnecessary data!(split [,])" if(information.count(",") < 2 || information.count(",") > 4)
+		raise "Not enough data or exists unnecessary data!(split [,])" if(information.count(",") < 3 || information.count(",") > 6)
 		hash_data = Laboratory_work.stringInformation_to_hash(information.delete(' ').split(","))
-		Laboratory_work.new(id:hash_data["id"],name:hash_data["name"],topics:hash_data["topics"],tasks:hash_data["tasks"],
+		Laboratory_work.new(id:hash_data["id"],number:hash_data["number"],name:hash_data["name"],topics:hash_data["topics"],tasks:hash_data["tasks"],
 			date:hash_data["date"])
 	end
 
@@ -48,10 +47,11 @@ class Laboratory_work
 		def self.stringInformation_to_hash(data)
 			hash_data = Hash.new
 			hash_data["id"] = data[0]
-			hash_data["name"] = data[1]	
-			hash_data["topics"] = data[2]
-			hash_data["tasks"] = data[3]
-			hash_data["date"] = data[4]
+			hash_data["number"] = data[1]	,
+			hash_data["name"] = data[2]	
+			hash_data["topics"] = data[3]
+			hash_data["tasks"] = data[4]
+			hash_data["date"] = data[5]
 			hash_data
 		end
 
@@ -60,16 +60,16 @@ class Laboratory_work
 				raise "Not valid name [A-Z][a-z]+ #{name}"  if(Laboratory_work.check_word(name) == nil || name.length > 99)
 			end
 			if(date!=nil) then
-				raise "Not valid date [A-Z][a-z]+ #{date}"  if(Laboratory_work.check_date(date) == nil)
+				raise "Not valid date #{date}"  if(Laboratory_work.check_date(date) == nil)
 			end
 		end
 
 		def valid_extraField_onCorrect(topics:,tasks:)
 			if(topics!=nil) then
-				raise "Not valid topics [A-Z][a-z]+ #{topics}"  if(Laboratory_work.check_word(topics) == nil || topics.length > 999)
+				raise "Not valid topics [A-Z][a-z]+ #{topics}"  if(topics.length > 999)
 			end
 			if(tasks!=nil) then
-				raise "Not valid tasks [A-Z][a-z]+ #{name}"  if(tasks.length > 9999)
+				raise "Not valid tasks [A-Z][a-z]+ #{tasks}"  if(tasks.length > 9999)
 			end	
 		end
 

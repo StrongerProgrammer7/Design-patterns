@@ -9,7 +9,7 @@ include Fox
 
 class Student_list_view < FXMainWindow
 
-	attr_reader :count_records, :num_page
+	attr_reader :count_records, :num_page, :current_table
 
   def initialize(app,controller,modal_create:nil,modal_change:nil)
   	@student_list_controller = controller
@@ -36,16 +36,23 @@ class Student_list_view < FXMainWindow
     tab_book.connect(SEL_COMMAND) do |sender, sel, data|
     	if data == 0 then
     		self.current_table = @table_student
+    		@student_list_controller.change_entity()
+    		self.count_records = 30
     	elsif data == 1 then
     		self.current_table = @table_labs
+    		@student_list_controller.change_entity()
+    		self.count_records = 16
     	else
     		self.current_table = @table_student
+    		
     	end
     		#pos = self.current_table.num_current_page.text.index(" ")
     	 	#current_page = Integer(self.current_table.num_current_page.text.slice(0,pos))
-    		showData(self.num_page,self.count_records) if (data==0)
+    	 	clearSelect()
+    	 	@student_list_controller.refresh_data(1,self.count_records)
+    		#showData(self.num_page,self.count_records) if (data==0)
     end
-
+    
     close_button = FXButton.new(horizontal_frame, "Close", nil, nil, 0, LAYOUT_FILL_X)
     close_button.connect(SEL_COMMAND) { getApp().exit }
 
@@ -58,23 +65,23 @@ class Student_list_view < FXMainWindow
   def showData(k,n)
   	self.num_page = k
   	self.count_records = n
-  	self.max_page_data = (@student_list_controller.get_count_student_short() / n) + 1
+  	self.max_page_data = (@student_list_controller.get_count_entities() / n) + 1
   	@student_list_controller.refresh_data(k,n)
   end
 
   def set_table_params(column_names,whole_entites_count)
-		@table_student.set_table_params(column_names,whole_entites_count)
-		@table_student.create_button_change_page()
+		self.current_table.set_table_params(column_names,whole_entites_count)
+		self.current_table.create_button_change_page()
 		initializeButtonTable_getData()
 	end
 	
 	def set_table_data(data_table)
-			@table_student.set_table_data(data_table) if data_table!=[] and data_table!=nil
+			self.current_table.set_table_data(data_table) if data_table!=[] and data_table!=nil
 	end
 
   private 
-	attr_accessor :student_list_controller ,:max_page_data, :modal_window_create_student, :modal_window_change_student, :current_table
-	attr_writer :count_records, :num_page
+	attr_accessor :student_list_controller ,:max_page_data, :modal_window_create_student, :modal_window_change_student
+	attr_writer :count_records, :num_page, :current_table
 	
 	def createTab(tab_book, name_tab)
     tab = FXTabItem.new(tab_book, name_tab)
@@ -90,11 +97,13 @@ class Student_list_view < FXMainWindow
 		tab_frame = FXHorizontalFrame.new(tab_book,LAYOUT_FILL_X|LAYOUT_FILL_Y)
 	
 		initialize_filter(tab_frame)
-	
-		intialize_table_students(tab_frame,"Students table")
-	
+
+		@table_student = Table_students.new(tab_frame,"Students table")
+		self.current_table = @table_student
+
 		list_btn = initialize_control(tab_frame)
-		events_students_controls(list_btn[0],list_btn[1],list_btn[2])
+
+		events_entities_controls(@table_student,list_btn[0],list_btn[1],list_btn[2],list_btn[3],modal_add:self.modal_window_create_student,modal_change:self.modal_window_change_student)
 
 		@filter_surname.connect(SEL_CHANGED) do
 			raise "Table is empty" if @table_student.table.numRows == 0
@@ -114,8 +123,16 @@ class Student_list_view < FXMainWindow
 		@table_labs = Table_lab_works.new(tab_frame,"Labs table")
 	
 		list_btn = initialize_control(tab_frame)
-		events_labs_controls(list_btn[0],list_btn[1],list_btn[2],list_btn[3])
-
+		events_entities_controls(@table_labs,
+			list_btn[0],list_btn[1],list_btn[2],list_btn[3],
+			modal_add:nil,
+			modal_change:nil)
+		
+		list_btn[3].connect(SEL_COMMAND) do |sender,sel,data|	
+			clearSelect()
+			disable_button_edit_delete(list_btn[1],list_btn[2])
+			@student_list_controller.refresh_data(1,self.count_records)
+    end
 	end
 
 	def initialize_filter(tab_frame)
@@ -130,9 +147,6 @@ class Student_list_view < FXMainWindow
 		
 	end
 	
-	def intialize_table_students(tab_frame,name_table)
-		@table_student = Table_students.new(tab_frame,name_table)
-	end
 
 	def initializeButtonTable_getData()
 			@table_student.next_data_button.connect(SEL_COMMAND) do |sender,sel,data|
@@ -163,50 +177,31 @@ class Student_list_view < FXMainWindow
 		return [add,ed,del,update]
 	end
 
-	def events_students_controls(add,ed,del)
+	def events_entities_controls(table,add,ed,del,update,modal_add:nil,modal_change:nil)
 		disable_button_edit_del(ed,del)
 
-		event_table_student_selected(ed,del)
-		event_table_student_deselected(ed,del)	
+		event_table_selected(table,ed,del)
+		event_table_deselected(table,ed,del)	
 		
-		event_addStudent(add)
-		event_deleteStudent(ed,del)
-		event_changeStudent(ed,del)
+		event_addEntity(modal_add,add)
+		event_delete_entity(ed,del)
+		event_change_entity(modal_change,ed,del)
 	end
 
-	def events_labs_controls(add,ed,del,update)
-		disable_button_edit_del(ed,del)
-
-	end
 
 	def disable_button_edit_del(ed,del)
 		ed.disable
 		del.disable
 	end
 
-	def event_table_selected(ed_btn,del_btn)
-		@selected_items = []
-		@table_student.table.connect(SEL_SELECTED) do |sender, selector, data|
-			item = sender.getItem(data.row, 0) #data.col	
-			@selected_items << data.row.to_s unless @selected_items.include? data.row.to_s
-			if @selected_items.length > 1 then
-				ed_btn.disable
-				del_btn.enable
-			elsif @selected_items.length == 1 then
-				ed_btn.enable
-				del_btn.enable
-			else
-				disable_button_edit_delete(ed_btn,del_btn)
-			end
-			self.student_list_controller.select_student(item.to_s)
-		end
-	end 
 
-	def event_table_student_selected(ed_btn,del_btn)
+	def event_table_selected(current_table,ed_btn,del_btn)
 		@selected_items = []
-		@table_student.table.connect(SEL_SELECTED) do |sender, selector, data|
-			item = sender.getItem(data.row, 0) #data.col	
+		current_table.table.connect(SEL_SELECTED) do |sender, selector, data|
+			
+			item = sender.getItem(data.row, 0) #data.col
 			@selected_items << data.row.to_s unless @selected_items.include? data.row.to_s if item != '' and item != nil
+
 			if @selected_items.length > 1 then
 				ed_btn.disable
 				del_btn.enable
@@ -216,41 +211,55 @@ class Student_list_view < FXMainWindow
 			else
 				disable_button_edit_delete(ed_btn,del_btn)
 			end
-			self.student_list_controller.select_student(data.row.to_s) if item != '' and item != nil
+			if (self.current_table.to_s.include? "Table_lab_works") then
+					if current_table.count_data.to_i - 1 == @selected_items[0].to_i && @selected_items.length == 1
+						del_btn.enable
+					else
+						del_btn.disable
+					end
+				end
+			self.student_list_controller.select_entity(data.row.to_s) if item != '' and item != nil
 		end
 	end
 
-	def event_table_student_deselected(ed_btn,del_btn)
-		@table_student.table.connect(SEL_DESELECTED) do |sender, sel, pos|
+	def event_table_deselected(current_table,ed_btn,del_btn)
+		current_table.table.connect(SEL_DESELECTED) do |sender, sel, pos|
 			@selected_items.delete(pos.row.to_s) #pos.row pos.col
-			self.student_list_controller.deselected_student(pos.row.to_s)
+			self.student_list_controller.deselected_entity(pos.row.to_s)
 			if @selected_items.length == 0 then
 				disable_button_edit_delete(ed_btn,del_btn)
 			end
 		end
 	end
 
-	def event_addStudent(add_btn)
+	def clearSelect()
+		@selected_items.each do |elem| 
+			self.student_list_controller.deselected_entity(elem.to_s)
+		end
+		@selected_items = []
+	end
+
+	def event_addEntity(modal_window_add,add_btn)
 		add_btn.connect(SEL_COMMAND) do |sender,sel,data|	
-			self.modal_window_create_student.show(PLACEMENT_SCREEN)
-			self.modal_window_create_student.addTimeoutCheck()
+			modal_window_add.show(PLACEMENT_SCREEN)
+			modal_window_add.addTimeoutCheck()
     end
 	end
 
-	def event_changeStudent(ed_btn,del_btn)
+	def event_change_entity(modal_window_change,ed_btn,del_btn)
 		ed_btn.connect(SEL_COMMAND) do |sender,sel,data|	
-			self.modal_window_change_student.show(PLACEMENT_SCREEN)	
+			modal_window_change.show(PLACEMENT_SCREEN)	
 			id = self.student_list_controller.get_selected()[0]
-			self.modal_window_change_student.get_personal_data_student(id)
-			self.modal_window_change_student.addTimeoutCheck()
+			modal_window_change.get_personal_data_student(id)
+			modal_window_change.addTimeoutCheck()
 			@selected_items = []
 			disable_button_edit_delete(ed_btn,del_btn)
     end
 	end
 
-	def event_deleteStudent(ed,del_btn)
+	def event_delete_entity(ed,del_btn)
 		del_btn.connect(SEL_COMMAND) do |sender,sel,data|
-    	self.student_list_controller.delete_student()
+    	self.student_list_controller.delete_entities()
     	@selected_items = []
     	disable_button_edit_delete(ed,del_btn)
     end

@@ -29,7 +29,7 @@ class Entities_list
 		raise 'This method should be oveeriden and retun data_list'
 	end
 
-	def sort_by_name(data_list)
+	def sort_by_field(data_list)
 		raise 'This method should be oveeriden and retun sort elements'
 	end
 
