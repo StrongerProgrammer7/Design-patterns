@@ -80,7 +80,6 @@ class Table
 				column += 1
 			end
 			self.table.setRowText(row,(row_data[row_data.length-1]).to_s)
-			self.current_data << row_data if self.table.to_s.include? "Table_lab_works"
 		end		
    end
 

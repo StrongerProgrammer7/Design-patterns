@@ -112,7 +112,11 @@ class Table_students < Table
 		row
    end
 
-  
+  def fillRow(row_data,row,max_column)
+   	super(row_data,row,max_column)
+		self.current_data << row_data  if row_data != nil		
+   end
+
    def resize_columns()
    	col = 0
    	@columns_size.each do |size|
