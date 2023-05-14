@@ -5,10 +5,9 @@ require 'clipboard'
 include Fox
 
 class Modal_change_student < FXDialogBox
-
-	def initialize(app,controller)
+	attr_writer :student_list_controller
+	def initialize(app)
 		@app = app
-		@student_list_controller = controller
 		
 		super(app, "Change student", :width => 400, :height => 250)
 		
@@ -57,6 +56,7 @@ class Modal_change_student < FXDialogBox
 	end
 
 private
+attr_reader :student_list_controller
 	def create_close_button(horizontal_frame)
 		close_button = FXButton.new(horizontal_frame, "Close", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
 		close_button.connect(SEL_COMMAND) do |sender, selector, data|

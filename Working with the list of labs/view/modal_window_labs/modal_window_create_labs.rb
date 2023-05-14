@@ -6,10 +6,9 @@ require 'date'
 include Fox
 
 class Modal_create_lab < FXDialogBox
-
-	def initialize(app,controller)
+	attr_writer :student_list_controller
+	def initialize(app)
 		@app = app
-		@student_list_controller = controller
 		
 		super(app, "Add lab", :width => 800, :height => 700)
 		
@@ -45,6 +44,7 @@ class Modal_create_lab < FXDialogBox
 	end
 
 private
+	attr_reader :student_list_controller
 	def create_close_button(horizontal_frame)
 		close_button = FXButton.new(horizontal_frame, "Close", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
 		close_button.connect(SEL_COMMAND) do |sender, selector, data|

@@ -11,7 +11,7 @@ class Controller_insert < Controller_action
 		@controller.entity_list.push_element(element)
 		@controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
 	rescue => e
-		self.logger.error("Error while creating student: #{e}")
+		self.logger.error("Error while creating element: #{e}")
 	end
 
 end

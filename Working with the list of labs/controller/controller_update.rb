@@ -16,7 +16,7 @@ class Controller_update < Controller_action
 		@controller.entity_list.replace_element_by_id(element["id"],element)
 		@controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
 	rescue => e
-		self.logger.error("Error while updating student with ID #{student["id"]}: #{e}")
+		self.logger.error("Error while updating element with ID #{element["id"]}: #{e}")
 	end
 
 end
