@@ -1,0 +1,234 @@
+
+require 'fox16'
+require 'clipboard'
+require 'date'
+include Fox
+
+class Modal_change_lab < FXDialogBox
+	attr_writer :student_list_controller
+	def initialize(app)
+		@app = app
+		
+		super(app, "Change student", :width => 800, :height => 700)
+		
+		@lab_field = {"number" =>nil,"name" => nil, "topics" => nil,
+			"tasks" => nil,"date_of_issue" => nil, "id" => nil}
+		matrix = FXMatrix.new(self, 2, MATRIX_BY_COLUMNS|LAYOUT_FILL_X)
+	
+		@number = create_textField(matrix,"Number",nil,nil)
+		@name = create_textField(matrix,"Name",method(:check_letter),method(:validate_name))
+		@topics = create_text(matrix,"Topics",method(:check_let_dig_specilSymbol),method(:validate_tasks))
+		@tasks = create_text(matrix,"Tasks",method(:check_let_dig_specilSymbol),method(:validate_tasks))
+		@date = create_textField(matrix,"Date_of_issue",method(:check_date),method(:valid_date))
+
+		@fields = {"number"=>@number,"name"=>@name,"topics" =>@topics,
+			"tasks" => @tasks, "date_of_issue" => @date}
+		create_close_button(matrix)
+		@ok_btn = create_button_ok(matrix)
+			
+	end
+
+	def addTimeoutCheck(data:nil)
+		@all_labs = data
+		if(self.shown?) then
+			@timeout_id = @app.addTimeout(1000, :repeat => true) do
+				if @lab_field["name"]!=nil && @lab_field["date_of_issue"] != nil then
+					 @ok_btn.enable  
+				else
+				 	 @ok_btn.disable 
+				end
+			end
+		end
+	end
+
+	def get_personal_data_student(id)
+		@lab_data = []
+		@lab_data = @student_list_controller.get_element_by_id(id)
+		
+		@lab_data["date_of_issue"] = Date.parse(@lab_data["date_of_issue"].to_s).strftime('%d.%m.%Y')
+		if(@lab_data.class!=Laboratory_work) then
+			@lab_data = @lab_data
+			@fields.each do |key,val|
+				fill_inputs(val,key)
+			end
+		else
+			fill_inputs_from_object()
+		end
+	end
+
+private
+	attr_reader :student_list_controller
+	def create_close_button(horizontal_frame)
+		close_button = FXButton.new(horizontal_frame, "Close", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
+		close_button.connect(SEL_COMMAND) do |sender, selector, data|
+			@app.removeTimeout(@timeout_id)
+			clear_inputs()
+			self.hide
+		end
+		close_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
+	end
+
+	def create_button_ok(horizontal_frame)
+		ok_button = FXButton.new(horizontal_frame, "Ok", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
+		ok_button.connect(SEL_COMMAND) do |sender, selector, data|
+			#TODO:Validate special field
+			@lab_field["id"] = @lab_data["id"] if @lab_data.class!=Laboratory_work
+			if validate_date_labs() == 1 then
+				@student_list_controller.update_entity(@lab_field)
+				@app.removeTimeout(@timeout_id)
+				clear_inputs()
+				self.hide
+			end
+
+		end
+		ok_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
+		ok_button
+	end
+
+
+	def create_textField(frame,name,method_check,method_validate)
+		FXLabel.new(frame, name)
+    	nameField = FXTextField.new(frame, 80)
+    	if(name != "Number") then
+    		nameField.connect(SEL_VERIFY) do |sender, sel, tentative|
+    			if method_check.call(tentative)
+    				false 
+    			else		
+    				true
+    			end
+    		end
+    		nameField.connect(SEL_CHANGED) do 
+    			validate_field(nameField,method_validate,name)
+    		end
+    	else
+    		nameField.disable
+    	end
+    	nameField
+	end
+
+	def create_text(frame,name,method_check,method_validate)
+		FXLabel.new(frame, name)
+    	nameField = FXText.new(frame, nil, 0, TEXT_WORDWRAP|LAYOUT_FILL_X|LAYOUT_FIX_HEIGHT)
+
+    	nameField.height = 250
+
+    	nameField.connect(SEL_VERIFY) do |sender, sel, tentative|
+    		if method_check.call(tentative)
+    			false 
+    		else		
+    			true
+    		end
+    	end
+    	nameField.connect(SEL_CHANGED) do 
+    		validate_field(nameField,method_validate,name)
+    	end
+    	nameField
+	end
+
+	def fill_inputs(nameField,name)
+		nameField.setText(@lab_data["#{name}"].to_s) if @lab_data["#{name}"] != nil
+		@lab_field["#{name.downcase}"] = @lab_data["#{name}"] if @lab_data["#{name}"] != nil
+	end
+
+	def fill_inputs_from_object()
+		@number.text = @lab_data.number if @lab_data.number != nil
+		@topics.text = @lab_data.topics if @lab_data.topics != nil
+		@tasks.text = @lab_data.tasks if @lab_data.tasks != nil
+		@date.text = @lab_data.date if @lab_data.date != nil
+		@name.text = @lab_data.name if @lab_data.name != nil
+
+		@lab_field["number"] = @lab_data.number if @lab_data.number != nil
+		@lab_field["name"] = @lab_data.name if @lab_data.name != nil
+		@lab_field["topics"] = @lab_data.topics if @lab_data.topics != nil
+		@lab_field["date_of_issue"] = @lab_data.date if @lab_data.date != nil
+		@lab_field["tasks"] = @lab_data.tasks if @lab_data.tasks != nil
+		@lab_field["id"] = @lab_data.id
+	end
+
+	def validate_field(nameField,method_validate,name)
+		if method_validate.call(nameField.text) then 
+        	@lab_field[name.downcase] = nameField.text 
+        else 
+        	@lab_field[name.downcase] = nil 
+        end
+	end
+
+	def message(text)
+		FXMessageBox.warning(self,
+			MBOX_OK,
+			"Warning",
+			text)
+	end
+
+	def clear_inputs()
+		@name.setText('')
+		@tasks.setText('')
+		@topics.setText('')
+		@date.setText('')
+	end
+
+
+	def validate_date_labs()
+		cur_date = @date.text.to_s
+		cur_date = Date.strptime(cur_date, '%d.%m.%Y').strftime('%Q').to_i
+		if(@number.text.to_i == @all_labs.length) then
+			lab_prev_date = @all_labs[@number.text.to_i-2][4]
+			lab_prev_date = Date.strptime(lab_prev_date, '%d.%m.%Y').strftime('%Q').to_i
+			if cur_date < lab_prev_date then
+				message("Вы не можете выдать эту лабораторную работу раньше предыдущей.\nСрок выдачи ЛР №#{(@number.text.to_i-2).to_s} - <#{@all_labs[@number.text.to_i-2][4].to_s}>")
+				return 0
+			end
+		elsif @number.text.to_i == 1 then
+			lab_next_date = @all_labs[@number.text.to_i][4]
+			lab_next_date = Date.strptime(lab_next_date, '%d.%m.%Y').strftime('%Q').to_i
+			if cur_date > lab_next_date then
+				message("Вы не можете выдать эту лабораторную работу позже следующей.\nСрок выдачи ЛР №#{(@number.text.to_i).to_s} - <#{@all_labs[@number.text.to_i][4].to_s}>")
+				return 0
+			end
+		else
+			lab_prev_date = @all_labs[@number.text.to_i-2][4]
+			lab_next_date = @all_labs[@number.text.to_i][4]
+
+			lab_prev_date = Date.strptime(lab_prev_date, '%d.%m.%Y').strftime('%Q').to_i
+			lab_next_date = Date.strptime(lab_next_date, '%d.%m.%Y').strftime('%Q').to_i
+			if !(cur_date > lab_prev_date && cur_date < lab_next_date) then
+				message("Вы не можете выдать эту лабораторную работу позже следующей and early previous.\nСрок выдачи ЛР №#{(@number.text.to_i).to_s}/#{@number.text.to_i-2} - <#{@all_labs[@number.text.to_i][4].to_s}/#{@all_labs[@number.text.to_i-2][4]}>")
+				return 0
+			end
+		end
+		return 1
+	end
+
+
+	def check_letter(elem)
+		elem.match?(/^[A-zА-яЁё\s]+$/) 
+	end
+
+	def check_date(elem)
+		elem.match?(/^[0-9\.]+$/)
+	end
+
+	def check_let_dig_specilSymbol(elem)
+		elem.match?(/\w+|[\.]|[\\]|\s|[#]|[\^]|[\&]|[\*]|[\[]|[\]]|[\(]|[\)]|[\{]|[\}]/)
+	end
+
+	def validate_name(text)
+		text.match?(/^[A-ZА-Я](([a-z]+|[a-яё]+){2,99})$/)
+	end
+
+	def validate_topics(text)
+		text.match?(/\A[\d\/]*[A-z\w\b\s\d\"\:\.\?\!\,]{1,999}\z/)
+	end
+
+	def validate_tasks(text)
+		text.match?(/\A[\d\/[A-z]\,]*[A-z\w\b\s\d\"\:\.\?\!\(\)\{\}\[\]\,\-]{1,9999}\z/)
+	end
+
+	def valid_date(text)
+		text.match?(/^(0[1-9]|[1|2][0-9]|3[01])\.(0[1-9]|1[0-2])\.(\d{2}|\d{4})$/)
+	end
+
+
+
+end
+
