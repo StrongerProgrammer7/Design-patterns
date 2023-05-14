@@ -1,8 +1,9 @@
 class Person
-	attr_reader :surname, :name, :lastname ,:phone, :telegram, :mail,:git 
+	attr_reader :surname, :name, :lastname ,:phone, :mail 
 	attr_accessor :id
+	
 	define_singleton_method :check_phone do |phone|
-		/\+?[0-9]{9,15}$/.match(phone)
+		/^(\+7|8)[0-9]{9,15}$/.match(phone)
 	end
 
 	define_singleton_method :check_word do |word|
@@ -13,62 +14,57 @@ class Person
 		/^[A-z0-9.]+@[a-z0-9]+\.[a-z]+$/.match(mail)
 	end
 
-	define_singleton_method :check_telegram do |telegram|
-		/^@[A-z0-9]/.match(telegram)
-	end
-	define_singleton_method :check_git do |git|
-		/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/.match(git)
-	end
-
-	def initialize(surname:,name:,lastname:)
+	def initialize(surname:,name:,lastname:,phone:,mail:nil)
 		set_baseInfo(surname:surname,name:name,lastname:lastname)
+		set_extraInfo(phone:phone,mail:mail)
 	end
 
 	def to_s()
-		"#{self.surname} #{self.name} #{self.lastname}"
+		"#{self.surname} #{self.name}"
 	end
 
 	def get_all_contacts()
-		"#{self.phone},#{self.telegram},#{self.mail}"
+		"#{self.phone}, #{self.mail}"
 	end
 	
-	def set_baseInfo(surname:,name:,lastname:nil)
-		valid_baseField_onCorrect(name,surname,lastname)
-		self.surname = surname if(surname!=nil)
-		self.name = name if(name != nil)
-		self.lastname = lastname if(lastname !=nil)
+	def get_Info()
+		mail = get_mail()
+		if mail != "" then mail = ",#{mail}" end
+		"#{get_initials()}, #{self.phone} #{mail}"
 	end
-
-	def set_extraInfo(phone:nil,telegram:nil,mail:nil,git:nil)
-		valid_extraField_onCorrect(phone:phone,mail:mail,telegram:telegram,git:git)		
-		self.phone=phone if(phone!=nil and phone != '')
-		self.mail = mail if(mail!=nil and mail!='') 
-		self.telegram = telegram if(telegram!=nil and telegram != '')
-		self.git = git if(git!=nil and git != '')
+	
+	def set_information(surname:nil,name:nil,lastname:nil, phone:nil,mail:nil)
+		set_baseInfo(surname:surname,name:name,lastname:lastname)
+		set_extraInfo(phone:phone,mail:mail)
 	end
-
+	
+	
 	private
-		attr_writer :surname, :name, :lastname ,:phone, :telegram, :mail,:git
+		attr_writer :surname, :name, :lastname ,:phone, :mail
+		
+		def set_baseInfo(surname:nil,name:nil,lastname:nil)
+			valid_baseField_onCorrect(name:name,surname:surname,lastname:lastname)
+			self.surname = surname if(surname!=nil)
+			self.name = name if(name != nil)
+			self.lastname = lastname if(lastname !=nil)
+		end
 
-
-		def getSurname_Initials
+		def set_extraInfo(phone:nil,mail:nil)
+			valid_extraField_onCorrect(phone:phone,mail:mail)		
+			self.phone=phone if(phone!=nil and phone != '')
+			self.mail = mail if(mail!=nil and mail!='') 
+		end
+	
+		def get_initials
 			lastname = if(self.lastname!= '' && self.lastname!=nil) then "#{self.lastname[0]}." else "" end
-			"#{self.surname} #{self.name[0]}. #{lastname} "
+			"#{self.surname} #{self.name[0]}.#{lastname}"
 		end
 
-		def getGit()
-			isExistsGit() ? "#{self.git}" : "have't git"
+		def get_mail()
+			if(self.mail) then self.mail else "" end
 		end
 
-		def isExistsGit()
-			self.git!=nil
-		end
-
-		def isExistsAnyContact()
-			getAnyContact()!=nil
-		end
-
-		def valid_baseField_onCorrect(name,surname,lastname)
+		def valid_baseField_onCorrect(name:,surname:,lastname:)
 			if(surname!=nil) then
 				raise "Not valid surname [A-Z][a-z]+ #{surname}"  if(Person.check_word(surname) == nil)
 			end
@@ -80,13 +76,11 @@ class Person
 			end
 		end
 
-		def valid_extraField_onCorrect(phone:nil,mail:nil,telegram:nil,git:nil)
-			valid_contact(phone:phone,mail:mail,telegram:telegram)
-			valid_git(git:git)	
-		
+		def valid_extraField_onCorrect(phone:,mail:)
+			valid_contact(phone:phone,mail:mail)	
 		end
 	
-		def valid_contact(phone:nil,mail:nil,telegram:nil)
+		def valid_contact(phone:,mail:)
 			if(phone!=nil and phone != '')
 				if Person.check_phone(phone) ==nil then
 				 	raise "Not valid phone #{phone}"
@@ -97,18 +91,6 @@ class Person
 					raise "Not valid mail #{mail}"
 				end
 			end
-			if(telegram!=nil and telegram != '')
-				if(Person.check_telegram(telegram)==nil) then
-					raise "Not valid telegram #{telegram}"
-				end
-			end
 		end
 	
-		def valid_git(git:nil)
-			if(git!=nil and git != '')
-				if(Person.check_git(git)==nil) then
-					raise "Not valid git #{git}"
-				end
-			end
-		end
 end
