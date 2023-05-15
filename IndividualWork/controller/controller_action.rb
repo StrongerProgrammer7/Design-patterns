@@ -2,7 +2,7 @@
 require 'logger'
 
 class Controller_action
-	attr_writer :student_list_view
+	attr_writer :view
 	def initialize(parent_controller,log_mode = :all,log_file)
 		self.logger = Logger.new(log_file)
     	case log_mode
@@ -17,6 +17,6 @@ class Controller_action
 	end
 	 
 	private 
-	attr_reader :student_list_view
+	attr_reader :view
 	attr_accessor :logger
 end

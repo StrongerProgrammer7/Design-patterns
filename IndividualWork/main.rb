@@ -2,32 +2,32 @@ require 'fox16'
 
 include Fox
 #--------------------Student-----------
-load './model_entity/entity_list/student_list.rb'
+load './model_entity/entity_list/Parking_list.rb'
 
 load './controller/controller.rb'
 load './controller/controller_insert.rb'
 load './controller/controller_update.rb'
 
-load './view/student_list_view.rb'
-load './view/modal_window_create_student.rb'
-load './view/modal_window_change_student.rb'
+load './views/view.rb'
+load './views/modal_window_create_student.rb'
+load './views/modal_window_change_student.rb'
 #--------------------------------------
 #-------------------Labs---------------
-load './view/modal_window_labs/modal_window_create_labs.rb'
-load './view/modal_window_labs/modal_window_change_labs.rb'
+load './views/modal_window_labs/modal_window_create_labs.rb'
+load './views/modal_window_labs/modal_window_change_labs.rb'
 #--------------------------------------
 
 class Factory
 	def self.actions(type_action,enitity,files:nil)
   	case type_action
   	when :mysql
-  		Student_list.intialize_DB(enitity)
+  		Parking_list.intialize_DB(enitity)
   	when :json
-  		Student_list.initialize_json(files,enitity)
+  		Parking_list.initialize_json(files,enitity)
   	when :yaml
-  		Student_list.initialize_yaml(files,enitity)
+  		Parking_list.initialize_yaml(files,enitity)
   	when :txt
-  		Student_list.initialize_txt(files,enitity)
+  		Parking_list.initialize_txt(files,enitity)
   	else
   		raise ArgumentError, "Invalid argument #{type_action}"
   	end
@@ -38,7 +38,7 @@ class Factory
   end
   
   def self.build_main_window(application,modal_create_ent1:nil,modal_change_ent1:nil,modal_create_ent2:nil,modal_change_ent2:nil)
-	 Student_list_view.new(application,
+	 Parking_view.new(application,
 	   modal_create_student:modal_create_ent1,
 	   modal_change_student:modal_change_ent1,
 	   modal_create_lab:modal_create_ent2,
@@ -76,17 +76,17 @@ class Factory
   end
 
   def self.connection_window_controller(controller,window)
-  	window.student_list_controller = controller
+  	window.controller = controller
   end
 end
 
-mysql = Factory.actions(:mysql,:student)
-mysql_lab = Factory.actions(:mysql,:lab)
-json = Factory.actions(:json,:student,files:Students_list_json.new())
-json_lab = Factory.actions(:json,:lab,files:Labs_list_json.new()) 
+mysql_owner = Factory.actions(:mysql,:owner)
+mysql_guard = Factory.actions(:mysql,:guard)
+json_owner = Factory.actions(:json,:owner,files:Persons_list_json.new(person:Owner_list.new(:json)))
+json_lab = Factory.actions(:json,:guard,files:Persons_list_json.new(person:Guard_list.new(:json))) 
 
 
-controller = Factory.build_main_controller(mysql,mysql_lab)
+controller = Factory.build_main_controller(mysql_owner,mysql_guard)
 contoller_modal_create = Factory.build_controllers(:insert,controller)
 controller_modal_change = Factory.build_controllers(:update,controller)
 application = FXApp.new

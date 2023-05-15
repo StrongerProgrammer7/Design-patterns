@@ -9,7 +9,7 @@ class Controller_insert < Controller_action
 		self.logger.debug("Creating element with params #{element}")
 		self.logger.info("Creating element with params #{element}")
 		@controller.entity_list.push_element(element)
-		@controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
+		@controller.refresh_data(self.view.num_page,self.view.count_records)
 	rescue => e
 		self.logger.error("Error while creating student: #{e}")
 	end

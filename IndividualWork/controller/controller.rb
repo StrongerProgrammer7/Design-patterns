@@ -2,10 +2,10 @@
 require 'logger'
 
 class Controller
-	attr_writer :student_list_view
+	attr_writer :view
 	attr_reader :entity_list
 
-	def initialize(student_list,lab_list,log_mode = :all)
+	def initialize(owners_list,guard_list,log_mode = :all)
 		self.logger = Logger.new("log.txt")
     	case log_mode
     		when :errors
@@ -15,15 +15,14 @@ class Controller
     		else
       			self.logger.level = Logger::DEBUG
     	end
-    	@entity_list = student_list
-		@student_list = student_list
-		@lab_list = lab_list
+    	@entity_list = owners_list
+		@owners_list = owners_list
+		@guard_list = guard_list
 	end
 
 	def change_entity()
-		@entity_list = (self.student_list_view.current_table.to_s.include? "Table_lab_works")? @lab_list : @student_list
-		n = @entity_list == @student_list ? 30 : 16
-		self.data_list = @entity_list.get_k_n_elements_list(1,n,data_list:nil)
+		@entity_list = (self.view.current_table.to_s.include? "Table_guards")? @guard_list : @owners_list
+		self.data_list = @entity_list.get_k_n_elements_list(1,30,data_list:nil)
 	end
 
 	def refresh_data(k,n)
@@ -32,9 +31,9 @@ class Controller
 		else
 			@entity_list.get_k_n_elements_list(k,n,data_list:self.data_list)
 		end
-		self.data_list.student_list_view = self.student_list_view if self.data_list.student_list_view == nil
+		self.data_list.observer = self.view if self.data_list.view == nil
 		self.data_list.notify(n)
-		self.student_list_view.show(PLACEMENT_SCREEN)
+		self.view.show(PLACEMENT_SCREEN)
 	end
 
 	def get_count_entities()
@@ -62,15 +61,15 @@ class Controller
 		list_entites.each do |id_entity|
 			@entity_list.delete_element_by_id(id_entity)
 		end 
-		refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
+		refresh_data(self.view.num_page,self.view.count_records)
 	rescue => e
 		self.logger.error("Error while deleting entity :#{e}")
 	end
 
 	private 
-	attr_reader :student_list_view
+	attr_reader :view
 	attr_writer :data_list, :logger, :entity_list
-	attr_accessor :student_list, :lab_list,:logger, :data_list
+	attr_accessor :owners_list, :guard_list,:logger, :data_list
 
 	
 end

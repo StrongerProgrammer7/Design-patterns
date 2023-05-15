@@ -14,7 +14,7 @@ class Controller_update < Controller_action
 		self.logger.debug("Updating element with ID #{element["id"]} and params #{element}")
 		self.logger.info("Updating element with ID #{element["id"]} and params #{element}")
 		@controller.entity_list.replace_element_by_id(element["id"],element)
-		@controller.refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
+		@controller.refresh_data(self.view.num_page,self.view.count_records)
 	rescue => e
 		self.logger.error("Error while updating element with ID #{element["id"]}: #{e}")
 	end

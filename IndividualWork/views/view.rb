@@ -1,25 +1,25 @@
-require_relative File.dirname($0) + './view/button_control_view.rb'
-require_relative File.dirname($0) + './view/filter_control_view.rb'
-require_relative File.dirname($0) + './view/tables/table__students_control_view.rb'
-require_relative File.dirname($0) + './view/tables/table_labs.rb'
+require_relative File.dirname($0) + './views/button_control_view.rb'
+require_relative File.dirname($0) + './views/filter_control_view.rb'
+require_relative File.dirname($0) + './views/tables/table__students_control_view.rb'
+require_relative File.dirname($0) + './views/tables/table_labs.rb'
 
 require 'fox16'
 
 include Fox
 
-class Student_list_view < FXMainWindow
+class Parking_view < FXMainWindow
 
 	attr_reader :count_records, :num_page, :current_table
-	attr_writer :student_list_controller
-  def initialize(app,modal_create_student:nil,modal_change_student:nil,modal_create_lab:nil,modal_change_lab:nil)
+	attr_writer :controller
+  def initialize(app,modal_create_owner:nil,modal_change_owner:nil,modal_create_guard:nil,modal_change_guard:nil)
 
   	@labs_list_controller = nil
   	
-  	self.modal_window_create_student = modal_create_student
-  	self.modal_window_change_student = modal_change_student
-  	self.modal_window_create_lab = modal_create_lab
-  	self.modal_window_change_lab = modal_change_lab
-    super(app, "Students list", :width => 1000, :height => 600)
+  	self.modal_window_create_owner = modal_create_owner
+  	self.modal_window_change_owner = modal_change_owner
+  	self.modal_window_create_guard = modal_create_guard
+  	self.modal_window_change_guard = modal_change_guard
+    super(app, "Parking list", :width => 1000, :height => 600)
 	
     horizontal_frame = FXHorizontalFrame.new(self, LAYOUT_SIDE_TOP|FRAME_NONE|LAYOUT_FILL_X|LAYOUT_FILL_Y)
 	
@@ -37,11 +37,11 @@ class Student_list_view < FXMainWindow
     tab_book.connect(SEL_COMMAND) do |sender, sel, data|
     	if data == 0 then
     		self.current_table = @table_student
-    		@student_list_controller.change_entity()
+    		@controller.change_entity()
     		self.count_records = 30
     	elsif data == 1 then
     		self.current_table = @table_labs
-    		@student_list_controller.change_entity()
+    		@controller.change_entity()
     		self.count_records = 16
     	else
     		self.current_table = @table_student
@@ -50,7 +50,7 @@ class Student_list_view < FXMainWindow
     		#pos = self.current_table.num_current_page.text.index(" ")
     	 	#current_page = Integer(self.current_table.num_current_page.text.slice(0,pos))
     	 	clearSelect()
-    	 	@student_list_controller.refresh_data(1,self.count_records)
+    	 	@controller.refresh_data(1,self.count_records)
     		#showData(self.num_page,self.count_records) if (data==0)
     end
     
@@ -66,8 +66,8 @@ class Student_list_view < FXMainWindow
   def showData(k,n)
   	self.num_page = k
   	self.count_records = n
-  	self.max_page_data = (@student_list_controller.get_count_entities() / n) + 1
-  	@student_list_controller.refresh_data(k,n)
+  	self.max_page_data = (@controller.get_count_entities() / n) + 1
+  	@controller.refresh_data(k,n)
   end
 
   def set_table_params(column_names,whole_entites_count)
@@ -81,9 +81,9 @@ class Student_list_view < FXMainWindow
 	end
 
   private 
-	attr_accessor :max_page_data, :modal_window_create_student, :modal_window_change_student,:modal_window_create_lab, :modal_window_change_lab
+	attr_accessor :max_page_data, :modal_window_create_owner, :modal_window_change_owner,:modal_window_create_guard, :modal_window_change_guard
 	attr_writer :count_records, :num_page, :current_table
-	attr_reader :student_list_controller
+	attr_reader :controller
 	
 	def createTab(tab_book, name_tab)
     tab = FXTabItem.new(tab_book, name_tab)
@@ -105,13 +105,24 @@ class Student_list_view < FXMainWindow
 
 		list_btn = initialize_control(tab_frame)
 
-		events_entities_controls(@table_student,list_btn[0],list_btn[1],list_btn[2],list_btn[3],modal_add:self.modal_window_create_student,modal_change:self.modal_window_change_student)
+		events_entities_controls(@table_student,list_btn[0],list_btn[1],list_btn[2],list_btn[3],modal_add:self.modal_window_create_owner,modal_change:self.modal_window_change_owner)
 
 		@filter_surname.connect(SEL_CHANGED) do
 			raise "Table is empty" if @table_student.table.numRows == 0
 				if @filter_surname.text!=nil and @filter_surname.text != "" then
 					if /^[A-zА-яЁё]*$/.match(@filter_surname.text)!=nil then
 						@table_student.filter_data(filter_surname_initials:@filter_surname.text)
+					end				
+				else
+					@table_student.filter_data()
+				end	
+		end
+		
+		@filter_phone.connect(SEL_CHANGED) do
+			raise "Table is empty" if @table_student.table.numRows == 0
+				if @filter_phone.text!=nil and @filter_phone.text != "" then
+					if /^[0-9]*$/.match(@filter_phone.text)!=nil then
+						@table_student.filter_data(filter_surname_initials:@filter_phone.text)
 					end				
 				else
 					@table_student.filter_data()
@@ -127,13 +138,13 @@ class Student_list_view < FXMainWindow
 		list_btn = initialize_control(tab_frame)
 		events_entities_controls(@table_labs,
 			list_btn[0],list_btn[1],list_btn[2],list_btn[3],
-			modal_add:self.modal_window_create_lab,
-			modal_change:self.modal_window_change_lab)
+			modal_add:self.modal_window_create_guard,
+			modal_change:self.modal_window_change_guard)
 		
 		list_btn[3].connect(SEL_COMMAND) do |sender,sel,data|	
 			clearSelect()
 			disable_button_edit_delete(list_btn[1],list_btn[2])
-			@student_list_controller.refresh_data(1,self.count_records)
+			@controller.refresh_data(1,self.count_records)
     end
 	end
 
@@ -141,10 +152,8 @@ class Student_list_view < FXMainWindow
 		@filters = Filter.new 
 		filter_area = @filters.create_filter_area(tab_frame,180)
 		@filter_surname = @filters.add_filter_input(filter_area,"Surname N.L.: ")
-		@filter_git = @filters.add_filter_radioBtn(filter_area,@filter_git,"Наличие гита")
+		@filter_phone = @filters.add_filter_input(filter_area,"Phone")
 		@filter_mail = @filters.add_filter_radioBtn(filter_area,@filter_mail,"Наличие почты")
-		@filter_telegram = @filters.add_filter_radioBtn(filter_area,@filter_mail,"Наличие телеграмма")
-		@filter_phone = @filters.add_filter_radioBtn(filter_area,@filter_mail,"Наличие телефона")
 		@update_btn = @filters.add_controlBtn(filter_area)
 		
 	end
@@ -220,14 +229,14 @@ class Student_list_view < FXMainWindow
 						del_btn.disable
 					end
 				end
-			self.student_list_controller.select_entity(data.row.to_s) if item != '' and item != nil
+			self.controller.select_entity(data.row.to_s) if item != '' and item != nil
 		end
 	end
 
 	def event_table_deselected(current_table,ed_btn,del_btn)
 		current_table.table.connect(SEL_DESELECTED) do |sender, sel, pos|
 			@selected_items.delete(pos.row.to_s) #pos.row pos.col
-			self.student_list_controller.deselected_entity(pos.row.to_s)
+			self.controller.deselected_entity(pos.row.to_s)
 			if @selected_items.length == 0 then
 				disable_button_edit_delete(ed_btn,del_btn)
 			end
@@ -236,7 +245,7 @@ class Student_list_view < FXMainWindow
 
 	def clearSelect()
 		@selected_items.each do |elem| 
-			self.student_list_controller.deselected_entity(elem.to_s)
+			self.controller.deselected_entity(elem.to_s)
 		end
 		@selected_items = []
 	end
@@ -251,7 +260,7 @@ class Student_list_view < FXMainWindow
 	def event_change_entity(modal_window_change,ed_btn,del_btn)
 		ed_btn.connect(SEL_COMMAND) do |sender,sel,data|	
 			modal_window_change.show(PLACEMENT_SCREEN)	
-			id = self.student_list_controller.get_selected()[0]
+			id = self.controller.get_selected()[0]
 			modal_window_change.get_personal_data_student(id)
 			modal_window_change.addTimeoutCheck(data:self.current_table.data)
 			@selected_items = []
@@ -261,7 +270,7 @@ class Student_list_view < FXMainWindow
 
 	def event_delete_entity(ed,del_btn)
 		del_btn.connect(SEL_COMMAND) do |sender,sel,data|
-    	self.student_list_controller.delete_entities()
+    	self.controller.delete_entities()
     	@selected_items = []
     	disable_button_edit_delete(ed,del_btn)
     end
