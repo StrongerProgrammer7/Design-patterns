@@ -19,10 +19,9 @@ class Auto_list_DB < Entities_list_DB
 
 		list_auto = []
 		@dbcon.crud_by_db("Select * FROM Auto LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
-			elem = clearData(elem)
 			auto = Auto.new(
 					id:elem["id"],
-					id_owner:elem["id_owner"],
+					id_owner:Integer(elem["owner_id"]),
       				model:elem["model"],
       				color:elem["color"])
 			list_auto.push(auto)
@@ -38,14 +37,14 @@ class Auto_list_DB < Entities_list_DB
 	def push_element(element)
 		auto = create_auto(element:element,id:0)
 		@dbcon.crud_by_db("INSERT INTO Auto
-			(id_owner,name, model, color) 
+			(owner_id,name, model, color) 
 			VALUES 
 			('#{auto.id_owner}','#{auto.model}','#{auto.color}');")
 	end
 
 	def replace_element_by_id(id,element)
 		auto = create_auto(element:element,id:id)
-		@dbcon.crud_by_db("UPDATE Auto SET id_owner = '#{auto.id_owner}', model = '#{auto.model}',color = '#{auto.color}'
+		@dbcon.crud_by_db("UPDATE Auto SET owner_id = '#{auto.id_owner}', model = '#{auto.model}',color = '#{auto.color}'
 		WHERE id = #{id};")
 	end
 
@@ -60,7 +59,7 @@ class Auto_list_DB < Entities_list_DB
 	private 
 	def create_auto(element:,id:nil)
 		 Auto.new(id:id,
-					id_owner:element["id_owner"],
+					id_owner:Integer(element["owner_id"]),
       				model:element["model"],
       				color:element["color"])
 	end

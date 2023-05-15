@@ -1,6 +1,7 @@
 #require_relative '../../model_lab/datatable/labs_list.rb'
 require_relative '../../model_person/datatable/owners_list.rb'
 require_relative '../../model_person/datatable/guards_list.rb'
+require_relative '../../model_auto/datatable/auto_list.rb'
 
 class Entity_adapter
 	
@@ -17,6 +18,9 @@ class Entity_adapter
   			when :guard
   				self.addressFile ="/../../testfile/testfile_guards/"
   				@entity_list_file = Guards_list.new(format_file)
+			when :auto
+  				self.addressFile ="/../../testfile/testfile_auto/"
+  				@entity_list_file = Auto_list.new(format_file)
   			else
   				raise ArgumentError, "Invalid argument #{entity}"
   		end	

@@ -1,6 +1,7 @@
 require_relative '../../model_person/person_DB/owners_list_DB.rb'
 require_relative '../../model_person/person_DB/guards_list_DB.rb'
-#require_relative '../../model_lab/lab_DB/labs_list_DB.rb'
+require_relative '../../model_auto/auto_DB/auto_list_DB.rb'
+
 require_relative File.dirname($0) + '/entity_adapter.rb'
 
 class Parking_list
@@ -24,6 +25,8 @@ class Parking_list
   				Parking_list.new(Owners_list_DB.new())
   			when :guard
   				Parking_list.new(Guards_list_DB.new())
+			when :auto
+  				Parking_list.new(Auto_list_DB.new())
   			else
   				raise ArgumentError, "Invalid argument #{entity}"
   		end		

@@ -1,37 +1,47 @@
-require_relative File.dirname($0) + '/../../model_person/list_file/owner_list.rb'
-require_relative File.dirname($0) + '/../../model_person/datatable/owners_list.rb'
+require_relative File.dirname($0) + '/../../model_auto/list_file/auto_list_json.rb'
+require_relative File.dirname($0) + '/../../model_auto/datatable/auto_list.rb'
 require_relative File.dirname($0) + '/../../model_entity/entity_list/Parking_list.rb'
 require 'test/unit'
 
-class TestOwner_db < Test::Unit::TestCase
+class TestAuto_db < Test::Unit::TestCase
   
   def setup
-	  @owner = Parking_list.intialize_DB(:owner)
+	  @auto = Parking_list.intialize_DB(:auto)
   end
 
-  def test_initialize_owner
-	elem = @owner.get_element_by_id(1)
-    assert_equal("Яковлев", elem["surname"])
-    assert_equal("Леон", elem["name"])
-    assert_equal("Тимофеевич", elem["lastname"])
-    assert_equal("89374225252", elem["phone"])
-    assert_equal(nil,elem["mail"])
+  def test_initialize
+	elem = @auto.get_element_by_id(1)
+    assert_equal(1, elem["owner_id"])
+    assert_equal("Higlander", elem["model"])
+    assert_equal("black", elem["color"])
   end
   
   def test_get_k_n
-	data_list_person_short = @owner.get_k_n_elements_list(1,3,data_list:nil)
+	data_list_person_short = @auto.get_k_n_elements_list(1,3,data_list:nil)
 	table = data_list_person_short.getDataFromTable()
-	initials = table.get_element(0,1)
-	intitlas_man = table.get_element(1,1)
-	not_mail = table.get_element(1,3)
-	assert_equal("initials", initials)
-	assert_equal("Яковлев Л.Т.", intitlas_man)
-	assert_equal("not mail", not_mail)
+	model = table.get_element(0,1)
+	highlander = table.get_element(1,1)
+	color = table.get_element(1,2)
+	assert_equal("model", model)
+	assert_equal("Higlander", highlander)
+	assert_equal("black", color)
   end
   
   def test_get_elements_count
-	 len = @owner.get_elements_count()
+	 len = @auto.get_elements_count()
 	 assert_equal(3, len)
+  end
+  
+  def test_after_db_files_json
+	@auto.strategy = Entity_adapter.new(Auto_list_json.new(),:auto)
+	data_list_auto = @auto.get_k_n_elements_list(1,2,data_list:nil)
+	table = data_list_auto.getDataFromTable()
+	model = table.get_element(0,1)
+	model_name = table.get_element(1,1)
+	id_owner = table.get_element(1,0)
+	assert_equal("model", model)
+	assert_equal("X6", model_name)
+	assert_equal(1, id_owner)
   end
 
 end
