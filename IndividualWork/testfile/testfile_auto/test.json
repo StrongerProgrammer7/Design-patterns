@@ -1,0 +1,20 @@
+{
+  "auto1": {
+    "id": 1,
+    "id_owner": 1,
+    "model": "X6",
+    "color": "black"
+  },
+  "auto2": {
+    "id": 2,
+    "id_owner": 2,
+    "model": "Highlander",
+    "color": "gray"
+  },
+  "auto3": {
+    "id": 3,
+    "id_owner": 3,
+    "model": "Skoda",
+    "color": "black"
+  }
+}

@@ -1,0 +1,11 @@
+---
+  person1:
+    id: 1
+    id_owner: 1
+    model: "X6"
+    color: "black"
+  person2:
+    id: 2
+    id_owner: 2
+    model: "Higlander"
+    color: "gray"

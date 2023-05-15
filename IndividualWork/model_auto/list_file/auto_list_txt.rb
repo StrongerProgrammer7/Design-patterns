@@ -5,11 +5,11 @@ class Auto_list_txt < Entities_list_from_file
 	#--------------------Test dev - autos ------------------------
 	attr_accessor :addressFile
 	def initialize()
-		self.addressFile = "./testfile/testfile_auto/test.txt"
+		self.addressFile = "testfile/testfile_auto/test.txt"
 	end
 	#----------------------------------------------------
 	def read_from_file(addressFile)
-		addressFile = self.addressFile if (addressFile == nil)
+		addressFile = File.dirname($0) + "/../../#{self.addressFile}" if addressFile==nil
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
 		autos = Array.new()
 		File.open(addressFile,'r') do |file|

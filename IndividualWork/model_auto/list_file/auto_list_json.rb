@@ -8,12 +8,12 @@ class Auto_list_json < Entities_list_from_file
 	#--------------------Test dev - Labs ------------------------
 	attr_accessor :addressFile
 	def initialize()
-		self.addressFile = "./testfile/testfile_auto/test.json"
+		self.addressFile = "testfile/testfile_auto/test.json"
 	end
 	#----------------------------------------------------
 
 	def read_from_file(addressFile)
-		addressFile = self.addressFile if (addressFile == nil)
+		addressFile = File.dirname($0) + "/../../#{self.addressFile}" if addressFile==nil
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
 		autos = Array.new()
 		file = File.read addressFile
