@@ -10,7 +10,8 @@ class Persons_list_json < Entities_list_from_file
 	end
 	
 	def read_from_file(addressFile)
-		addressFile = File.dirname($0) + "/../../#{@person.addressFile}" if addressFile==nil #Fot test
+		#addressFile = File.dirname($0) + "/../../#{@person.addressFile}" if addressFile==nil #Fot test
+		addressFile = @person.addressFile #"./testfile/testfile_owners/test.json"
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
 		
 		persons = Array.new()

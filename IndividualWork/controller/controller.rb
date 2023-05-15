@@ -5,7 +5,7 @@ class Controller
 	attr_writer :view
 	attr_reader :entity_list
 
-	def initialize(owners_list,guard_list,log_mode = :all)
+	def initialize(owners_list,guard_list,auto_list,log_mode = :all)
 		self.logger = Logger.new("log.txt")
     	case log_mode
     		when :errors
@@ -18,6 +18,7 @@ class Controller
     	@entity_list = owners_list
 		@owners_list = owners_list
 		@guard_list = guard_list
+		@auto_list = auto_list
 	end
 
 	def change_entity()
@@ -52,7 +53,6 @@ class Controller
 		self.data_list.get_selected()
 	end
 
-	
 
 	def delete_entities()
 		list_entites = get_selected()
@@ -68,8 +68,8 @@ class Controller
 
 	private 
 	attr_reader :view
-	attr_writer :data_list, :logger, :entity_list
-	attr_accessor :owners_list, :guard_list,:logger, :data_list
+	attr_writer :entity_list
+	attr_accessor :owners_list, :guard_list,:auto_list,:logger, :data_list
 
 	
 end

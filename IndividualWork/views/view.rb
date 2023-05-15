@@ -11,9 +11,8 @@ class Parking_view < FXMainWindow
 
 	attr_reader :count_records, :num_page, :current_table
 	attr_writer :controller
-  def initialize(app,modal_create_owner:nil,modal_change_owner:nil,modal_create_guard:nil,modal_change_guard:nil)
-
-  	@labs_list_controller = nil
+  def initialize(app,modal_create_owner:nil,modal_change_owner:nil,modal_create_guard:nil,modal_change_guard:nil,
+						modal_create_auto:nil,modal_change_auto:nil)
   	
   	self.modal_window_create_owner = modal_create_owner
   	self.modal_window_change_owner = modal_change_owner
@@ -26,11 +25,11 @@ class Parking_view < FXMainWindow
     tab_book = FXTabBook.new(horizontal_frame)
 
 
-		createTab(tab_book,"Students")
-		fillTab_students(tab_book)
+	createTab(tab_book,"Owner ")
+	createLabelByCenter(tab_book)#fillTab_students(tab_book)
 
-    createTab(tab_book,"Labs")
-    fillTab_labs(tab_book)
+    createTab(tab_book,"Guard")
+    createLabelByCenter(tab_book)#fillTab_labs(tab_book)
     createTab(tab_book, "Tab 3")
     createLabelByCenter(tab_book)
 
