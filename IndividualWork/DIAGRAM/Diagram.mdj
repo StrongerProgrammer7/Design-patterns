@@ -23322,7 +23322,6 @@
 												"$ref": "AAAAAAGIHzN1XWBbDm8="
 											},
 											"visible": false,
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 32,
 											"top": 64,
@@ -23334,7 +23333,6 @@
 											"_parent": {
 												"$ref": "AAAAAAGIHzN1XWBbDm8="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;1",
 											"left": 469,
 											"top": 1855,
@@ -23349,7 +23347,6 @@
 												"$ref": "AAAAAAGIHzN1XWBbDm8="
 											},
 											"visible": false,
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 32,
 											"top": 64,
@@ -23364,7 +23361,6 @@
 												"$ref": "AAAAAAGIHzN1XWBbDm8="
 											},
 											"visible": false,
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 32,
 											"top": 64,
@@ -23372,7 +23368,6 @@
 											"horizontalAlignment": 1
 										}
 									],
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": 464,
 									"top": 1848,
@@ -23410,7 +23405,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzOY4mOae8Y="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 469,
 											"top": 1878,
@@ -23428,7 +23422,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzPfEGb7hiE="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 469,
 											"top": 1893,
@@ -23438,7 +23431,6 @@
 											"horizontalAlignment": 0
 										}
 									],
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": 464,
 									"top": 1873,
@@ -23464,7 +23456,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzP3eWrgYH4="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 469,
 											"top": 1916,
@@ -23483,7 +23474,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzQVWm6DFvQ="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 469,
 											"top": 1931,
@@ -23501,7 +23491,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzQpa3BYFq0="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 469,
 											"top": 1946,
@@ -23519,7 +23508,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzQzo3ItAJE="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 469,
 											"top": 1961,
@@ -23529,7 +23517,6 @@
 											"horizontalAlignment": 0
 										}
 									],
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": 464,
 									"top": 1911,
@@ -23546,7 +23533,6 @@
 										"$ref": "AAAAAAGIHzN1XGBYz7E="
 									},
 									"visible": false,
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": 16,
 									"top": 32,
@@ -23563,7 +23549,6 @@
 										"$ref": "AAAAAAGIHzN1XGBYz7E="
 									},
 									"visible": false,
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": 16,
 									"top": 32,
@@ -23571,7 +23556,6 @@
 									"height": 10
 								}
 							],
-							"fillColor": "#e67070",
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 464,
@@ -23621,7 +23605,6 @@
 												"$ref": "AAAAAAGIHzRUuXTLG4o="
 											},
 											"visible": false,
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": -32,
 											"top": 64,
@@ -23633,7 +23616,6 @@
 											"_parent": {
 												"$ref": "AAAAAAGIHzRUuXTLG4o="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;1",
 											"left": 293,
 											"top": 1855,
@@ -23648,7 +23630,6 @@
 												"$ref": "AAAAAAGIHzRUuXTLG4o="
 											},
 											"visible": false,
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": -32,
 											"top": 64,
@@ -23663,7 +23644,6 @@
 												"$ref": "AAAAAAGIHzRUuXTLG4o="
 											},
 											"visible": false,
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": -32,
 											"top": 64,
@@ -23671,7 +23651,6 @@
 											"horizontalAlignment": 1
 										}
 									],
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": 288,
 									"top": 1848,
@@ -23709,7 +23688,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzRpzHfIJXk="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 293,
 											"top": 1878,
@@ -23719,7 +23697,6 @@
 											"horizontalAlignment": 0
 										}
 									],
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": 288,
 									"top": 1873,
@@ -23745,7 +23722,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzRzyXlazYY="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 293,
 											"top": 1901,
@@ -23764,7 +23740,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzTagoXG+M4="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 293,
 											"top": 1916,
@@ -23782,7 +23757,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzTogIeb08M="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 293,
 											"top": 1931,
@@ -23800,7 +23774,6 @@
 											"model": {
 												"$ref": "AAAAAAGIHzT1JolwtTw="
 											},
-											"fillColor": "#e67070",
 											"font": "Arial;13;0",
 											"left": 293,
 											"top": 1946,
@@ -23810,7 +23783,6 @@
 											"horizontalAlignment": 0
 										}
 									],
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": 288,
 									"top": 1896,
@@ -23827,7 +23799,6 @@
 										"$ref": "AAAAAAGIHzRUuXTIUOQ="
 									},
 									"visible": false,
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": -16,
 									"top": 32,
@@ -23844,7 +23815,6 @@
 										"$ref": "AAAAAAGIHzRUuXTIUOQ="
 									},
 									"visible": false,
-									"fillColor": "#e67070",
 									"font": "Arial;13;0",
 									"left": -16,
 									"top": 32,
@@ -23852,7 +23822,6 @@
 									"height": 10
 								}
 							],
-							"fillColor": "#e67070",
 							"font": "Arial;13;0",
 							"containerChangeable": true,
 							"left": 288,
