@@ -11,7 +11,6 @@ class Persons_list < Entities_list
 
 	def get_k_n_elements_list(k,n,data_list:nil)
 		self.list_entities = read_from_file(nil)
-		print self.list_entities,"\n"
 		list_persons_short = []
 		index_elem = 0
 		index_list = 0

@@ -1,5 +1,6 @@
-require_relative '../../model_lab/datatable/labs_list.rb'
-require_relative '../../model_student/datatable/students_list.rb'
+#require_relative '../../model_lab/datatable/labs_list.rb'
+require_relative '../../model_person/datatable/owners_list.rb'
+require_relative '../../model_person/datatable/guards_list.rb'
 
 class Entity_adapter
 	
@@ -8,15 +9,14 @@ class Entity_adapter
 	#--------------------------------
 		
 	def initialize(format_file,entity)
+		self.nameFile = "test"
 		case entity
-  			when :student
-  				self.addressFile = "/testfile"
-  				self.nameFile = "test"
-  				@entity_list_file = Students_list.new(format_file)
-  			when :lab
-  				self.addressFile = "/testfile/testfile_labs"
-  				self.nameFile = "test"
-  				@entity_list_file = Labs_list.new(format_file)
+  			when :owner
+  				self.addressFile = "/../../testfile/testfile_owners/"
+  				@entity_list_file = Owners_list.new(format_file)
+  			when :guard
+  				self.addressFile ="/../../testfile/testfile_guards/"
+  				@entity_list_file = Guards_list.new(format_file)
   			else
   				raise ArgumentError, "Invalid argument #{entity}"
   		end	

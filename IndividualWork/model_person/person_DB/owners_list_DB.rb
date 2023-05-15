@@ -1,0 +1,72 @@
+require_relative '../../model_entity/entity_DB/entity_list_DB.rb'
+
+class Owners_list_DB < Entities_list_DB
+
+	def initialize()
+		super()
+	end 
+	
+	def get_element_by_id(id)
+		owner = @dbcon.crud_by_db("Select * FROM Owner WHERE id = #{id}").to_a
+		owner = clearData(owner[0])
+		return owner
+	end
+
+	def get_k_n_elements_list(k,n,data_list:nil)
+		offset = (k - 1) * n
+		limit = n
+
+		list_persons_short = []
+		@dbcon.crud_by_db("Select * FROM Owner LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
+			elem = clearData(elem)
+			owner = Owner.new(id:elem["id"],surname:elem["surname"],name:elem["name"],lastname:elem["lastname"], phone:elem["phone"],mail:elem["mail"])
+			person_short = Person_short.initialization(owner)
+			list_persons_short.push(person_short)
+		end
+
+		if(data_list == nil) then
+			return Data_list_person_short.new(list_persons_short)
+		else
+			return data_list.list_entities = list_persons_short
+		end
+	end
+
+	def push_element(element)
+		owner = create_owner(element)
+		@dbcon.crud_by_db("INSERT INTO Owner(surname, name, lastname, phone, mail) 
+		VALUES ('#{owner.surname}','#{owner.name}','#{owner.lastname}','#{owner.phone}','#{owner.mail || 'NULL'}');")
+	end
+
+	def replace_element_by_id(id,element)
+		owner = create_owner(element)
+		@dbcon.crud_by_db("UPDATE Owner 
+							SET surname = '#{owner.surname}', name = '#{owner.name}', 
+							lastname = '#{owner.lastname}',
+							phone = '#{owner.phone}', mail = '#{owner.mail || 'NULL'}'
+							WHERE id = #{id};")
+	end
+
+	def delete_element_by_id(id)
+		@dbcon.crud_by_db("Delete from Owner WHERE id = #{id}")
+	end
+
+	def get_elements_count()
+		return @dbcon.crud_by_db("Select count(*) FROM Owner").to_a[0]['count(*)']
+	end
+	
+	private 
+	
+	def create_owner(element)
+		Owner.new(id:0,surname:element["surname"],name:element["name"],lastname:element["lastname"],phone:element["phone"],mail:element["mail"])
+	end
+
+	def clearData(elem)
+		elem["mail"] = change_NULL_to_empty(elem["mail"]) if elem["mail"] != nil
+		elem["lastname"] = if elem["lastname"] == "" then nil else elem["lastname"] end
+		return elem
+	end
+
+	def change_NULL_to_empty(elem)
+		if(elem.to_s.include? "NULL") then return "" else return elem end
+	end
+end

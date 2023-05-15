@@ -1,9 +1,11 @@
 require_relative '../Database/database.rb'
+require_relative File.dirname($0) + '/../../model_person/datatable/data_list_person_short.rb'
+require_relative File.dirname($0) + '/../../model_person/persons/person_short.rb'
 
 class Entities_list_DB
 
 	def initialize()
-		@dbcon = Students_DB.getInstance()
+		@dbcon = Parking_DB.getInstance()
 	end 
 	
 	def get_element_by_id(id)

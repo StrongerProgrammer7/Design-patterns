@@ -4068,7 +4068,7 @@
 											"top": 1775,
 											"width": 171.63427734375,
 											"height": 13,
-											"text": "Students_list_DB"
+											"text": "Owner_list_DB"
 										},
 										{
 											"_type": "LabelView",
@@ -4276,13 +4276,30 @@
 											"height": 13,
 											"text": "-change_NULL_to_empty()",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGIHtdqHhlKedA=",
+											"_parent": {
+												"$ref": "AAAAAAGHYQZC/crWhq8="
+											},
+											"model": {
+												"$ref": "AAAAAAGIHtdp9RlH8+4="
+											},
+											"font": "Arial;13;0",
+											"left": 2005,
+											"top": 1928,
+											"width": 171.63427734375,
+											"height": 13,
+											"text": "-create_owner()",
+											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 2000,
 									"top": 1803,
 									"width": 181.63427734375,
-									"height": 128
+									"height": 143
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -4322,7 +4339,7 @@
 							"left": 2000,
 							"top": 1768,
 							"width": 181.63427734375,
-							"height": 176,
+							"height": 178,
 							"nameCompartment": {
 								"$ref": "AAAAAAGHYQZC/MrQmc0="
 							},
@@ -4382,7 +4399,7 @@
 											"top": 1575,
 											"width": 134.0625,
 											"height": 13,
-											"text": "Studnets_DB"
+											"text": "Parking_DB"
 										},
 										{
 											"_type": "LabelView",
@@ -4525,7 +4542,7 @@
 											"top": 1651,
 											"width": 134.0625,
 											"height": 13,
-											"text": "+crud_student_by_db()",
+											"text": "+crud_by_db()",
 											"horizontalAlignment": 0
 										}
 									],
@@ -4633,7 +4650,7 @@
 											"top": 1487,
 											"width": 171.63427734375,
 											"height": 13,
-											"text": "Student_list"
+											"text": "Parking_list"
 										},
 										{
 											"_type": "LabelView",
@@ -5629,8 +5646,8 @@
 								"$ref": "AAAAAAFF+qBtyKM79qY="
 							},
 							"font": "Arial;13;0",
-							"left": 2392,
-							"top": 1680,
+							"left": 2344,
+							"top": 1704,
 							"width": 120,
 							"height": 25,
 							"text": "Pattern \"Singleton\""
@@ -13575,7 +13592,7 @@
 											"top": 1775,
 											"width": 171.63427734375,
 											"height": 13,
-											"text": "Labs_list_DB"
+											"text": "Guard_list_DB"
 										},
 										{
 											"_type": "LabelView",
@@ -13793,6 +13810,7 @@
 											"model": {
 												"$ref": "AAAAAAGIDFWxLe/Pccw="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 2285,
 											"top": 1928,
@@ -13810,6 +13828,7 @@
 											"model": {
 												"$ref": "AAAAAAGIDFXGWPERF0I="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 2285,
 											"top": 1943,
@@ -13817,13 +13836,30 @@
 											"height": 13,
 											"text": "-formating_string()",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAGIHtd+vBzqSWs=",
+											"_parent": {
+												"$ref": "AAAAAAGIBod91jko5CM="
+											},
+											"model": {
+												"$ref": "AAAAAAGIHtd+hxzPRj4="
+											},
+											"font": "Arial;13;0",
+											"left": 2285,
+											"top": 1928,
+											"width": 171.63427734375,
+											"height": 13,
+											"text": "-create_guard()",
+											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 2280,
 									"top": 1803,
 									"width": 181.63427734375,
-									"height": 158
+									"height": 143
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -13863,7 +13899,7 @@
 							"left": 2280,
 							"top": 1768,
 							"width": 181.63427734375,
-							"height": 193,
+							"height": 178,
 							"nameCompartment": {
 								"$ref": "AAAAAAGIBod91TkiAv0="
 							},
@@ -14501,7 +14537,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 2149,
+									"left": 2150,
 									"top": 1729,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -14522,7 +14558,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 2137,
+									"left": 2138,
 									"top": 1721,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -14543,7 +14579,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 2174,
+									"left": 2175,
 									"top": 1746,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -14562,7 +14598,7 @@
 								"$ref": "AAAAAAGHYQZC/MrPErU="
 							},
 							"lineStyle": 1,
-							"points": "2148:1767;2177:1722",
+							"points": "2148:1767;2178:1722",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGIBp7IPviOcus="
@@ -14595,7 +14631,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 2277,
+									"left": 2279,
 									"top": 1746,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -14616,7 +14652,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 2265,
+									"left": 2267,
 									"top": 1754,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -14637,7 +14673,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 2302,
+									"left": 2304,
 									"top": 1729,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -14656,7 +14692,7 @@
 								"$ref": "AAAAAAGIBod91Tkh+s0="
 							},
 							"lineStyle": 1,
-							"points": "2305:1767;2275:1722",
+							"points": "2308:1767;2277:1722",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGIBp7U5/sP+ww="
@@ -23141,7 +23177,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Students_list_DB",
+					"name": "Owner_list_DB",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",
@@ -23223,6 +23259,15 @@
 							},
 							"name": "change_NULL_to_empty",
 							"visibility": "private"
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGIHtdp9RlH8+4=",
+							"_parent": {
+								"$ref": "AAAAAAGHYQZC+srNa0c="
+							},
+							"name": "create_owner",
+							"visibility": "private"
 						}
 					]
 				},
@@ -23232,7 +23277,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Studnets_DB",
+					"name": "Parking_DB",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -23303,7 +23348,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGHYQbfnsuRy90="
 							},
-							"name": "crud_student_by_db"
+							"name": "crud_by_db"
 						}
 					]
 				},
@@ -23313,7 +23358,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Student_list",
+					"name": "Parking_list",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -25844,7 +25889,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Labs_list_DB",
+					"name": "Guard_list_DB",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -25999,6 +26044,15 @@
 								"$ref": "AAAAAAGIBodp/TjUU+Y="
 							},
 							"name": "formating_string",
+							"visibility": "private"
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGIHtd+hxzPRj4=",
+							"_parent": {
+								"$ref": "AAAAAAGIBodp/TjUU+Y="
+							},
+							"name": "create_guard",
 							"visibility": "private"
 						}
 					]
