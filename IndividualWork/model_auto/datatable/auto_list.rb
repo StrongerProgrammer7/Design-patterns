@@ -1,14 +1,14 @@
-require_relative File.dirname($0) + '/data_list_labs.rb'
+require_relative File.dirname($0) + '/data_list_auto.rb'
 require_relative '../../model_entity/Datatable/entities_list.rb'
 
-class Labs_list < Entities_list
+class Auto_list < Entities_list
 
 	def initialize(format_file)
 		super(format_file)
 	end
 
 	def get_k_n_elements_list(k,n,data_list:nil)
-		self.list_entities = read_from_file(self.format_file.addressFile)
+		self.list_entities = read_from_file(nil)
 		list = []
 		index_elem = 0
 		index_list = 0
@@ -28,36 +28,31 @@ class Labs_list < Entities_list
 
 
 		if(data_list == nil) then
-			return Data_list_labs.new(list)
+			return Data_list_auto.new(list)
 		else
 			return data_list.list_entities = list
 		end
 	end
 
 	def sort_by_field(data_list)
-		data_list.list_entities.sort! { |a,b| a.name <=> b.name}
+		data_list.list_entities.sort! { |a,b| a.model <=> b.model}
 	end
 
 	def push_element(element)
-		lab = Laboratory_work.new(
-					id:0,
-					number:element["number"],
-      				name:element["name"],
-      				topics:element["topics"],
-      				tasks:element["tasks"],
-      				date:element["date"])
-		super(lab)
+		auto = create_auto(element:element)
+		super(auto)
 	end
 
 	def replace_element_by_id(id,element)
-		lab = Laboratory_work.new(
-					id:element["id"],
-					number:element["number"],
-      				name:element["name"],
-      				topics:element["topics"],
-      				tasks:element["tasks"],
-      				date:element["date"])
-		super(id,lab)
+		auto = create_auto(element:element,id:id)
+		super(id,auto)
+	end
+	
+	private
+	def create_auto(element:,id:nil)
+		Auto.new(id:id,id_owner:element["id_owner"],
+      				model:element["model"],
+      				color:element["color"])
 	end
 
 
