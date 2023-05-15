@@ -6,7 +6,7 @@ class Students_DB
 	def self.getInstance()
 		if @@mysql.nil?
 			@@mysql = Mysql2::Client.new(:username => 'alex', :host => 'localhost')
-			@@mysql.query("USE Students")
+			@@mysql.query("USE Parking")
 		end
 		if @@inst.nil?
 			@@inst = Students_DB.new()

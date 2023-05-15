@@ -1,10 +1,10 @@
-require_relative File.dirname($0) + '/person.rb'
+require_relative '../../model_entity/parent_entities/person.rb'
 
 class Person_short < Person
 	attr_reader :initials, :contact
 
 	def self.initialization(person)
-		raise "require class's object person" if(person.class!=Owner)
+		raise "require class's object person" if(person.class.to_s!="Owner" and person.class.to_s!="Guard")
 		Person_short.new(id:person.id,information:person.get_Info())
 	end
 

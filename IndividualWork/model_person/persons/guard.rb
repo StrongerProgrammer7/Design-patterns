@@ -1,4 +1,4 @@
-require_relative File.dirname($0) + '/person.rb'
+require_relative '../../model_entity/parent_entities/person.rb'
 
 class Guard < Person
 	attr_reader :exp_year

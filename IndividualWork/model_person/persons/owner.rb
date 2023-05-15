@@ -1,4 +1,4 @@
-require_relative File.dirname($0) + '/person.rb'
+require_relative '../../model_entity/parent_entities/person.rb'
 
 class Owner < Person
 	def initialize(id:,surname:,name:,lastname:, phone:,mail:nil)
@@ -12,7 +12,6 @@ class Owner < Person
 		Owner.new(id:hash_data["id"],surname:hash_data["surname"],name:hash_data["name"],lastname:hash_data["lastname"],
 			phone:hash_data["phone"],mail:hash_data["mail"])
 	end
-
 	
 	private
 	

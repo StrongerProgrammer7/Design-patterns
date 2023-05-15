@@ -1,10 +1,7 @@
-require_relative '../../model_student/list_file/students_list_txt.rb'
-require_relative '../../model_student/list_file/students_list_json.rb'
-require_relative '../../model_student/list_file/students_list_yaml.rb'
-#labs
-require_relative '../../model_lab/list_file/labs_list_txt.rb'
-require_relative '../../model_lab/list_file/labs_list_json.rb'
-require_relative '../../model_lab/list_file/labs_list_yaml.rb'
+require_relative '../../model_person/list_file/persons_list_json.rb'
+require_relative '../../model_person/list_file/persons_list_txt.rb'
+require_relative '../../model_person/list_file/persons_list_yaml.rb'
+
 
 
 class Entities_list
@@ -13,12 +10,12 @@ class Entities_list
 
 	def initialize(format_file)
 		self.format_file = format_file 
-		self.list_entities = read_from_file(format_file.addressFile) #TEST: Using only json
+		self.list_entities = read_from_file(nil) #TEST: Using only json
 	end
 
 	def get_element_by_id(id)
 		self.list_entities.each do |elem|
-			if(elem.id == id) then
+			if(Integer(elem.id) == id) then
 				return elem
 			end
 		end
@@ -37,7 +34,6 @@ class Entities_list
 		id = self.list_entities.max_by { |elem| elem.id }.id
 		element.id = id.to_i + 1
 		self.list_entities.push(element)
-
 	end
 
 	def replace_element_by_id(id,element)
@@ -54,7 +50,7 @@ class Entities_list
 
 	def write_to_file(addressFile,nameFile,elements)
 		self.format_file.write_to_file(addressFile,nameFile,elements)
-		self.read_from_file(self.format_file.addressFile)
+		self.read_from_file(nil)
 	end
 
 	private

@@ -1,4 +1,4 @@
-class Students_list_from_file
+class Entities_list_from_file
 
 	def read_from_file(addressFile)
 		raise 'This method should be oveeriden and retun array students'

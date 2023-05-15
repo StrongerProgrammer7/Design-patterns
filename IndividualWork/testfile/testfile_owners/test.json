@@ -1,0 +1,26 @@
+{
+  "person1": {
+    "id": 1,
+    "surname": "Калмыков",
+    "name": "Сергей",
+    "lastname": "Тимурович",
+    "phone": "89374324535",
+    "mail": null
+  },
+  "person2": {
+    "id": 2,
+    "surname": "Крылов",
+    "name": "Александр",
+    "lastname": "Ильич",
+    "phone": "+79374324585",
+    "mail": "swaf@mail.ru"
+  },
+  "person3": {
+    "id": 3,
+    "surname": "Gordon",
+    "name": "Wolf",
+    "lastname": "Malrov",
+    "phone": "+79374552595",
+    "mail": "mail@mail.com"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "person1": {
+    "id": 1,
+    "surname": "Пучкин",
+    "name": "Сергей",
+    "lastname": "Тимурович",
+    "phone": "89374324535",
+    "mail": null,
+    "exp_year": 0
+  },
+  "person2": {
+    "id": 2,
+    "surname": "Малюга",
+    "name": "Александр",
+    "lastname": "Ильич",
+    "phone": "+79374324585",
+    "mail": "swaf@mail.ru",
+    "exp_year": 5
+  },
+  "person3": {
+    "id": 3,
+    "surname": "Gordon",
+    "name": "Wolf",
+    "lastname": "Malrov",
+    "phone": "+79374552595",
+    "mail": "mail@mail.com",
+    "exp_year": 10
+  }
+}
