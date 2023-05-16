@@ -22,7 +22,7 @@ class Entities_list
 		return nil
 	end
 
-	def get_k_n_elements_list(k,n,data_list:nil)
+	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil)
 		raise 'This method should be oveeriden and retun data_list'
 	end
 

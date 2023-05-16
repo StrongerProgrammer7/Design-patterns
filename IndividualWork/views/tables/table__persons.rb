@@ -9,7 +9,9 @@ class Table_persons < Table
 	
 	def initialize(tab_frame,name_table)
 		super(tab_frame,name_table)
-		
+
+		@button_layout = FXHorizontalFrame.new(self.vframe_table,:opts => LAYOUT_FILL_X|LAYOUT_SIDE_BOTTOM)
+
 		self.table.columnHeader.connect(SEL_COMMAND) do |sender, selector, data|
 			current_page = self.num_current_page.text.slice(0,self.num_current_page.text.index(" "))
 			if(self.current_data != nil && self.current_data.length != 0) then
@@ -33,36 +35,12 @@ class Table_persons < Table
 
 	def create_button_change_page()
 		if(self.num_current_page==nil) then
-			# Add buttons for changing pages
-			button_layout = FXHorizontalFrame.new(self.vframe_table,:opts => LAYOUT_FILL_X|LAYOUT_SIDE_BOTTOM)
-			self.prev_data_button = FXButton.new(button_layout, "Previous data",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
-			self.next_data_button = FXButton.new(button_layout, "Next data",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
-
-
-			prev_button = FXButton.new(button_layout, "Previous page",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
-			next_button = FXButton.new(button_layout, "Next page",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
+			create_btn_change_data()
+						
+			list_btn = create_btn_change_page()
+			display_numPage_countPage()			
+			event_btn_change_page(list_btn[0],list_btn[1])
 			
-			
-
-			display_numPage_countPage(button_layout)
-			
-			prev_button.connect(SEL_COMMAND) do
-				current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
-				if current_page > 1
-					current_page -= 1
-					self.num_current_page.text = "#{current_page} of #{@total_pages}"
-					fill_table(current_page,self.whole_entites_count)
-				end
-			end
-
-			next_button.connect(SEL_COMMAND) do
-				current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
-				if current_page < @total_pages
-					current_page += 1
-					self.num_current_page.text = "#{current_page} of #{@total_pages}"
-					fill_table(current_page,self.whole_entites_count)
-				end
-			end
 		else
 			@whole_entites_count_input.text = self.whole_entites_count.to_s
 			@total_pages = (self.table.numRows/self.whole_entites_count.to_f).ceil
@@ -91,7 +69,7 @@ class Table_persons < Table
 			if(self.data[ind]!=nil) then
 				row = fill_table_rows(ind,row,filter_surname_initials:filter_surname_initials,filter_phone:filter_phone)
 			end
-			if(ind >= count * num_page) then 
+			if(ind >= (count * num_page)-1) then 
 				break 
 			end
 			ind +=1
@@ -136,24 +114,7 @@ class Table_persons < Table
    	super(row_data,row,max_column)
 		self.current_data << row_data  if row_data != nil		
    end
-
-   def resize_columns()
-   	col = 0
-   	@columns_size.each do |size|
-   		if col ==0 then 
-   			col +=1 
-   			next 
-   		end
-   		self.table.setColumnWidth(col, size * 4) if col == 1
-   		self.table.setColumnWidth(col, size * 6) if col > 1
-   		col +=1
-   	end
-   	#cur_width = self.table.getItem(row,column).getWidth(self.table)
-			#if  @columns_size!= nil && @columns_size[column] < cur_width then
-				#	@columns_size[column] = cur_width
-			#end
-   end
-   
+  
 
 #---------------------------------TODO--REFACTORING!!
    def fill_table_sort_data(num_page,count,data)
@@ -182,28 +143,84 @@ class Table_persons < Table
  	 end
 #---------------------------------------------   
 
-   def display_numPage_countPage(button_layout,pos_x:300)
-		self.num_current_page = FXLabel.new(button_layout, "1", :opts => LAYOUT_FIX_X)
+   def display_numPage_countPage(pos_x:300)
+		self.num_current_page = FXLabel.new(@button_layout, "1", :opts => LAYOUT_FIX_X)
 		self.num_current_page.x = pos_x
 
+		whole_entities_count_label_create()
+	
+		create_whole_entites_count_input()
 
-		whole_entites_count_label = FXLabel.new(button_layout, "Count people ",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
+		create_chekbox_sort_all_data_in_table()
+		
+		event_whole_entites_count_changed()
+						
+		@total_pages = 1
+		self.num_current_page.text = "1 of #{@total_pages}"
+		create_label_num_current_page(pos_x)
+	end
+
+	def create_btn_change_data()
+		self.prev_data_button = FXButton.new(@button_layout, "Previous data",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
+		self.next_data_button = FXButton.new(@button_layout, "Next data",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
+	end
+
+	def create_btn_change_page()
+		prev_button = FXButton.new(@button_layout, "Previous page",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_LEFT,:padTop=> 10,:padBottom=> 10)
+		next_button = FXButton.new(@button_layout, "Next page",:opts => FRAME_RAISED|FRAME_THICK|BUTTON_NORMAL|LAYOUT_RIGHT,:padTop=> 10,:padBottom=> 10)
+		[prev_button,next_button]
+	end
+
+	def event_btn_change_page(prev_button,next_button)
+		prev_button.connect(SEL_COMMAND) do
+				current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
+				if current_page > 1
+					current_page -= 1
+					self.num_current_page.text = "#{current_page} of #{@total_pages}"
+					fill_table(current_page,self.whole_entites_count)
+				end
+			end
+
+			next_button.connect(SEL_COMMAND) do
+				current_page = Integer(self.num_current_page.text.slice(0,self.num_current_page.text.index(" ")))
+				if current_page < @total_pages
+					current_page += 1
+					self.num_current_page.text = "#{current_page} of #{@total_pages}"
+					fill_table(current_page,self.whole_entites_count)
+				end
+			end
+	end
+
+	def whole_entities_count_label_create()
+		whole_entites_count_label = FXLabel.new(@button_layout, "Count people ",:opts => LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
 		whole_entites_count_label.x = 20
 		whole_entites_count_label.y = 80
+	end
 
-		@whole_entites_count_input = FXTextField.new(button_layout, 15, :opts => TEXTFIELD_NORMAL|LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
-		@whole_entites_count_input.x = 20
-		@whole_entites_count_input.y = 100
-		@whole_entites_count_input.text = self.whole_entites_count.to_s
-		
-		self.chekbox_sort_all_data_toTable = FXCheckButton.new(button_layout, " Sort all data in the table", :opts => LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_SIDE_BOTTOM)
+	def create_chekbox_sort_all_data_in_table()
+		self.chekbox_sort_all_data_toTable = FXCheckButton.new(@button_layout, " Sort all data in the table", :opts => LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_SIDE_BOTTOM)
 
 		self.chekbox_sort_all_data_toTable.x = 160
 		self.chekbox_sort_all_data_toTable.y = 100
+	end
 
+	def create_label_num_current_page(pos_x)
+		self.label_num_current_page_data = FXLabel.new(@button_layout, "",:opts => LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_SIDE_BOTTOM)
+		self.label_num_current_page_data.x = pos_x - 25
+		self.label_num_current_page_data.y = 25
+		self.label_num_current_page_data.text = "1 page of Max data"
+	end
 
+	def create_whole_entites_count_input()
+		@whole_entites_count_input = FXTextField.new(@button_layout, 15, :opts => TEXTFIELD_NORMAL|LAYOUT_FIX_X|LAYOUT_SIDE_BOTTOM|LAYOUT_FIX_Y)
+		@whole_entites_count_input.x = 20
+		@whole_entites_count_input.y = 100
+		@whole_entites_count_input.text = self.whole_entites_count.to_s
+	end
+
+	def event_whole_entites_count_changed()
 		@whole_entites_count_input.connect(SEL_CHANGED) do
-			if @whole_entites_count_input.text!=nil and  @whole_entites_count_input.text != "" then
+			if @whole_entites_count_input.text!=nil and  @whole_entites_count_input.text != "" and @whole_entites_count_input.text!='0' then
 				if /^[0-9]*$/.match(@whole_entites_count_input.text)!=nil then
 					self.whole_entites_count = Integer(@whole_entites_count_input.text)
 				end				
@@ -219,14 +236,5 @@ class Table_persons < Table
 				fill_table(Integer(current_page),self.whole_entites_count)
 			end
 		end
-				
-		@total_pages = (table.numRows / self.whole_entites_count.to_f).ceil
-		self.num_current_page.text = "1 of #{@total_pages}"
-
-		self.label_num_current_page_data = FXLabel.new(button_layout, "",:opts => LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_SIDE_BOTTOM)
-		self.label_num_current_page_data.x = pos_x - 25
-		self.label_num_current_page_data.y = 25
-
 	end
-
 end

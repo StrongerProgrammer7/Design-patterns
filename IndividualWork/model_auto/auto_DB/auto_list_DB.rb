@@ -13,7 +13,7 @@ class Auto_list_DB < Entities_list_DB
 		auto[0]
 	end
 
-	def get_k_n_elements_list(k,n,data_list:nil)
+	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil)
 		offset = (k - 1) * n
 		limit = n
 

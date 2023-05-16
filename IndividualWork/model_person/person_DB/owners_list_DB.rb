@@ -1,9 +1,12 @@
 require_relative '../../model_entity/entity_DB/entity_list_DB.rb'
+require_relative '../../model_entity/Decorator/Persons_filter/mail_decorator.rb'
+require_relative '../../model_entity/Decorator/Persons_filter/surname_decorator.rb'
+require_relative '../../model_entity/Decorator/Persons_filter/phone_decorator.rb'
 
 class Owners_list_DB < Entities_list_DB
 
 	def initialize()
-		super()
+		super(query_select:"Select * FROM Owner WHERE ")
 	end 
 	
 	def get_element_by_id(id)
@@ -12,12 +15,18 @@ class Owners_list_DB < Entities_list_DB
 		return owner
 	end
 
-	def get_k_n_elements_list(k,n,data_list:nil)
+	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil)
 		offset = (k - 1) * n
 		limit = n
 
+		query = Mail_decorator.new(filter_mail,Phone_decorator.new(filter_phone,
+			Surname_decorator.new(filter_initials,
+				Owners_list_DB.new()))).query_select
+
+		query = query + " LIMIT #{limit} OFFSET #{offset};"
+
 		list_persons_short = []
-		@dbcon.crud_by_db("Select * FROM Owner LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
+		@dbcon.crud_by_db(query).to_a.each do |elem|
 			elem = clearData(elem)
 			owner = Owner.new(id:elem["id"],surname:elem["surname"],name:elem["name"],lastname:elem["lastname"], phone:elem["phone"],mail:elem["mail"])
 			person_short = Person_short.initialization(owner)

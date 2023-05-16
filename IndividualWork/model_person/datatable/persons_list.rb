@@ -9,7 +9,7 @@ class Persons_list < Entities_list
 		super(format_file)
 	end
 
-	def get_k_n_elements_list(k,n,data_list:nil)
+	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil)
 		self.list_entities = read_from_file(nil)
 		list_persons_short = []
 		index_elem = 0

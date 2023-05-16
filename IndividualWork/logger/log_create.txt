@@ -235,3 +235,6 @@ E, [2023-05-16T12:08:39.624000 #13222] ERROR -- : Error while creating element: 
 Did you mean?  create_owner
 I, [2023-05-16T12:09:53.343998 #13289]  INFO -- : Creating element with params {"name"=>"Kiss", "surname"=>"Pusii", "lastname"=>"Musi", "phone"=>"89562562565", "mail"=>nil, "exp_year"=>3}
 I, [2023-05-16T12:21:55.430149 #14154]  INFO -- : Creating element with params {"name"=>"Kiss", "surname"=>"Pussi", "lastname"=>"Nassi", "phone"=>"+78569568525", "mail"=>"swao_s2@mail.ru", "exp_year"=>15}
+I, [2023-05-16T22:53:43.785976 #20469]  INFO -- : Creating element with params {"name"=>"Kyuo", "surname"=>"Lopi", "lastname"=>"", "phone"=>"+7985625325", "mail"=>"pup@gmail.com"}
+I, [2023-05-16T22:54:19.338994 #20469]  INFO -- : Creating element with params {"name"=>"Guarding", "surname"=>"Surnaming", "lastname"=>"", "phone"=>"+78569586525", "mail"=>nil, "exp_year"=>15}
+I, [2023-05-16T23:27:57.053921 #23257]  INFO -- : Creating element with params {"name"=>"Gardin", "surname"=>"Sur", "lastname"=>"Lasd", "phone"=>"+7956856952", "mail"=>nil, "exp_year"=>15}

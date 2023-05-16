@@ -58,7 +58,7 @@ class Parking_view < FXMainWindow
     		self.current_table = @table_owner		
     	end
     	 	@selected_items = []
-    	 	@controller.refresh_data(1,self.count_records)
+    	 	showData(1,self.count_records)#@controller.refresh_data(1,self.count_records)
     end
 
    
@@ -71,19 +71,22 @@ class Parking_view < FXMainWindow
 		
   end
   
-  	def showData(k,n)
+  	def showData(k,n,filter_initials:nil,filter_phone:nil,filter_mail:nil)
   		self.num_page = k
-  		self.count_records_default = n
+  		self.count_records_default = n if self.count_records_default == nil
   		max_count_entities = @controller.get_count_entities()
   		calculate_max_page(max_count_entities)
   		n = max_count_entities if max_count_entities < n
   		self.count_records = n
-  		@controller.refresh_data(k,n)
+  		@controller.refresh_data(k,n,
+  			filter_initials:filter_initials,
+  			filter_phone:filter_phone,
+  			filter_mail:filter_mail)
   	end
 
   	def set_table_params(column_names,whole_entites_count)
 		self.current_table.set_table_params(column_names,whole_entites_count)
-		self.current_table.create_button_change_page()
+		#self.current_table.create_button_change_page()
 		initializeButtonTable_getData(self.current_table)
 	end
 	
@@ -115,12 +118,12 @@ class Parking_view < FXMainWindow
 		list_filters = initialize_filter(tab_frame)
 
 		table = Table_persons.new(tab_frame,name_table)
-		
+		table.create_button_change_page()
 
 		list_btn = initialize_control(tab_frame)
 
 		events_entities_controls(table,list_btn[0],list_btn[1],list_btn[2],list_btn[3],modal_add:modal_create,modal_change:modal_update)
-		event_filters(list_filters[0],list_filters[1])
+		event_filters_person(list_filters)
 		table
 	end
 
@@ -148,9 +151,9 @@ class Parking_view < FXMainWindow
 		filter_area = filters.create_filter_area(tab_frame,180)
 		filter_surname = filters.add_filter_input(filter_area,"Surname N.L.: ")
 		filter_phone = filters.add_filter_input(filter_area,"Phone")
-		filter_mail = filters.add_filter_radioBtn(filter_area,@filter_mail,"Наличие почты")
-		update_btn = filters.add_controlBtn(filter_area)	
-		return [filter_surname,filter_phone,filter_mail,filter_mail,update_btn]	
+		filter_mail = filters.add_filter_radioBtn(filter_area,"Наличие почты")
+		list_btn_filter = filters.add_controlBtn(filter_area)	
+		return [filter_surname,filter_phone,filter_mail,list_btn_filter]	
 	end
 
 	
@@ -194,10 +197,32 @@ class Parking_view < FXMainWindow
 		event_change_entity(modal_change,ed,del)
 	end
 
-	def event_filters(filter_initials,filter_phone)
-		
-		event_filters_verify(filter_initials:filter_initials,filter_phone:filter_phone)
+	def event_filters_person(filters)	
+		event_filters_verify(filter_initials:filters[0],filter_phone:filters[1])
+		event_filters_changed(filter_initials:filters[0],filter_phone:filters[1])
+		event_filter_btn_action(filters)
+	end
 
+
+	def event_filters_verify(filter_initials:nil,filter_phone:nil)
+		filter_initials.connect(SEL_VERIFY) do |sender, sel, tentative|
+    		if tentative.match(/^[A-zА-яЁё\.]*$/)
+    			false 
+    		else		
+    			true
+    		end
+    	end
+
+    	filter_phone.connect(SEL_VERIFY) do |sender, sel, tentative|
+    		if /^\+?[0-9]*$/.match(tentative)
+    			false 
+    		else		
+    			true
+    		end
+    	end
+	end
+
+	def event_filters_changed(filter_initials:nil,filter_phone:nil)
 		filter_initials.connect(SEL_CHANGED) do
 			raise "Table is empty" if self.current_table.table.numRows == 0
 				if filter_initials.text!=nil and filter_initials.text != "" then
@@ -221,25 +246,32 @@ class Parking_view < FXMainWindow
 		end
 	end
 
+	def event_filter_btn_action(list_btn_filter)
+		update_btn = list_btn_filter[3][0]
+		discard_btn = list_btn_filter[3][1]
+		update_btn.connect(SEL_COMMAND) do |sender,sel,data|
+			filter_initials = list_btn_filter[0].text
+			filter_phone = list_btn_filter[1].text
+			filter_mail = "NULL" if(list_btn_filter[2][0].value == 1)
+			filter_mail = list_btn_filter[2][1].text if list_btn_filter[2][0].value == 0
+			filter_mail = nil if list_btn_filter[2][0] == 2
+			showData(self.num_page,self.count_records,
+				filter_initials:filter_initials,
+				filter_phone:filter_phone,
+				filter_mail:filter_mail)
 
-	def event_filters_verify(filter_initials:nil,filter_phone:nil)
-		filter_initials.connect(SEL_VERIFY) do |sender, sel, tentative|
-    		if tentative.match(/^[A-zА-яЁё\.]*$/)
-    			false 
-    		else		
-    			true
-    		end
     	end
 
-    	filter_phone.connect(SEL_VERIFY) do |sender, sel, tentative|
-    		if /^\+?[0-9]*$/.match(tentative)
-    			false 
-    		else		
-    			true
-    		end
+    	discard_btn.connect(SEL_COMMAND) do |sender,sel,data|
+			list_btn_filter[0].text = ''
+			list_btn_filter[1].text = ''
+			list_btn_filter[2][1].text = ''
+			list_btn_filter[2][1].disable
+			list_btn_filter[2][0].value = 2
+			showData(self.num_page,self.count_records)
     	end
+
 	end
-
 
 	def disable_button_edit_delete(ed,del)
 		ed.disable
@@ -316,5 +348,6 @@ class Parking_view < FXMainWindow
 			del.disable
 		end
 	end
+
 end
 

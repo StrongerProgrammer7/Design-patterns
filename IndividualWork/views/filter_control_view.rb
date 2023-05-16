@@ -27,11 +27,11 @@ class Filter
 	def add_controlBtn(filtering_area)
 		button_filter = FXHorizontalFrame.new(filtering_area,LAYOUT_FILL_X|LAYOUT_FILL_Y)
 		update = FXButton.new(button_filter, "Обновить")
-		FXButton.new(button_filter, "Сбросить")
-		update	
+		discard = FXButton.new(button_filter, "Сбросить")
+		[update,discard]
 	end
 	
-	def add_filter_radioBtn(filtering_area,filter,name_group)
+	def add_filter_radioBtn(filtering_area,name_group)
 
 		filter = FXDataTarget.new(2)
 		groups_radio = FXGroupBox.new(filtering_area, name_group, :opts => GROUPBOX_NORMAL|GROUPBOX_TITLE_LEFT|FRAME_GROOVE|LAYOUT_SIDE_TOP)
@@ -47,10 +47,12 @@ class Filter
 		filter.connect(SEL_COMMAND) do
 			puts "The newly selected value is #{filter.value}"
 			search_field.enable if filter.value == 0
-			search_field.disable if filter.value > 0
-			
+			if filter.value > 0 then
+				search_field.disable
+				search_field.text = ''
+			end			
 		end
-		filter
+		return [filter,search_field]
 	end
 	
 end

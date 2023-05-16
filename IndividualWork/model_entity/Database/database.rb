@@ -19,6 +19,12 @@ class Parking_DB
 			@@mysql.query(query)
 		rescue Mysql2::Error => e
 			print e
+			[]
+		ensure
+			if !@@mysql.ping then
+				@@mysql.close
+				print "connection close\n"
+			end
 		end
 	end
 

@@ -30,8 +30,11 @@ class Entity_adapter
 		@entity_list_file.get_element_by_id(id)
 	end
 
-	def get_k_n_elements_list(k,n,data_list:nil)
-		@entity_list_file.get_k_n_elements_list(k,n,data_list:data_list)
+	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil)
+		@entity_list_file.get_k_n_elements_list(k,n,data_list:data_list,
+			filter_initials:filter_initials,
+			filter_phone:filter_phone,
+			filter_mail:filter_mail)
 	end
 	
 	def get_elements_count()

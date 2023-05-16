@@ -2,10 +2,12 @@
   person1:
     id: 1
     id_owner: 1
+    surname_owner: "Goblin"
     model: "X6"
     color: "black"
   person2:
     id: 2
     id_owner: 2
+    surname_owner: "Kupit"
     model: "Higlander"
     color: "gray"

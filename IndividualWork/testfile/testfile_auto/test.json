@@ -2,18 +2,21 @@
   "auto1": {
     "id": 1,
     "id_owner": 1,
+    "surname_owner": "Goblin",
     "model": "X6",
     "color": "black"
   },
   "auto2": {
     "id": 2,
     "id_owner": 2,
+    "surname_owner": "Kupit",
     "model": "Highlander",
     "color": "gray"
   },
   "auto3": {
     "id": 3,
     "id_owner": 3,
+    "surname_owner": "Pisa",
     "model": "Skoda",
     "color": "black"
   }
