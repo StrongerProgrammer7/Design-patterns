@@ -62,7 +62,7 @@ class Guards_list_DB < Entities_list_DB
 	
 	private 
 	
-	def create_owner(element)
+	def create_guard(element)
 		Guard.new(id:0,surname:element["surname"],name:element["name"],lastname:element["lastname"],phone:element["phone"],mail:element["mail"],exp_year:element["exp_year"])
 	end
 

@@ -21,9 +21,16 @@ class Controller
 		@auto_list = auto_list
 	end
 
-	def change_entity()
-		@entity_list = (self.view.current_table.to_s.include? "Table_guards")? @guard_list : @owners_list
-		self.data_list = @entity_list.get_k_n_elements_list(1,30,data_list:nil)
+	def change_entity(num_tab)
+		case num_tab
+    		when 0
+      			@entity_list = @owners_list
+    		when 1
+      			@entity_list = @guard_list
+    		else
+      			@entity_list = @owners_list
+    	end
+		self.data_list = nil
 	end
 
 	def refresh_data(k,n)
@@ -32,7 +39,7 @@ class Controller
 		else
 			@entity_list.get_k_n_elements_list(k,n,data_list:self.data_list)
 		end
-		self.data_list.observer = self.view if self.data_list.view == nil
+		self.data_list.observer = self.view if self.data_list.observer == nil
 		self.data_list.notify(n)
 		self.view.show(PLACEMENT_SCREEN)
 	end
@@ -60,6 +67,7 @@ class Controller
 		self.logger.info("Deleting entity with ID {#{list_entites}")
 		list_entites.each do |id_entity|
 			@entity_list.delete_element_by_id(id_entity)
+			#self.view.count_records -=1
 		end 
 		refresh_data(self.view.num_page,self.view.count_records)
 	rescue => e

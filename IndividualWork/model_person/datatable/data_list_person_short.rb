@@ -11,7 +11,7 @@ class Data_list_person_short < Data_list
 
 	private
 		def get_names()
-			arr_attr= ["num","initials","contact","mail"] 
+			["num","initials","contact","mail"] 
 		end
 	
 		def get_data()

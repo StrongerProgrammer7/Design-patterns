@@ -4,7 +4,7 @@ require 'fox16'
 
 include Fox
 
-class Table_students < Table
+class Table_persons < Table
 	attr_accessor :current_data, :prev_data_button,:next_data_button, :label_num_current_page_data
 	
 	def initialize(tab_frame,name_table)
@@ -27,9 +27,8 @@ class Table_students < Table
 	end
 
 	
-	def filter_data(filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
-	filter_surname_initials:nil)
-		fill_table(1,self.whole_entites_count,filter_git:filter_git,filter_mail:filter_mail,filter_telegram:filter_telegram,filter_phone:filter_phone,filter_surname_initials:filter_surname_initials)
+	def filter_data(filter_mail:nil,filter_phone:nil,filter_surname_initials:nil)
+		fill_table(1,self.whole_entites_count,filter_mail:filter_mail,filter_phone:filter_phone,filter_surname_initials:filter_surname_initials)
 	end
 
 	def create_button_change_page()
@@ -72,7 +71,7 @@ class Table_students < Table
 	
 	end
 
-	def delete_student_from_data(num)
+	def delete_person_from_data(num)
 		self.data.delete_at(num)
 		self.current_data.delete_at(num)
 		self.table.removeRows(num)
@@ -82,41 +81,62 @@ class Table_students < Table
 		attr_accessor :chekbox_sort_all_data_toTable
 
 
-  def fill_table(num_page,count,filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,
-	filter_surname_initials:nil)
+  def fill_table(num_page,count,filter_mail:nil,filter_phone:nil,filter_surname_initials:nil)
 		clear_table((self.data[0].length-1),(self.data.length - 1))
 		row = 0
 		begin_ = if num_page != 0 then count * num_page - count else 0 end
 		ind = begin_
 		self.current_data = []
 		loop do 
-			row = fill_table_rows(filter_surname_initials,ind,row)
-			ind +=1
+			if(self.data[ind]!=nil) then
+				row = fill_table_rows(ind,row,filter_surname_initials:filter_surname_initials,filter_phone:filter_phone)
+			end
 			if(ind >= count * num_page) then 
 				break 
 			end
+			ind +=1
 		end
    end 
 
 
-   def fill_table_rows(filter_surname_initials,ind,row)
+   def fill_table_rows(ind,row,filter_surname_initials:nil,filter_phone:nil)
    	if(filter_surname_initials!=nil) then
-			if self.data[ind][1].include? filter_surname_initials then
-				fillRow(self.data[ind],row,4) 
-				row +=1
-			end
+			row = fill_table_by_filter_initials(row,ind,filter_surname_initials)
+		elsif (filter_phone != nil) then
+			row = fill_table_by_filter_phone(row,ind,filter_phone)
 		else
 			fillRow(self.data[ind],row,4)
 			row +=1	
 		end
 		row
    end
+
+   def fill_table_by_filter_initials(row,ind,filter_surname_initials)
+   	if self.data[ind][1].include? filter_surname_initials then
+			fillRow(self.data[ind],row,4) 
+			return row +=1
+		end
+		row
+   end
+
+   def fill_table_by_filter_phone(row,ind,filter_phone)
+   	if self.data[ind][2].include? filter_phone then
+   		if filter_phone.length == 1 && filter_phone[0] == '8' then
+   			fillRow(self.data[ind],row,4) if self.data[ind][2][1] == '8'
+   			return row +=1 if self.data[ind][2][1] == '8'
+   		else
+				fillRow(self.data[ind],row,4)
+				return row +=1
+			end
+		end
+		row
+   end
+
    def fillRow(row_data,row,max_column)
    	super(row_data,row,max_column)
 		self.current_data << row_data  if row_data != nil		
    end
 
-  
    def resize_columns()
    	col = 0
    	@columns_size.each do |size|

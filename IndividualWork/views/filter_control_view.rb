@@ -28,8 +28,7 @@ class Filter
 		button_filter = FXHorizontalFrame.new(filtering_area,LAYOUT_FILL_X|LAYOUT_FILL_Y)
 		update = FXButton.new(button_filter, "Обновить")
 		FXButton.new(button_filter, "Сбросить")
-		update
-		
+		update	
 	end
 	
 	def add_filter_radioBtn(filtering_area,filter,name_group)

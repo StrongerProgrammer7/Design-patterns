@@ -40,8 +40,8 @@ class Parking_list
 		@strategy.get_k_n_elements_list(k,n,data_list:data_list)
 	end
 
-	def push_element(student)
-		@strategy.push_element(student)
+	def push_element(element)
+		@strategy.push_element(element)
 	end
 
 	def replace_element_by_id(id,element)

@@ -15,8 +15,7 @@ class Person
 	end
 
 	def initialize(surname:,name:,lastname:,phone:,mail:nil)
-		set_baseInfo(surname:surname,name:name,lastname:lastname)
-		set_extraInfo(phone:phone,mail:mail)
+		set_information(surname:surname,name:name,lastname:lastname, phone:phone,mail:mail)
 	end
 
 	def to_s()

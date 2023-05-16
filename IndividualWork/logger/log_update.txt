@@ -35,3 +35,5 @@ I, [2023-05-14T17:35:57.746734 #4219]  INFO -- : Updating element with ID 6 and 
 I, [2023-05-14T17:43:51.811646 #4722]  INFO -- : Updating element with ID 6 and params {"number"=>3, "name"=>"Buisness", "topics"=>"Topic-Topic-45", "tasks"=>"Tasd task 3", "date_of_issue"=>"20.04.2022", "id"=>6}
 I, [2023-05-14T17:51:45.402904 #5136]  INFO -- : Updating element with ID 5 and params {"number"=>2, "name"=>"Managment", "topics"=>"Topics", "tasks"=>"Tasd task 3", "date_of_issue"=>"17.04.2022", "id"=>5}
 I, [2023-05-14T17:54:25.504969 #5242]  INFO -- : Updating element with ID 5 and params {"number"=>2, "name"=>"Managment", "topics"=>"Topics", "tasks"=>"Tasd task 3", "date_of_issue"=>"17.04.2022", "id"=>5}
+I, [2023-05-16T10:07:55.513020 #5853]  INFO -- : Updating element with ID 10 and params {"name"=>"Next", "surname"=>"Prev", "lastname"=>"Pup", "phone"=>"+78523654595", "mail"=>"swPis@mail.ru", "id"=>10}
+I, [2023-05-16T12:22:05.922161 #14154]  INFO -- : Updating element with ID 5 and params {"name"=>"Kiss", "surname"=>"Pussi", "lastname"=>"Nassi", "phone"=>"+78569568525", "mail"=>"swao_s2@mail.ru", "exp_year"=>5, "id"=>5}

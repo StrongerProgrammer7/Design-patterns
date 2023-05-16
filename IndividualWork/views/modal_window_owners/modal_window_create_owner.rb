@@ -4,25 +4,24 @@ require 'clipboard'
 
 include Fox
 
-class Modal_create_student < FXDialogBox
+class Modal_create_owner < FXDialogBox
 
-	attr_writer :student_list_controller
+	attr_writer :controller
 	def initialize(app)
 		@app = app
 		
-		super(app, "Add student", :width => 300, :height => 300)
+		super(app, "Add owner", :width => 300, :height => 200)
 		
-		@student_field = {"name" =>nil,"surname" => nil, "lastname" => nil,
-			"phone" => nil,"mail" => nil, "telegram" => nil, "git" => nil}
+		@owner_field = {"name" =>nil,"surname" => nil, "lastname" => "",
+			"phone" => nil,"mail" => nil}
 		matrix = FXMatrix.new(self, 2, MATRIX_BY_COLUMNS|LAYOUT_FILL_X)
 
-		create_textField(matrix,"Name",method(:check_letter),method(:validate_surname_name_lastname))
-		create_textField(matrix,"Surname",method(:check_letter),method(:validate_surname_name_lastname))
-		create_textField(matrix,"Lastname",method(:check_letter),method(:validate_surname_name_lastname))
-		create_textField(matrix,"Phone",method(:check_phone),method(:valid_phone))
-		create_textField(matrix,"Mail",method(:check_let_dig_specilSymbol),method(:valid_mail))
-		create_textField(matrix,"Telegram",method(:check_let_dig_specilSymbol),method(:valid_telegram))
-		create_textField(matrix,"Git",method(:check_let_dig_specilSymbol),method(:valid_git))
+		@list_text_fields = []
+		@list_text_fields.push(create_textField(matrix,"Name",method(:check_letter),method(:validate_surname_name_lastname)))
+		@list_text_fields.push(create_textField(matrix,"Surname",method(:check_letter),method(:validate_surname_name_lastname)))
+		@list_text_fields.push(create_textField(matrix,"Lastname",method(:check_letter),method(:validate_surname_name_lastname)))
+		@list_text_fields.push(create_textField(matrix,"Phone",method(:check_phone),method(:valid_phone)))
+		@list_text_fields.push(create_textField(matrix,"Mail",method(:check_let_dig_specilSymbol),method(:valid_mail)))
 	
 		create_close_button(matrix)
 		@ok_btn = create_button_ok(matrix)
@@ -31,8 +30,8 @@ class Modal_create_student < FXDialogBox
 
 	def addTimeoutCheck(data:nil)
 		if(self.shown?) then
-			@timeout_id = @app.addTimeout(500, :repeat => true) do
-				if @student_field["surname"]!=nil && @student_field["name"] != nil then
+			@timeout_id = @app.addTimeout(200, :repeat => true) do
+				if require_field_to_fill() then
 					 @ok_btn.enable  
 				else
 				 	 @ok_btn.disable 
@@ -42,11 +41,12 @@ class Modal_create_student < FXDialogBox
 	end
 
 private
-	attr_reader :student_list_controller
+	attr_reader :controller
+
 	def create_close_button(horizontal_frame)
 		close_button = FXButton.new(horizontal_frame, "Close", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
 		close_button.connect(SEL_COMMAND) do |sender, selector, data|
-			@app.removeTimeout(@timeout_id)
+			removeTimeout(@timeout_id,@app)
 			self.hide
 		end
 		close_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
@@ -57,8 +57,9 @@ private
 		ok_button.disable
 		ok_button.connect(SEL_COMMAND) do |sender, selector, data|
 			#TODO:Validate special field
-			@app.removeTimeout(@timeout_id)
-			@student_list_controller.create_entity(@student_field)
+			removeTimeout(@timeout_id,@app)
+			@controller.create_entity(@owner_field)
+			clear_fields()
 			self.hide
 		end
 		ok_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
@@ -68,7 +69,6 @@ private
 	def create_textField(frame,name,method_check,method_validate)
 		FXLabel.new(frame, name)
     	nameField = FXTextField.new(frame, 20)
-    	nameField.text = name if name == "Name" || name == "Surname" || name == "Lastname"
 
     	nameField.connect(SEL_VERIFY) do |sender, sel, tentative|
     		if method_check.call(tentative)
@@ -80,25 +80,40 @@ private
     	nameField.connect(SEL_CHANGED) do 
     		validate_field(nameField,method_validate,name)
     	end
-
-    	
+    	nameField   	
 	end
 
 	def validate_field(nameField,method_validate,name)
 		if method_validate.call(nameField.text) then 
-        	@student_field[name.downcase] = nameField.text 
+        	@owner_field[name.downcase] = nameField.text 
         else 
-        	@student_field[name.downcase] = nil 
+        	@owner_field[name.downcase] = nil 
         end
 	end
 
+	def clear_fields()
+		@list_text_fields.each do |elem|
+			elem.setText('')
+		end
+		@owner_field.each do |key,val|
+			@owner_field[key] = nil
+		end
+	end
+
+	def require_field_to_fill()
+		@owner_field["surname"]!=nil && @owner_field["name"] != nil  && @owner_field["phone"] != nil
+	end
+
+	def removeTimeout(timerId,app)
+		app.removeTimeout(timerId)
+	end
 
 	def check_letter(elem)
 		elem.match?(/^[A-zА-яЁё\s]+$/) 
 	end
 
 	def check_phone(elem)
-		elem.match?(/^[0-9\+]+$/)
+		elem.match?(/^\+?[0-9]*$/)
 	end
 
 	def check_let_dig_specilSymbol(elem)
@@ -111,19 +126,11 @@ private
 	end
 
 	def valid_phone(text)
-		text.match?(/^[0-9\+]{8,15}$/)
+		text.match?(/^(\+7|8)[0-9]{9,15}$$/)
 	end
 
 	def valid_mail(text)
 		text.match?(/^\w+[@][a-z]+[\.][a-z]{2,20}/)
-	end
-
-	def valid_git(text)
-		text.match?(/^https:\/\/github\.com\/[A-z0-9]*\/[A-z0-9]*\.git/)
-	end
-
-	def valid_telegram(text)
-		text.match?(/^@[A-z0-9]+/)
 	end
 
 

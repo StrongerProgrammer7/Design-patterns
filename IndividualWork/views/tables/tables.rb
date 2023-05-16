@@ -40,7 +40,7 @@ class Table
 		attr_writer :num_current_page, :data
 		attr_accessor :vframe_table, :whole_entites_count
 
-	def fill_table(num_page,count,filter_git:nil,filter_mail:nil,filter_telegram:nil,filter_phone:nil,	filter_surname_initials:nil)
+	def fill_table(num_page,count,filter_mail:nil,filter_phone:nil,	filter_surname_initials:nil)
 		raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
 	end
 
@@ -52,9 +52,6 @@ class Table
 			num+=1
 		end
 		self.table.setColumnWidth((0), 40)
-		self.table.setColumnWidth((column_names.length-1), 200) if column_names[(column_names.length-1)] == "git"
-		self.table.setColumnWidth((column_names.length-1), 120) if column_names[(column_names.length-1)] == "date"
-		self.table.setColumnWidth((column_names.length-2), 200) if column_names[(column_names.length-2)] == "tasks"
 	end
 
 	def clear_table(count_col,count_row)
