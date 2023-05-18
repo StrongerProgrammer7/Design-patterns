@@ -5,6 +5,7 @@
 <h5>Kernel classes and models</h5>
 &emsp;&emsp;<a href="https://github.com/StrongerProgrammer7/Design-patterns#1ex-object-and-clesses">Object and clesses<a/>
 &emsp;&emsp;<a href="https://github.com/StrongerProgrammer7/Design-patterns#2ex-reading-view-record-entity">Reading, view, record entity<a/>
+          
 </p>
 <div>
 <h3> Introduction with Ruby - 1lab</h3>
