@@ -242,3 +242,5 @@ I, [2023-05-17T14:38:33.145637 #2073]  INFO -- : Creating element with params {"
 I, [2023-05-18T20:40:47.094538 #52713]  INFO -- : Creating element with params {"id_owner"=>"3", "model"=>"X6", "color"=>"white", "surname_owner"=>"Бирюков", "mark"=>"BMW"}
 I, [2023-05-18T20:42:13.112478 #52795]  INFO -- : Creating element with params {"id_owner"=>"3", "model"=>"X6", "color"=>"white", "surname_owner"=>"Бирюков", "mark"=>"BMW"}
 I, [2023-05-18T21:22:35.953615 #54330]  INFO -- : Creating element with params {"id_owner"=>"6", "model"=>"X6", "color"=>"white", "surname_owner"=>"Kocpit", "mark"=>"BMW"}
+I, [2023-05-18T21:56:46.069509 #56984]  INFO -- : Creating element with params {"id_owner"=>"5", "model"=>"X6", "color"=>"black", "surname_owner"=>"Kolins", "mark"=>"BMW"}
+I, [2023-05-18T21:57:06.918367 #56984]  INFO -- : Creating element with params {"id_owner"=>"8", "model"=>"GL-3", "color"=>"pink", "surname_owner"=>"Kolins", "mark"=>"Mersedes-Benz"}

@@ -37,17 +37,26 @@ class Controller
 		self.data_list = nil
 	end
 
-	def refresh_data(k,n,filter_initials:nil,filter_phone:nil,filter_mail:nil)
+	def refresh_data(k,n,filter_initials:nil,filter_phone:nil,filter_mail:nil,
+		filter_color:nil,filter_model:nil,filter_mark:nil,filter_owner:nil)
 		if(self.data_list==nil) then
 			self.data_list = @entity_list.get_k_n_elements_list(k,n,data_list:self.data_list,
 				filter_initials:filter_initials,
 				filter_phone:filter_phone,
-				filter_mail:filter_mail)
+				filter_mail:filter_mail,
+				filter_color:filter_color,
+				filter_model:filter_model,
+				filter_mark:filter_mark,
+				filter_owner:filter_owner)
 		else
 			@entity_list.get_k_n_elements_list(k,n,data_list:self.data_list,
 				filter_initials:filter_initials,
 				filter_phone:filter_phone,
-				filter_mail:filter_mail)
+				filter_mail:filter_mail,
+				filter_color:filter_color,
+				filter_model:filter_model,
+				filter_mark:filter_mark,
+				filter_owner:filter_owner)
 		end
 		self.data_list.observer = self.view if self.data_list.observer == nil
 		self.data_list.notify(n)

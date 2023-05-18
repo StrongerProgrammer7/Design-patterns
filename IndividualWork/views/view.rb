@@ -83,7 +83,8 @@ class Parking_view < FXMainWindow
 
   end
   
-  	def showData(k,n,filter_initials:nil,filter_phone:nil,filter_mail:nil)
+  	def showData(k,n,filter_initials:nil,filter_phone:nil,filter_mail:nil,
+  		filter_color:nil,filter_model:nil,filter_mark:nil,filter_owner:nil)
   		self.num_page = k
   		self.count_records_default = n if self.count_records_default == nil
   		max_count_entities = @controller.get_count_entities()
@@ -93,7 +94,11 @@ class Parking_view < FXMainWindow
   		@controller.refresh_data(k,n,
   			filter_initials:filter_initials,
   			filter_phone:filter_phone,
-  			filter_mail:filter_mail)
+  			filter_mail:filter_mail,
+  			filter_color:filter_color,
+			filter_model:filter_model,
+			filter_mark:filter_mark,
+			filter_owner:filter_owner)
   	end
 
   	def set_table_params(column_names,whole_entites_count)
@@ -175,6 +180,7 @@ class Parking_view < FXMainWindow
 		event_filters_changed(filter_owner:list_filters[0],filter_model:list_filters[1],
 			filter_mark:list_filters[2],filter_color:list_filters[3])
 
+		event_filter_auto_btn_action(list_filters)
 
 		table
 	end
@@ -334,6 +340,32 @@ class Parking_view < FXMainWindow
 			list_btn_filter[2][1].text = ''
 			list_btn_filter[2][1].disable
 			list_btn_filter[2][0].value = 2
+			showData(self.num_page,self.count_records)
+    	end
+
+	end
+
+	def event_filter_auto_btn_action(list_btn_filter)
+		update_btn = list_btn_filter[4][0]
+		discard_btn = list_btn_filter[4][1]
+		update_btn.connect(SEL_COMMAND) do |sender,sel,data|
+			filter_owner = list_btn_filter[0].text
+			filter_model = list_btn_filter[1].text
+			filter_mark = list_btn_filter[2].text
+			filter_color = list_btn_filter[3].text
+			showData(self.num_page,self.count_records,
+				filter_owner:filter_owner,
+				filter_model:filter_model,
+				filter_mark:filter_mark,
+				filter_color:filter_color)
+
+    	end
+
+    	discard_btn.connect(SEL_COMMAND) do |sender,sel,data|
+			list_btn_filter[0].text = ''
+			list_btn_filter[1].text = ''
+			list_btn_filter[2].text = ''
+			list_btn_filter[3].text = ''
 			showData(self.num_page,self.count_records)
     	end
 

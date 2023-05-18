@@ -42,11 +42,16 @@ class Parking_list
 		@strategy.get_element_by_id(id)
 	end
 
-	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil)
+	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil,
+		filter_color:nil,filter_model:nil,filter_mark:nil,filter_owner:nil)
 		@strategy.get_k_n_elements_list(k,n,data_list:data_list,
 			filter_initials:filter_initials,
 			filter_phone:filter_phone,
-			filter_mail:filter_mail)
+			filter_mail:filter_mail,
+			filter_color:filter_color,
+			filter_owner:filter_owner,
+			filter_mark:filter_mark,
+			filter_model:filter_model)
 	end
 
 	def push_element(element)

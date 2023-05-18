@@ -157,37 +157,6 @@ private
 	end
 
 
-	def validate_date_labs()
-		cur_date = @date.text.to_s
-		cur_date = Date.strptime(cur_date, '%d.%m.%Y').strftime('%Q').to_i
-		if(@number.text.to_i == @all_labs.length) then
-			lab_prev_date = @all_labs[@number.text.to_i-2][4]
-			lab_prev_date = Date.strptime(lab_prev_date, '%d.%m.%Y').strftime('%Q').to_i
-			if cur_date < lab_prev_date then
-				message("Вы не можете выдать эту лабораторную работу раньше предыдущей.\nСрок выдачи ЛР №#{(@number.text.to_i-2).to_s} - <#{@all_labs[@number.text.to_i-2][4].to_s}>")
-				return 0
-			end
-		elsif @number.text.to_i == 1 then
-			lab_next_date = @all_labs[@number.text.to_i][4]
-			lab_next_date = Date.strptime(lab_next_date, '%d.%m.%Y').strftime('%Q').to_i
-			if cur_date > lab_next_date then
-				message("Вы не можете выдать эту лабораторную работу позже следующей.\nСрок выдачи ЛР №#{(@number.text.to_i).to_s} - <#{@all_labs[@number.text.to_i][4].to_s}>")
-				return 0
-			end
-		else
-			lab_prev_date = @all_labs[@number.text.to_i-2][4]
-			lab_next_date = @all_labs[@number.text.to_i][4]
-
-			lab_prev_date = Date.strptime(lab_prev_date, '%d.%m.%Y').strftime('%Q').to_i
-			lab_next_date = Date.strptime(lab_next_date, '%d.%m.%Y').strftime('%Q').to_i
-			if !(cur_date > lab_prev_date && cur_date < lab_next_date) then
-				message("Вы не можете выдать эту лабораторную работу позже следующей and early previous.\nСрок выдачи ЛР №#{(@number.text.to_i).to_s}/#{@number.text.to_i-2} - <#{@all_labs[@number.text.to_i][4].to_s}/#{@all_labs[@number.text.to_i-2][4]}>")
-				return 0
-			end
-		end
-		return 1
-	end
-
 
 	def clear_inputs()
 		@number.setText('')

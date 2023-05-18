@@ -15,7 +15,8 @@ class Owners_list_DB < Entities_list_DB
 		return owner
 	end
 
-	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil)
+	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil,
+		filter_color:nil,filter_model:nil,filter_mark:nil,filter_owner:nil)
 		offset = (k - 1) * n
 		limit = n
 

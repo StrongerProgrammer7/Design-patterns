@@ -1,11 +1,15 @@
 require_relative File.dirname($0) + './auto.rb'
 require_relative '../../model_entity/entity_DB/entity_list_DB.rb'
-require 'date'
+
+require_relative '../../model_entity/Decorator/Auto_filter/mark_dec.rb'
+require_relative '../../model_entity/Decorator/Auto_filter/model_dec.rb'
+require_relative '../../model_entity/Decorator/Auto_filter/color_dec.rb'
+require_relative '../../model_entity/Decorator/Auto_filter/owner_dec.rb'
 
 class Auto_list_DB < Entities_list_DB
 
 	def initialize()
-		super()
+		super(query_select:"Select Auto.id as id, Auto.owner_id, Auto.model, Auto.color, Model.mark, Owner.surname FROM Auto INNER JOIN Model ON Model.model = Auto.model INNER JOIN Owner ON Owner.id = Auto.owner_id WHERE ")
 	end 
 	
 	def get_element_by_id(id)
@@ -13,12 +17,19 @@ class Auto_list_DB < Entities_list_DB
 		auto[0]
 	end
 
-	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil)
+	def get_k_n_elements_list(k,n,data_list:nil,filter_initials:nil,filter_phone:nil,filter_mail:nil,filter_color:nil,filter_model:nil,filter_mark:nil,filter_owner:nil)
 		offset = (k - 1) * n
 		limit = n
 
+		query = Owner_decorator.new(filter_owner,
+			Mark_decorator.new(filter_mark,
+			Color_decorator.new(filter_color,
+			Model_decorator.new(filter_model,
+				Auto_list_DB.new())))).query_select
+		query = query + " LIMIT #{limit} OFFSET #{offset};"
+
 		list_auto = []
-		@dbcon.crud_by_db("Select * FROM Auto LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
+		@dbcon.crud_by_db(query).to_a.each do |elem|
 			surname_owner = @dbcon.crud_by_db("Select surname FROM Owner WHERE id = #{elem["owner_id"]};").to_a
 			mark = @dbcon.crud_by_db("Select mark FROM Model WHERE model = '#{elem["model"]}';").to_a
 			auto = Auto.new(
