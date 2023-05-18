@@ -73,7 +73,6 @@ class Table
    		column = 0
    		if(row_data!=nil) then
    			row_data.each do |cell_data|
-   				print cell_data,"\n",column,"\n"
 				self.table.setItemText(row, column, cell_data.to_s)  if(column<max_column)
 				column += 1
 			end

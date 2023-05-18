@@ -41,7 +41,7 @@ class Auto_list_DB < Entities_list_DB
 	def push_element(element)
 		auto = create_auto(element:element,id:0)
 		@dbcon.crud_by_db("INSERT INTO Auto
-			(owner_id,name, model, color) 
+			(owner_id, model, color) 
 			VALUES 
 			('#{auto.id_owner}','#{auto.model}','#{auto.color}');")
 	end
@@ -63,7 +63,7 @@ class Auto_list_DB < Entities_list_DB
 	private 
 	def create_auto(element:,id:nil)
 		 Auto.new(id:id,
-					id_owner:Integer(element["owner_id"]),
+					id_owner:Integer(element["id_owner"]),
 					surname_owner:element["surname_owner"],
       				model:element["model"],
       				mark:element["mark"],

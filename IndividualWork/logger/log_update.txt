@@ -38,3 +38,4 @@ I, [2023-05-14T17:54:25.504969 #5242]  INFO -- : Updating element with ID 5 and 
 I, [2023-05-16T10:07:55.513020 #5853]  INFO -- : Updating element with ID 10 and params {"name"=>"Next", "surname"=>"Prev", "lastname"=>"Pup", "phone"=>"+78523654595", "mail"=>"swPis@mail.ru", "id"=>10}
 I, [2023-05-16T12:22:05.922161 #14154]  INFO -- : Updating element with ID 5 and params {"name"=>"Kiss", "surname"=>"Pussi", "lastname"=>"Nassi", "phone"=>"+78569568525", "mail"=>"swao_s2@mail.ru", "exp_year"=>5, "id"=>5}
 I, [2023-05-16T23:28:04.960579 #23257]  INFO -- : Updating element with ID 7 and params {"name"=>"Gardin", "surname"=>"Sur", "lastname"=>"Lasd", "phone"=>"+7956856952", "mail"=>"ama@mail.ru", "exp_year"=>15, "id"=>7}
+I, [2023-05-18T21:24:51.071250 #54515]  INFO -- : Updating element with ID 5 and params {"id"=>5, "id_owner"=>6, "model"=>"GL-3", "color"=>"white", "surname_owner"=>"Kocpit", "mark"=>"Mersedes-Benz"}

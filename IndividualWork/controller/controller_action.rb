@@ -15,6 +15,18 @@ class Controller_action
     	end
 		@controller = parent_controller
 	end
+
+	def get_element_by_id(id)
+		@controller.entity_list.get_element_by_id(id)
+	end
+
+	def get_model(id)
+		@controller.get_model(id)
+	end
+
+	def get_owner(id)
+		@controller.get_owner(id)
+	end
 	 
 	private 
 	attr_reader :view

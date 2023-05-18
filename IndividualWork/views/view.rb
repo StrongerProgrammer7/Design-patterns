@@ -23,6 +23,8 @@ class Parking_view < FXMainWindow
   	self.modal_window_change_owner = modal_change_owner
   	self.modal_window_create_guard = modal_create_guard
   	self.modal_window_change_guard = modal_change_guard
+  	self.modal_window_create_auto = modal_create_auto
+  	self.modal_window_change_auto = modal_change_auto
     super(app, "Parking list", :width => 1000, :height => 600)
 	
     horizontal_frame = FXHorizontalFrame.new(self, LAYOUT_SIDE_TOP|FRAME_NONE|LAYOUT_FILL_X|LAYOUT_FILL_Y)
@@ -43,8 +45,8 @@ class Parking_view < FXMainWindow
 
     createTab(tab_book, "Auto")
     @table_auto = fillTab_auto(tab_book,"Auto table",
-    	modal_create:nil,
-    	modal_update:nil)
+    	modal_create:self.modal_window_create_auto,
+    	modal_update:self.modal_window_change_auto)
 
     tab_book.connect(SEL_COMMAND) do |sender, sel, data|
     	if data == 0 then
@@ -62,7 +64,6 @@ class Parking_view < FXMainWindow
     	else
     		self.current_table = @table_owner		
     	end
-    	print data,"\n"
     	 	@selected_items = []
     	 	showData(1,self.count_records)#@controller.refresh_data(1,self.count_records)
     end
@@ -110,7 +111,7 @@ class Parking_view < FXMainWindow
 	end
 
   private 
-	attr_accessor :max_page_data, :modal_window_create_owner, :modal_window_change_owner,:modal_window_create_guard, :modal_window_change_guard
+	attr_accessor :max_page_data, :modal_window_create_owner, :modal_window_change_owner,:modal_window_create_guard, :modal_window_change_guard,:modal_window_create_auto, :modal_window_change_auto
 	attr_writer :num_page, :current_table,:count_records_default
 	attr_reader :controller
 	
@@ -151,28 +152,29 @@ class Parking_view < FXMainWindow
 
 		list_btn = initialize_control(tab_frame)
 
-		FXLabel.new(tab_frame, "Expense Category:")
-    	categories = FXComboBox.new(tab_frame, 6, :opts => COMBOBOX_INSERT_AFTER|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_FIX_WIDTH)
-    	categories.numVisible = 6
-    	categories.x = 810
-    	categories.y = 140
-    	categories.width = 100
-    	categories.appendItem("Wining")
-    	categories.appendItem("Dining")
-    	categories.appendItem("Outright Bribery")
-    	categories.sortItems
-
-    	categories.connect(SEL_COMMAND) do |sender, sel, data|
+		#FXLabel.new(tab_frame, "Expense Category:")
+    	#categories = FXComboBox.new(tab_frame, 6, :opts => COMBOBOX_INSERT_AFTER|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FIX_X|LAYOUT_FIX_Y|LAYOUT_FIX_WIDTH)
+    	#categories.numVisible = 6
+    	#categories.x = 810
+    	#categories.y = 140
+    	#categories.width = 100
+    	#categories.appendItem("Wining")
+    	#categories.appendItem("Dining")
+    	#categories.appendItem("Outright Bribery")
+    	#categories.sortItems
+    	#categories.clearItems
+    	#categories.connect(SEL_COMMAND) do |sender, sel, data|
       		#sender.sortItems
-      		print sender.text
-    	end
+      	#	print sender.text
+      	#	print ":",data
+    	#end
 
 
 		events_entities_controls(table,list_btn[0],list_btn[1],list_btn[2],list_btn[3],modal_add:modal_create,modal_change:modal_update)
+
 		event_filters_changed(filter_owner:list_filters[0],filter_model:list_filters[1],
 			filter_mark:list_filters[2],filter_color:list_filters[3])
 
-		#event_filters_person(list_filters)
 
 		table
 	end

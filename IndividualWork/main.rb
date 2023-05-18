@@ -24,8 +24,8 @@ load './views/modal_window_guards/modal_window_create_guard.rb'
 load './views/modal_window_guards/modal_window_change_guard.rb'
 #--------------------------------------
 #-------------------Auto---------------
-#load './views/modal_window_labs/modal_window_create_labs.rb'
-#load './views/modal_window_labs/modal_window_change_labs.rb'
+load './views/modal_window_auto/modal_window_create_auto.rb'
+load './views/modal_window_auto/modal_window_change_auto.rb'
 #--------------------------------------
 
 class Factory
@@ -52,12 +52,16 @@ class Factory
 		modal_create_ent1:nil,
 		modal_change_ent1:nil,
 		modal_create_ent2:nil,
-		modal_change_ent2:nil)
+		modal_change_ent2:nil,
+    modal_create_ent3:nil,
+    modal_change_ent3:nil)
 	 Parking_view.new(application,
 	   modal_create_owner:modal_create_ent1,
 	   modal_change_owner:modal_change_ent1,
 	   modal_create_guard:modal_create_ent2,
-	   modal_change_guard:modal_change_ent2)
+	   modal_change_guard:modal_change_ent2,
+     modal_create_auto:modal_create_ent3,
+     modal_change_auto:modal_change_ent3)
   end
 
   def self.build_controllers(controller_type,main_controller)
@@ -81,6 +85,10 @@ class Factory
      	Modal_create_guard.new(application)
     when :change_guard
      	Modal_change_guard.new(application)
+    when :add_auto
+      Modal_create_auto.new(application)
+    when :change_auto
+      Modal_change_auto.new(application)
     else
       raise ArgumentError, "Invalid window type: #{window_type}"
     end
@@ -112,18 +120,24 @@ application = FXApp.new
 
 modalWindow_create_owner = Factory.build_modals(application,:add_owner)
 modalWindow_create_guard = Factory.build_modals(application,:add_guard)
+modalWindow_create_auto= Factory.build_modals(application,:add_auto)
 modalWindow_change_owner = Factory.build_modals(application,:change_owner)
 modalWindow_change_guard = Factory.build_modals(application,:change_guard)
+modalWindow_change_auto= Factory.build_modals(application,:change_auto)
 Factory.connection_window_controller(contoller_modal_create,modalWindow_create_owner)
 Factory.connection_window_controller(contoller_modal_create,modalWindow_create_guard)
+Factory.connection_window_controller(contoller_modal_create,modalWindow_create_auto)
 Factory.connection_window_controller(controller_modal_change,modalWindow_change_owner)
 Factory.connection_window_controller(controller_modal_change,modalWindow_change_guard)
+Factory.connection_window_controller(controller_modal_change,modalWindow_change_auto)
 
 view = Factory.build_main_window(application,
   modal_create_ent1:modalWindow_create_owner,
   modal_change_ent1:modalWindow_change_owner,
   modal_create_ent2:modalWindow_create_guard,
-  modal_change_ent2:modalWindow_change_guard)
+  modal_change_ent2:modalWindow_change_guard,
+  modal_create_ent3:modalWindow_create_auto,
+  modal_change_ent3:modalWindow_change_auto)
 
 Factory.connection_controller_window(controller,view)
 Factory.connection_controller_window(contoller_modal_create,view)

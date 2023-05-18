@@ -18,7 +18,7 @@ class Model_list_DB < Entities_list_DB
 		limit = n
 
 		list_model = []
-		@dbcon.crud_by_db("Select * FROM Model LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
+		@dbcon.crud_by_db("Select * FROM Model;").to_a.each do |elem|
 			model = Model.new(model:elem["model"],mark:elem["mark"])
 			list_model.push(model)
 		end

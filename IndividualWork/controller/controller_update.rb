@@ -6,9 +6,6 @@ class Controller_update < Controller_action
 		super(parent_controller,log_mode,"logger/log_update.txt")
 	end
 	
-	def get_element_by_id(id)
-		@controller.entity_list.get_element_by_id(id)
-	end
 
 	def update_entity(element)
 		self.logger.debug("Updating element with ID #{element["id"]} and params #{element}")

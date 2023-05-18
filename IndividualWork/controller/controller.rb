@@ -84,6 +84,14 @@ class Controller
 		self.logger.error("Error while deleting entity :#{e}")
 	end
 
+	def get_model(id)
+		@model_list.get_element_by_id(id)
+	end
+
+	def get_owner(id)
+		@owners_list.get_element_by_id(id)
+	end
+
 	private 
 	attr_reader :view
 	attr_writer :entity_list
