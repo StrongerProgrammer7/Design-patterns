@@ -31,7 +31,7 @@ class Student_list_controller
 		list_student.each do |id_student|
 			@student_list.delete_element_by_id(id_student)
 		end 
-		
+		refresh_data(self.student_list_view.num_page,self.student_list_view.count_records)
 	end
 
 	private 
