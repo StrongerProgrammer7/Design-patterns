@@ -54,6 +54,7 @@ class Auto_list < Entities_list
 			id_owner:element["id_owner"],
 			surname_owner: element["surname_owner"],
       				model:element["model"],
+      				mark:element["mark"],
       				color:element["color"])
 	end
 

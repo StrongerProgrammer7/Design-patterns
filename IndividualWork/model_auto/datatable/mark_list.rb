@@ -34,18 +34,31 @@ class Mark_list < Entities_list
 		end
 	end
 
+	def get_element_by_id(id)
+		self.list_entities.each do |elem|
+			if(elem.mark == id) then
+				return elem
+			end
+		end
+		return nil
+	end
+
 	def sort_by_field(data_list)
 		data_list.list_entities.sort! { |a,b| a.mark <=> b.mark}
 	end
 
 	def push_element(element)
 		mark = create_mark(element:element,id:element["mark"])
-		super(mark)
+		self.list_entities.push(mark)
 	end
 
 	def replace_element_by_id(id,element)
 		mark = create_mark(element:element,id:id)
-		super(id,mark)
+		self.list_entities.map! { |elem|  elem.mark == id ? mark : elem }
+	end
+
+	def delete_element_by_id(id)
+		self.list_entities.delete_if { |elem| elem.mark == id }
 	end
 	
 	private

@@ -40,7 +40,7 @@ class Table
 		attr_writer :num_current_page, :data
 		attr_accessor :vframe_table, :whole_entites_count
 
-	def fill_table(num_page,count,filter_mail:nil,filter_phone:nil,	filter_surname_initials:nil)
+	def fill_table(num_page,count,filter_mail:nil,filter_phone:nil,	filter_surname_initials:nil, filter_owner:nil,filter_model:nil,filter_mark:nil,filter_color:nil)
 		raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
 	end
 
@@ -73,6 +73,7 @@ class Table
    		column = 0
    		if(row_data!=nil) then
    			row_data.each do |cell_data|
+   				print cell_data,"\n",column,"\n"
 				self.table.setItemText(row, column, cell_data.to_s)  if(column<max_column)
 				column += 1
 			end

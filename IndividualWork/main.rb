@@ -5,14 +5,15 @@ include Fox
 load './model_entity/entity_list/Parking_list.rb'
 load './model_person/list_file/owner_list.rb'
 load './model_person/list_file/guard_list.rb'
-load './model_auto/datatable/auto_list.rb'
-load './model_auto/datatable/mark_list.rb'
-load './model_auto/datatable/model_list.rb'
+load './model_auto/list_file/auto_list_json.rb'
+load './model_auto/list_file/mark/mark_list_json.rb'
+load './model_auto/list_file/model/model_list_json.rb'
 #--------------------Controller-----------
 load './controller/controller.rb'
 load './controller/controller_insert.rb'
 load './controller/controller_update.rb'
 
+#--------------------View-----------
 load './views/view.rb'
 #------------------Owner---------------
 load './views/modal_window_owners/modal_window_create_owner.rb'
@@ -43,8 +44,8 @@ class Factory
   	end
   end
   
-  def self.build_main_controller(owner:nil,guard:nil,auto:nil)
-	   Controller.new(owner,guard,auto,:hybrid)
+  def self.build_main_controller(owner:nil,guard:nil,auto:nil,mark:nil,model:nil)
+	   Controller.new(owner,guard,auto,mark,model,:hybrid)
   end
   
   def self.build_main_window(application,
@@ -97,11 +98,14 @@ end
 mysql_owner = Factory.actions(:mysql,:owner)
 mysql_guard = Factory.actions(:mysql,:guard)
 mysql_auto = Factory.actions(:mysql,:auto)
+mysql_model = Factory.actions(:mysql,:model)
+mysql_mark = Factory.actions(:mysql,:mark)
 json_owner = Factory.actions(:json,:owner,files:Persons_list_json.new(person:Owner_list.new(:json)))
 json_guard = Factory.actions(:json,:guard,files:Persons_list_json.new(person:Guard_list.new(:json))) 
+json_auto= Factory.actions(:json,:auto,files:Auto_list_json.new()) 
 
 
-controller = Factory.build_main_controller(owner:mysql_owner,guard:mysql_guard,auto:mysql_auto)
+controller = Factory.build_main_controller(owner:mysql_owner,guard:mysql_guard,auto:mysql_auto,mark:mysql_mark,model:mysql_model)
 contoller_modal_create = Factory.build_controllers(:insert,controller)
 controller_modal_change = Factory.build_controllers(:update,controller)
 application = FXApp.new

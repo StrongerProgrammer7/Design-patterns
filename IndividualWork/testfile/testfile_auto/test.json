@@ -4,6 +4,7 @@
     "id_owner": 1,
     "surname_owner": "Goblin",
     "model": "X6",
+    "mark":"BMW",
     "color": "black"
   },
   "auto2": {
@@ -11,13 +12,7 @@
     "id_owner": 2,
     "surname_owner": "Kupit",
     "model": "Highlander",
+    "mark":"Toyota",
     "color": "gray"
-  },
-  "auto3": {
-    "id": 3,
-    "id_owner": 3,
-    "surname_owner": "Pisa",
-    "model": "Skoda",
-    "color": "black"
   }
 }

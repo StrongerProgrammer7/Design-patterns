@@ -11,13 +11,15 @@ class Data_list_auto < Data_list
 
 	private
 		def get_names()
-			arr_attr= ["surname_owner","model","color"] 
+			arr_attr= ["num","surname_owner","model","mark","color"] 
 		end
 	
 		def get_data()
 			matrix = []
+			count = 1
 			@list_entities.each  do |elem|
-				matrix.push([elem.surname_owner,elem.model,elem.color,elem.id,elem.id_owner])
+				matrix.push([count,elem.surname_owner,elem.model,elem.mark,elem.color,elem.id,elem.id_owner])
+				count +=1
 			end
 			matrix
 		end

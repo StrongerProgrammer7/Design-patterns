@@ -14,6 +14,7 @@ class Auto_list_json < Entities_list_from_file
 
 	def read_from_file(addressFile)
 		addressFile = File.dirname($0) + "/../../#{self.addressFile}" if addressFile==nil
+		addressFile = "./testfile/testfile_auto/test.json"
 		raise "Address file don't correct, check this." if(!File.exist?(addressFile))
 		autos = Array.new()
 		file = File.read addressFile
@@ -39,6 +40,7 @@ class Auto_list_json < Entities_list_from_file
 				"id_owner"=>i.id_owner,
 				"surname_owner"=>i.surname_owner,
 				"model"=>i.model,
+				"mark"=>i.mark,
 				"color"=>i.color
 			}
 			num+=1

@@ -8,16 +8,18 @@ class TestAuto < Test::Unit::TestCase
     @auto1 = Auto.new(id:0,
       id_owner:1,
       surname_owner:"Goblin",
+      mark:"BMW",
       model:"Wolf",
       color:"black")
 	  
-	  @auto2 = Auto.initialization("1,2,Kupit,Highlander,gray")
+	  @auto2 = Auto.initialization("1,2,Kupit,Highlander,Toyota,gray")
   end
 
   def test_initialize_auto1
     assert_equal(1, @auto1.id_owner)
     assert_equal("Goblin", @auto1.surname_owner)
     assert_equal("Wolf", @auto1.model)
+    assert_equal("BMW", @auto1.mark)
     assert_equal("black", @auto1.color)
   end
   
@@ -25,6 +27,7 @@ class TestAuto < Test::Unit::TestCase
     assert_equal(2, @auto2.id_owner)
     assert_equal("Kupit", @auto2.surname_owner)
     assert_equal("Highlander", @auto2.model)
+    assert_equal("Toyota", @auto2.mark)
     assert_equal("gray", @auto2.color)
   end
   

@@ -39,6 +39,7 @@ class Auto_list_yaml < Entities_list_from_file
 				"id_owner"=>i.id_owner,
 				"surname_owner"=>i.surname_owner,
 				"model"=>i.model,
+				"mark"=>i.mark,
 				"color"=>i.color
 			}
 			num+=1

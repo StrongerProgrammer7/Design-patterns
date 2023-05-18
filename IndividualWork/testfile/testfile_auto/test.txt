@@ -1,2 +1,2 @@
-1,1 , Goblin ,X6 ,black
-2,2 , Kupit ,Highlander ,gray
+1,1 , Goblin ,X6 ,BMW ,black
+2,2 , Kupit ,Highlander ,Toyota ,gray

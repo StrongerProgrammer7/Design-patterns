@@ -5,7 +5,7 @@ class Controller
 	attr_writer :view
 	attr_reader :entity_list
 
-	def initialize(owners_list,guard_list,auto_list,log_mode = :all)
+	def initialize(owners_list,guard_list,auto_list,mark_list,model_list,log_mode = :all)
 		self.logger = Logger.new("log.txt")
     	case log_mode
     		when :errors
@@ -19,6 +19,8 @@ class Controller
 		@owners_list = owners_list
 		@guard_list = guard_list
 		@auto_list = auto_list
+		@mark_list = mark_list
+		@model_list = model_list
 	end
 
 	def change_entity(num_tab)
@@ -27,6 +29,8 @@ class Controller
       			@entity_list = @owners_list
     		when 1
       			@entity_list = @guard_list
+      		when 2
+      			@entity_list = @auto_list
     		else
       			@entity_list = @owners_list
     	end

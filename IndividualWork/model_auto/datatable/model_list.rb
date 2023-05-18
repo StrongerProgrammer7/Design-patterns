@@ -33,6 +33,16 @@ class Model_list < Entities_list
 			return data_list.list_entities = list
 		end
 	end
+#-----------Refactoring - include yeald
+	def get_element_by_id(id)
+		self.list_entities.each do |elem|
+			if(elem.model == id) then
+				return elem
+			end
+		end
+		return nil
+	end
+
 
 	def sort_by_field(data_list)
 		data_list.list_entities.sort! { |a,b| a.mark <=> b.mark}
@@ -40,12 +50,16 @@ class Model_list < Entities_list
 
 	def push_element(element)
 		model = create_model(element:element,id:element["model"])
-		super(model)
+		self.list_entities.push(model)
 	end
 
 	def replace_element_by_id(id,element)
 		model = create_model(element:element,id:id)
-		super(id,model)
+		self.list_entities.map! { |elem|  elem.model == id ? model : elem }
+	end
+
+	def delete_element_by_id(id)
+		self.list_entities.delete_if { |elem| elem.model == id }
 	end
 	
 	private

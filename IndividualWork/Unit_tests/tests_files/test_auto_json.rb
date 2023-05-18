@@ -24,7 +24,7 @@ class TestAuto_json < Test::Unit::TestCase
 	table = data_list_auto.getDataFromTable()
 	model = table.get_element(0,1)
 	model_name = table.get_element(1,1)
-	id_owner = table.get_element(1,4)
+	id_owner = table.get_element(1,5)
 	assert_equal("model", model)
 	assert_equal("X6", model_name)
 	assert_equal(1, id_owner)
@@ -42,16 +42,19 @@ class TestAuto_json < Test::Unit::TestCase
       id_owner:1,
       surname_owner:"Goblin",
       model:"X6",
+      mark:"BMW",
 	  color:"black"),
 	  Auto.new(id:2,
       id_owner:2,
       surname_owner: "Kupit",
       model:"Highlander",
+      mark:"Toyota",
 	  color:"gray"),
 	  Auto.new(id:3,
       id_owner:3,
       surname_owner: "Pisa",
-      model:"Skoda",
+      model:"Rapid",
+      mark:"Skoda",
 	  color:"black")]
 	  
 	  @auto_file.write_to_file("/../../testfile/testfile_auto/","test",elements)
@@ -59,7 +62,7 @@ class TestAuto_json < Test::Unit::TestCase
 		data_list_auto = @auto_file.get_k_n_elements_list(1,3,data_list:nil)
 		table = data_list_auto.getDataFromTable()
 		assert_equal("Pisa",  table.get_element(3,0))
-		assert_equal("Skoda", table.get_element(3,1))
+		assert_equal("Rapid", table.get_element(3,1))
 	
   end
 

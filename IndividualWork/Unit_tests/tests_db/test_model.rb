@@ -11,6 +11,7 @@ class TestModel_db < Test::Unit::TestCase
 
   def test_initialize
 		elem = @model.get_element_by_id("X6")
+		print elem,"\n"
     assert_equal("BMW", elem["mark"])
     assert_equal("X6", elem["model"])
   end
