@@ -1,7 +1,7 @@
-require_relative File.dirname($0) + '/data_list_mark.rb'
+require_relative File.dirname($0) + '/data_list_model.rb'
 require_relative '../../model_entity/Datatable/entities_list.rb'
 
-class Mark_list < Entities_list
+class Model_list < Entities_list
 
 	def initialize(format_file)
 		super(format_file)
@@ -28,7 +28,7 @@ class Mark_list < Entities_list
 
 
 		if(data_list == nil) then
-			return Data_list_mark.new(list)
+			return Data_list_model.new(list)
 		else
 			return data_list.list_entities = list
 		end
@@ -39,18 +39,18 @@ class Mark_list < Entities_list
 	end
 
 	def push_element(element)
-		mark = create_mark(element:element,id:element["mark"])
-		super(mark)
+		model = create_model(element:element,id:element["model"])
+		super(model)
 	end
 
 	def replace_element_by_id(id,element)
-		mark = create_mark(element:element,id:id)
-		super(id,mark)
+		model = create_model(element:element,id:id)
+		super(id,model)
 	end
 	
 	private
-	def create_mark(element:,id:nil)
-		Mark.new(mark:id)
+	def create_model(element:,id:nil)
+		Model.new(model:id,mark:element["mark"])
 	end
 
 
