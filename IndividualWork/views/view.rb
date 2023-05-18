@@ -183,6 +183,19 @@ class Parking_view < FXMainWindow
 		ed = button_control.createButton("Edit")
 		del = button_control.createButton("Delete")
 		update = button_control.createButton("update")
+
+		#FXLabel.new(tab_frame, "Expense Category:")
+    	#categories = FXComboBox.new(tab_frame, 6, :opts => COMBOBOX_INSERT_AFTER|FRAME_SUNKEN|FRAME_THICK|LAYOUT_FIX_X)
+    	#categories.numVisible = 6
+    	#categories.x = 500
+    	#categories.appendItem("Wining")
+    	#categories.appendItem("Dining")
+    	#categories.appendItem("Outright Bribery")
+    	#categories.sortItems
+    	#categories.connect(SEL_COMMAND) do |sender, sel, data|
+      		#sender.sortItems
+      	#	print sender.text
+    	#end
 		return [add,ed,del,update]
 	end
 

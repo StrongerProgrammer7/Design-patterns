@@ -1,7 +1,7 @@
-require_relative File.dirname($0) + '/data_list_auto.rb'
+require_relative File.dirname($0) + '/data_list_mark.rb'
 require_relative '../../model_entity/Datatable/entities_list.rb'
 
-class Auto_list < Entities_list
+class Mark_list < Entities_list
 
 	def initialize(format_file)
 		super(format_file)
@@ -28,33 +28,29 @@ class Auto_list < Entities_list
 
 
 		if(data_list == nil) then
-			return Data_list_auto.new(list)
+			return Data_list_mark.new(list)
 		else
 			return data_list.list_entities = list
 		end
 	end
 
 	def sort_by_field(data_list)
-		data_list.list_entities.sort! { |a,b| a.model <=> b.model}
+		data_list.list_entities.sort! { |a,b| a.mark <=> b.mark}
 	end
 
 	def push_element(element)
-		auto = create_auto(element:element,id:0)
-		super(auto)
+		mark = create_mark(element:element,id:0)
+		super(mark)
 	end
 
 	def replace_element_by_id(id,element)
-		auto = create_auto(element:element,id:id)
-		super(id,auto)
+		mark = create_mark(element:element,id:id)
+		super(id,mark)
 	end
 	
 	private
-	def create_auto(element:,id:nil)
-		Auto.new(id:id,
-			id_owner:element["id_owner"],
-			surname_owner: element["surname_owner"],
-      				model:element["model"],
-      				color:element["color"])
+	def create_mark(element:,id:nil)
+		Mark.new(mark:id)
 	end
 
 

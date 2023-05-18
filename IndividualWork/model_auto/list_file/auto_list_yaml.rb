@@ -37,6 +37,7 @@ class Auto_list_yaml < Entities_list_from_file
 			auto_hash["auto#{num}"] = {
 				"id" => i.id,
 				"id_owner"=>i.id_owner,
+				"surname_owner"=>i.surname_owner,
 				"model"=>i.model,
 				"color"=>i.color
 			}

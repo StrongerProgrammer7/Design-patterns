@@ -19,9 +19,11 @@ class Auto_list_DB < Entities_list_DB
 
 		list_auto = []
 		@dbcon.crud_by_db("Select * FROM Auto LIMIT #{limit} OFFSET #{offset};").to_a.each do |elem|
+			surname_owner = @dbcon.crud_by_db("Select surname FROM Owner WHERE id = #{elem["owner_id"]};").to_a
 			auto = Auto.new(
 					id:elem["id"],
 					id_owner:Integer(elem["owner_id"]),
+					surname_owner: surname_owner[0]["surname"],
       				model:elem["model"],
       				color:elem["color"])
 			list_auto.push(auto)

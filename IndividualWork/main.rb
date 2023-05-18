@@ -5,7 +5,9 @@ include Fox
 load './model_entity/entity_list/Parking_list.rb'
 load './model_person/list_file/owner_list.rb'
 load './model_person/list_file/guard_list.rb'
+load './model_auto/datatable/auto_list.rb'
 
+#--------------------Controller-----------
 load './controller/controller.rb'
 load './controller/controller_insert.rb'
 load './controller/controller_update.rb'
