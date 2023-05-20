@@ -1,44 +1,24 @@
 
-require 'fox16'
-require 'clipboard'
+require_relative  '../modal_Window.rb'
 
-include Fox
 
-class Modal_change_owner < FXDialogBox
+class Modal_change_owner < Modal_Window
 
-	attr_writer :controller
 	def initialize(app)
-		@app = app
-
-		super(app, "Change owner", :width => 400, :height => 250)
+		super(app, "Change owner", width:350, height:200)
 		
+
 		@owner_field = {"name" =>nil,"surname" => nil, "lastname" => nil,
 			"phone" => nil,"mail" => nil, "id" => nil}
 		matrix = FXMatrix.new(self, 2, MATRIX_BY_COLUMNS|LAYOUT_FILL_X)
-
-		@name = create_textField(matrix,"Name",method(:check_letter),method(:validate_surname_name_lastname))
-		@surname = create_textField(matrix,"Surname",method(:check_letter),method(:validate_surname_name_lastname))
-		@lastname = create_textField(matrix,"Lastname",method(:check_letter),method(:validate_surname_name_lastname))
-		@phone = create_textField(matrix,"Phone",method(:check_phone),method(:valid_phone))
-		@mail = create_textField(matrix,"Mail",method(:check_let_dig_specilSymbol),method(:valid_mail))
 	
+		create_inputs(matrix)
+		
 		@fields = {"name"=>@name,"surname"=>@surname,"lastname" =>@lastname,
 			"phone" => @phone, "mail" => @mail}
 		create_close_button(matrix)
 		@ok_btn = create_button_ok(matrix)
 			
-	end
-
-	def addTimeoutCheck(data:nil)
-		if(self.shown?) then
-			@timeout_id = @app.addTimeout(200, :repeat => true) do
-				if require_field_to_fill() then
-					 @ok_btn.enable  
-				else
-				 	 @ok_btn.disable 
-				end
-			end
-		end
 	end
 
 
@@ -55,15 +35,6 @@ class Modal_change_owner < FXDialogBox
 	end
 
 private
-	attr_reader :controller
-	def create_close_button(horizontal_frame)
-		close_button = FXButton.new(horizontal_frame, "Close", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
-		close_button.connect(SEL_COMMAND) do |sender, selector, data|
-			removeTimeout(@timeout_id,@app)
-			self.hide
-		end
-		close_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
-	end
 
 	def create_button_ok(horizontal_frame)
 		ok_button = FXButton.new(horizontal_frame, "Ok", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
@@ -129,37 +100,6 @@ private
 	def require_field_to_fill()
 		@owner_field["surname"]!=nil && @owner_field["name"] != nil  && @owner_field["phone"] != nil
 	end
-
-	def removeTimeout(timerId,app)
-		app.removeTimeout(timerId)
-	end
-
-
-	def check_letter(elem)
-		elem.match?(/^[A-zА-яЁё\s]+$/) 
-	end
-
-	def check_phone(elem)
-		elem.match?(/^\+?[0-9]*$/)
-	end
-
-	def check_let_dig_specilSymbol(elem)
-		elem.match?(/\w+|[@]|[\.]|[:]|[\\]/)
-	end
-
-
-	def validate_surname_name_lastname(text)
-		text.match?(/^[A-ZА-Я]([a-z]+|[a-яё]+)$/)
-	end
-
-	def valid_phone(text)
-		text.match?(/^(\+7|8)[0-9]{9,15}$$/)
-	end
-
-	def valid_mail(text)
-		text.match?(/^\w+[@][a-z]+[\.][a-z]{2,20}/)
-	end
-
 
 
 end

@@ -1,57 +1,30 @@
+require_relative  '../modal_Window.rb'
+class Modal_create_guard < Modal_Window
 
-require 'fox16'
-require 'clipboard'
-
-include Fox
-
-class Modal_create_guard < FXDialogBox
-
-	attr_writer :controller
 	def initialize(app)
-		@app = app
-		
-		super(app, "Add Guard", :width => 300, :height => 200)
-		
+		super(app, "Add guard", width:300, height:250)
+
 		@guard_field = {"name" =>nil,"surname" => nil, "lastname" => "",
 			"phone" => nil,"mail" => nil,"exp_year" => nil}
 		matrix = FXMatrix.new(self, 2, MATRIX_BY_COLUMNS|LAYOUT_FILL_X)
 
+		create_inputs(matrix)
 		@list_text_fields = []
-		@list_text_fields.push(create_textField(matrix,"Name",method(:check_letter),method(:validate_surname_name_lastname)))
-		@list_text_fields.push(create_textField(matrix,"Surname",method(:check_letter),method(:validate_surname_name_lastname)))
-		@list_text_fields.push(create_textField(matrix,"Lastname",method(:check_letter),method(:validate_surname_name_lastname)))
-		@list_text_fields.push(create_textField(matrix,"Phone",method(:check_phone),method(:valid_phone)))
+		@list_text_fields.push(@name)
+		@list_text_fields.push(@surname)
+		@list_text_fields.push(@lastname)
+		@list_text_fields.push(@phone)
+		@list_text_fields.push(@mail)
 		@list_text_fields.push(create_textField(matrix,"exp_year",method(:check_years),method(:valid_years)))
-		@list_text_fields.push(create_textField(matrix,"Mail",method(:check_let_dig_specilSymbol),method(:valid_mail)))
 	
 		create_close_button(matrix)
 		@ok_btn = create_button_ok(matrix)
 			
 	end
 
-	def addTimeoutCheck(data:nil)
-		if(self.shown?) then
-			@timeout_id = @app.addTimeout(200, :repeat => true) do
-				if require_field_to_fill() then
-					 @ok_btn.enable  
-				else
-				 	 @ok_btn.disable 
-				end
-			end
-		end
-	end
-
+	
 private
-	attr_reader :controller
-
-	def create_close_button(horizontal_frame)
-		close_button = FXButton.new(horizontal_frame, "Close", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
-		close_button.connect(SEL_COMMAND) do |sender, selector, data|
-			removeTimeout(@timeout_id,@app)
-			self.hide
-		end
-		close_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
-	end
+	
 
 	def create_button_ok(horizontal_frame)
 		ok_button = FXButton.new(horizontal_frame, "Ok", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
@@ -107,43 +80,13 @@ private
 		end
 	end
 
-	def removeTimeout(timerId,app)
-		app.removeTimeout(timerId)
-	end
-
-	def check_letter(elem)
-		elem.match?(/^[A-zА-яЁё\s]+$/) 
-	end
-
-	def check_phone(elem)
-		elem.match?(/^\+?[0-9]*$/)
-	end
-
 	def check_years(elem)
 		elem.match?(/^[0-9]*$/)
-	end
-
-	def check_let_dig_specilSymbol(elem)
-		elem.match?(/\w+|[@]|[\.]|[:]|[\\]/)
-	end
-
-
-	def validate_surname_name_lastname(text)
-		text.match?(/^[A-ZА-Я]([a-z]+|[a-яё]+)$/)
 	end
 
 	def valid_years(elem)
 		elem.match?(/^[0-9]{1,2}$/)
 	end
-
-	def valid_phone(text)
-		text.match?(/^(\+7|8)[0-9]{9,15}$$/)
-	end
-
-	def valid_mail(text)
-		text.match?(/^\w+[@][a-z]+[\.][a-z]{2,20}/)
-	end
-
 
 end
 

@@ -144,6 +144,6 @@ Factory.connection_controller_window(contoller_modal_create,view)
 Factory.connection_controller_window(controller_modal_change,view)
 Factory.connection_window_controller(controller,view)
 
-view.showData(1,8)
+view.showData(1,30)
 application.create
 application.run
