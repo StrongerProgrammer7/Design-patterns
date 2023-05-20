@@ -1,14 +1,11 @@
 
-require 'fox16'
 
-include Fox
+require_relative  '../modal_Window.rb'
 
-class Modal_change_auto < FXDialogBox
-	attr_writer :controller
+class Modal_change_auto < Modal_Window
+
 	def initialize(app)
-		@app = app
-		
-		super(app, "Change auto", :width => 300, :height => 150)
+		super(app, "Add auto", width:300, height:150)
 		
 		@model_filed = {"id"=>nil,"id_owner" =>nil,"model" => nil, "color" => nil,"surname_owner"=>nil,"mark"=>nil}
 		matrix = FXMatrix.new(self, 2, MATRIX_BY_COLUMNS|LAYOUT_FILL_X)
@@ -21,19 +18,6 @@ class Modal_change_auto < FXDialogBox
 		create_close_button(matrix)
 		@ok_btn = create_button_ok(matrix)
 			
-	end
-
-	def addTimeoutCheck(data:nil)
-		if(self.shown?) then
-			@timeout_id = @app.addTimeout(500, :repeat => true) do
-				if @model_filed["id_owner"]!=nil && @model_filed["model"] != nil && @model_filed["color"] != nil then
-					 @ok_btn.enable  
-				else
-				 	 @ok_btn.disable 
-				end
-			end
-		end
-
 	end
 
 	def get_personal_data(id)
@@ -53,16 +37,6 @@ class Modal_change_auto < FXDialogBox
 	end
 
 private
-	attr_reader :controller
-	def create_close_button(horizontal_frame)
-		close_button = FXButton.new(horizontal_frame, "Close", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
-		close_button.connect(SEL_COMMAND) do |sender, selector, data|
-			@app.removeTimeout(@timeout_id)
-			clear_inputs()
-			self.hide
-		end
-		close_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
-	end
 
 	def create_button_ok(horizontal_frame)
 		ok_button = FXButton.new(horizontal_frame, "Ok", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
@@ -72,8 +46,8 @@ private
 			model = @controller.get_model(@model.text)
 			@model_filed["surname_owner"] = owner["surname"] if owner !=nil
 			@model_filed["mark"] = model["mark"] if model!=nil
-			print @model_filed,"\n"
-			if owner!= nil && model != nil then
+			
+			if owner!= nil && model != nil && owner != []  then
 				answer = FXMessageBox.question(
 							self,
 							MBOX_YES_NO,
@@ -87,9 +61,8 @@ private
 					clear_inputs()
 					self.hide
 				end
-			else				
-				FXMessageBox.warning(self,MBOX_OK,"Warning",
-					"Owner/model don't exists, show directory!")
+			else
+				message_warning("Owner/model don't exists, show directory!")				
 			end
 
 
@@ -142,12 +115,10 @@ private
         end
 	end
 
-	def message(text)
-		FXMessageBox.warning(self,
-			MBOX_OK,
-			"Warning",
-			text)
+	def require_field_to_fill()
+		@model_filed["id_owner"]!=nil && @model_filed["model"] != nil && @model_filed["color"] != nil
 	end
+	
 
 	def clear_inputs()
 		@name.setText('')

@@ -10,8 +10,8 @@ class Owners_list_DB < Entities_list_DB
 	end 
 	
 	def get_element_by_id(id)
-		owner = @dbcon.crud_by_db("Select * FROM Owner WHERE id = #{id}").to_a
-		owner = clearData(owner[0])
+		owner = @dbcon.crud_by_db("Select * FROM Owner WHERE id = #{id}").to_a[0]
+		owner = clearData(owner) if owner != nil
 		return owner
 	end
 

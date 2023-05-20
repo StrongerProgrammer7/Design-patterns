@@ -49,6 +49,13 @@ class Modal_Window < FXDialogBox
 		app.removeTimeout(timerId)
 	end
 
+	def message_warning(text)
+		FXMessageBox.warning(self,
+			MBOX_OK,
+			"Warning",
+			text)
+	end
+
 
 	def check_letter(elem)
 		elem.match?(/^[A-zА-яЁё\s]+$/) 

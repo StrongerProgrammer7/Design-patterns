@@ -250,3 +250,5 @@ I, [2023-05-20T09:30:22.213572 #3100]  INFO -- : Creating element with params {"
 I, [2023-05-20T09:45:36.481855 #4299]  INFO -- : Creating element with params {"name"=>"Ownern", "surname"=>"Owners", "lastname"=>"Ownerl", "phone"=>"+79562563625", "mail"=>"exp@mail.ru", "id"=>nil}
 I, [2023-05-20T10:07:48.667519 #5369]  INFO -- : Creating element with params {"name"=>"Max", "surname"=>"Petrenko", "lastname"=>"", "phone"=>"+78558565625", "mail"=>"max@gmail.com", "exp_year"=>14}
 I, [2023-05-20T10:18:46.562407 #5773]  INFO -- : Creating element with params {"name"=>"Name", "surname"=>"Surname", "lastname"=>"Lastname", "phone"=>"+78565698565", "mail"=>nil, "exp_year"=>15}
+I, [2023-05-20T10:27:19.807457 #6397]  INFO -- : Creating element with params {"id_owner"=>"2", "model"=>"X6", "color"=>"green", "surname_owner"=>"Потапов", "mark"=>"BMW"}
+I, [2023-05-20T10:47:04.579587 #7440]  INFO -- : Creating element with params {"id_owner"=>"20", "model"=>"X6", "color"=>"pink", "surname_owner"=>"Lopi", "mark"=>"BMW"}

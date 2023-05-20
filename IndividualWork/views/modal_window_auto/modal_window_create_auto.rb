@@ -1,14 +1,10 @@
 
-require 'fox16'
+require_relative  '../modal_Window.rb'
 
-include Fox
-
-class Modal_create_auto < FXDialogBox
-	attr_writer :controller
+class Modal_create_auto < Modal_Window
 	def initialize(app)
-		@app = app
 		
-		super(app, "Add auto", :width => 300, :height => 200)
+		super(app, "Add auto", width:300, height:150)
 		
 		@model_fileds = {"id_owner" =>nil,"model" => nil, "color" => nil,"surname_owner"=>nil,"mark"=>nil}
 		matrix = FXMatrix.new(self, 2, MATRIX_BY_COLUMNS|LAYOUT_FILL_X)
@@ -22,31 +18,8 @@ class Modal_create_auto < FXDialogBox
 			
 	end
 
-	def addTimeoutCheck(data:nil)
-		if(self.shown?) then
-			@timeout_id = @app.addTimeout(500, :repeat => true) do
-				if @model_fileds["id_owner"]!=nil && @model_fileds["model"] != nil && @model_fileds["color"] != nil then
-					 @ok_btn.enable  
-				else
-				 	 @ok_btn.disable 
-				end
-			end
-		end
-
-	end
-
 private
-	attr_reader :controller
-	def create_close_button(horizontal_frame)
-		close_button = FXButton.new(horizontal_frame, "Close", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
-		close_button.connect(SEL_COMMAND) do |sender, selector, data|
-			@app.removeTimeout(@timeout_id)
-			clear_inputs()
-			self.hide
-		end
-		close_button.layoutHints |= LAYOUT_TOP|LAYOUT_RIGHT|LAYOUT_FILL_X
-	end
-
+	
 	def create_button_ok(horizontal_frame)
 		ok_button = FXButton.new(horizontal_frame, "Ok", nil,nil, :opts => BUTTON_NORMAL|LAYOUT_RIGHT)
 		ok_button.disable
@@ -70,8 +43,7 @@ private
 					self.hide
 				end
 			else				
-				FXMessageBox.warning(self,MBOX_OK,"Warning",
-					"Owner/model don't exists, show directory!")
+				message_warning("Owner/model don't exists, show directory!")
 			end
 
 
@@ -112,6 +84,9 @@ private
 		@model.setText('')
 	end
 
+	def require_field_to_fill()
+		@model_fileds["id_owner"]!=nil && @model_fileds["model"] != nil && @model_fileds["color"] != nil
+	end
 
 	def check_letter(elem)
 		elem.match?(/^[A-zА-яЁё\s\-0-9\#]+$/) 
@@ -128,7 +103,5 @@ private
 	def validate_id(text)
 		text.match?(/^[0-9]{1,999}$/)
 	end
-
-
 end
 
