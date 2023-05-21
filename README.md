@@ -4,12 +4,12 @@
 <p>
 <a href="https://github.com/StrongerProgrammer7/Design-patterns#introduction-with-rubyhttpsgithubcomstrongerprogrammer7design-patternsfiles115246511__2022-2023pdf--">Introduction with Ruby</a></br>
 <a href="https://github.com/StrongerProgrammer7/Design-patterns#kernel-classes-and-modelshttpsgithubcomstrongerprogrammer7design-patternsfiles115246612__2022-2023pdf-">Kernel classes and models</a> <i> Pattern Strategy</i></br>
-<a href="">Single Entity Model</a>  <i> Pattern: Singleton && Adapter && MVC && Observer</i></br>
-<a href="">MVC</a>  <i> Pattern Factory</i></br> 
-<a href="">Create software</a></br>
-<a href="">Filtering and sorting </a> <i> Pattern Wrapper</i> </br>
-<a href="">Working with the list of labs</a></br>     
-<a href="">Individual work</a><strong> <i> Pattern: Strategy & Sigleton & Adapter & Factory & Wrapper & MVC & Observer </i></strong></br>
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#-single-entity-modelhttpsgithubcomstrongerprogrammer7design-patternsfiles115246673__2022-2023pdf">Single Entity Model</a>  <i> Pattern: Singleton && Adapter && MVC && Observer</i></br>
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#mvchttpsgithubcomstrongerprogrammer7design-patternsfiles115246814__2022-2023pdf">MVC</a>  <i> Pattern Factory</i></br> 
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#create-software-httpsgithubcomstrongerprogrammer7design-patternsfiles115246875__2022-2023pdf">Create software</a></br>
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#filtering-and-sortinghttpsgithubcomstrongerprogrammer7design-patternsfiles115246936__2022-2023pdf">Filtering and sorting </a> <i> Pattern Wrapper</i> </br>
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#working-with-the-list-of-labshttpsgithubcomstrongerprogrammer7design-patternsfiles115246987__2022-2023pdf">Working with the list of labs</a></br>     
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#-individual-workhttpsgithubcomstrongerprogrammer7design-patternsfiles115247012022-2023_pdf">Individual work</a><strong> <i> Pattern: Strategy & Sigleton & Adapter & Factory & Wrapper & MVC & Observer </i></strong></br>
 </p>
           
  <h3> Content: </h3>
