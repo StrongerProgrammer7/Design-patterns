@@ -2,8 +2,8 @@
 # Design-patterns
 <h4>Map</h4>
 <p>
-<a href="">Introduction with Ruby</a></br>
-<a href="">Kernel classes and models</a> <i> Pattern Strategy</i></br>
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#introduction-with-rubyhttpsgithubcomstrongerprogrammer7design-patternsfiles115246511__2022-2023pdf--">Introduction with Ruby</a></br>
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#kernel-classes-and-modelshttpsgithubcomstrongerprogrammer7design-patternsfiles115246612__2022-2023pdf-">Kernel classes and models</a> <i> Pattern Strategy</i></br>
 <a href="">Single Entity Model</a>  <i> Pattern: Singleton && Adapter && MVC && Observer</i></br>
 <a href="">MVC</a>  <i> Pattern Factory</i></br> 
 <a href="">Create software</a></br>
