@@ -15,6 +15,7 @@
           <li><a href="https://github.com/StrongerProgrammer7/Design-patterns#-diagramm-class-and-view-labs-">Labs</a></li>
           <li><a href="https://github.com/StrongerProgrammer7/Design-patterns#-diagramm-class-and-view-iw-">IW</a></li>
 </p>
+<a href="">Developement tools </a>
 </p>
           
  <h3> Content: </h3>
@@ -82,4 +83,13 @@
    <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/28be3edf-65cd-48d5-ad0d-e22c2b114d83" alt="diagramm iw"/>  
    <p> Show view program </p>
     <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/729b181a-5b53-4d7d-89ec-b6e7d41658e5"  width="600" height="400" alt="view iw"/>  
-         <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/0da51400-4eb4-436a-8117-95e9e00e5fa0"  width="600" height="400" alt="view iw"/>   
+         <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/0da51400-4eb4-436a-8117-95e9e00e5fa0"  width="600" height="400" alt="view iw"/> 
+<h3> Development tools </h3>
+<ul>
+          <li>Ruby (v. 2023y)</li>
+          <li> Mysql </li>
+          <li> Fox </li>
+          <li> Sublime Text 3</li>
+          <li> StarUML </li>
+</ul>
+<sub>**autohor<strong>Abuykov Z.M. </strong> **</sub> 
