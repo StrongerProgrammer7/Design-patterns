@@ -12,8 +12,8 @@
 <a href="https://github.com/StrongerProgrammer7/Design-patterns#-individual-workhttpsgithubcomstrongerprogrammer7design-patternsfiles115247012022-2023_pdf">Individual work</a><strong> <i> Pattern: Strategy & Sigleton & Adapter & Factory & Wrapper & MVC & Observer </i></strong></br>
 <p> Diagram and view
 <ul>
-          <li><a href="">Labs</a></li>
-          <li><a href="">IW</a></li>
+          <li><a href="https://github.com/StrongerProgrammer7/Design-patterns#-diagramm-class-and-view-labs-">Labs</a></li>
+          <li><a href="https://github.com/StrongerProgrammer7/Design-patterns#-diagramm-class-and-view-iw-">IW</a></li>
 </p>
 </p>
           
@@ -75,11 +75,11 @@
    <h3> Diagramm class and view (labs) </h3>
    <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/cb14bea7-3f76-4772-9ec6-24bbe7f298a9" alt="diagramm labs"/>
    <p> Show view program </p>
-    <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/ef8041bb-f701-4953-a221-93de586893be" alt="view labs"/> 
-      <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/f87e3c86-8551-493d-b1eb-04d1a7697988" alt="view labs"/> 
-        <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/953d9f42-884f-41cf-ad78-fa7af530b48f" alt="view labs"/> 
+    <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/ef8041bb-f701-4953-a221-93de586893be"  width="600" height="400" alt="view labs"/> 
+      <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/f87e3c86-8551-493d-b1eb-04d1a7697988"  width="600" height="400" alt="view labs"/> 
+        <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/953d9f42-884f-41cf-ad78-fa7af530b48f"  width="600" height="400" alt="view labs"/> 
   <h3> Diagramm class and view (IW) </h3>
    <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/28be3edf-65cd-48d5-ad0d-e22c2b114d83" alt="diagramm iw"/>  
    <p> Show view program </p>
-    <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/729b181a-5b53-4d7d-89ec-b6e7d41658e5" alt="view iw"/>  
-         <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/0da51400-4eb4-436a-8117-95e9e00e5fa0" alt="view iw"/>   
+    <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/729b181a-5b53-4d7d-89ec-b6e7d41658e5"  width="600" height="400" alt="view iw"/>  
+         <img src="https://github.com/StrongerProgrammer7/Design-patterns/assets/71569051/0da51400-4eb4-436a-8117-95e9e00e5fa0"  width="600" height="400" alt="view iw"/>   
