@@ -15,7 +15,7 @@
           <li><a href="https://github.com/StrongerProgrammer7/Design-patterns#-diagramm-class-and-view-labs-">Labs</a></li>
           <li><a href="https://github.com/StrongerProgrammer7/Design-patterns#-diagramm-class-and-view-iw-">IW</a></li>
 </p>
-<a href="">Developement tools </a>
+<a href="https://github.com/StrongerProgrammer7/Design-patterns#-development-tools-">Developement tools </a>
 </p>
           
  <h3> Content: </h3>
@@ -92,4 +92,4 @@
           <li> Sublime Text 3</li>
           <li> StarUML </li>
 </ul>
-<sub>**autohor<strong>Abuykov Z.M. </strong> **</sub> 
+<sub>**author <strong>Abuykov Z.M. </strong> **</sub> 
